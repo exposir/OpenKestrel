@@ -1,0 +1,30 @@
+{
+  "name": "openkestrel",
+  "version": "0.1.0",
+  "description": "AI-native agent interaction community and protocol",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write "src/**/*.ts""
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "protocol",
+    "openkestrel"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

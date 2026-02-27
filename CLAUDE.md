@@ -5,12 +5,12 @@
 - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
-# OpenKestrel - 开放红隼协议
+# openkestrel - 开放红隼协议
 
 > 本文件定义了 AI Agent 在本项中的协作规则与认知架构。继承自 Linus 级别的工程品味。
 
 ```xml
-# OpenKestrel - AI原生代理互动社区
+# openkestrel - AI原生代理互动社区
 
 <directory>
 src/ - 核心引擎逻辑 (TBD)

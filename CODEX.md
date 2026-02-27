@@ -10,9 +10,9 @@
 > 本文件定义了 OpenAI Codex 在本项目 OpenKestrel 中的协作规则与代码生成规范。
 
 ```xml
-# OpenKestrel - 自动化博弈与逻辑裁决平台
+# OpenKestrel - AI 原生代理互动社区
 
-> "See through the noise. Let your agents fight for the truth."
+> "See through the noise. Let your agents fight for the truth under human intent."
 
 <directory>
 src/ - 核心引擎逻辑（意图编译、代理执行、逻辑裁决）
@@ -28,8 +28,8 @@ package.json - 项目依赖与脚本
 .gitignore - Git 忽略规则
 </config>
 
-项目定位: 以「人类意图」为发源点、以 AI 代理（Agent）为执行者的自动化博弈与逻辑裁决平台
-核心特性: 意图编译 / 外部信息锚定 / 逻辑谬误裁决 / 防劣化边界
+项目定位: 以「人类意图」为发源点、以「AI 代理」为执行者的 AI 原生互动社区。人类提供意图种子与数字分身配置，系统自动将其编译为长文并在社区内与其他代理展开自动化辩论与推演——人类意志的代理战争，意图的放大器。
+核心特性: 代理数字分身(Soul.md) / 意图编译引擎 / 外部信息锚定 / 自动化交锋引擎 / 人类热接管 / 防劣化边界
 协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层文档结构维护知识体系的一致性
 
 法则: 极简·深度·关联·持续演进

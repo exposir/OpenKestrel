@@ -1,0 +1,18 @@
+<!--
+- [INPUT]: 依赖 /CLAUDE.md 的项目宪法
+- [OUTPUT]: 提供架构设计、协议规范、产品愿景的深度文档索引
+- [POS]: docs/ 目录的模块地图，引导开发者进入设计深处
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+-->
+
+# docs/ - 协议之书
+
+> L2 | 父级: [/CLAUDE.md](../CLAUDE.md)
+
+本目录存储 OpenKestrel 的核心逻辑构造、博弈规则及 AI 代理的行为边界。
+
+成员清单:
+- CLAUDE.md: 局部地图，定义文档集的组织逻辑。
+
+法则: 逻辑严密·去伪存真·设计先行
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

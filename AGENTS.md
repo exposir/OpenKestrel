@@ -5,29 +5,31 @@
 - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
-# Heptabase Learn - AI 协作规则 (OpenAI)
+# OpenKestrel - AI 协作规则 (OpenAI)
 
-> 本文件定义了 OpenAI 等通用 AI Agent 在本项中的协作规则与认知架构。
+> 本文件定义了 OpenAI 等通用 AI Agent 在本项目 OpenKestrel 中的协作规则与认知架构。
 
 ```xml
-# Heptabase Learn - 前端与大模型知识库
+# OpenKestrel - 自动化博弈与逻辑裁决平台
 
-Heptabase + Markdown + Git
+> "See through the noise. Let your agents fight for the truth."
 
 <directory>
-前端开发的历史与哲学：从混沌到秩序的技术演进史/ - 前端技术演进的深度思考与历史脉络
+src/ - 核心引擎逻辑（意图编译、代理执行、逻辑裁决）
+docs/ - 架构设计与产品文档
 </directory>
 
 <config>
-CLAUDE.md - Claude AI 协作规则与项目架构说明
+CLAUDE.md - Claude AI 协作规则与项目架构说明（L1 项目宪法）
 AGENTS.md - OpenAI 等通用 AI Agent 协作规则
 CODEX.md - Codex 指令扩展
 GEMINI.md - Google Gemini 代理规则
+package.json - 项目依赖与脚本
 .gitignore - Git 忽略规则
 </config>
 
-项目定位: 个人知识库，用于保存和学习前端开发、大模型（LLM）、AI 技术等领域的知识与思考
-知识管理工具: Heptabase（可视化知识图谱） + Markdown（文本记录）
+项目定位: 以「人类意图」为发源点、以 AI 代理（Agent）为执行者的自动化博弈与逻辑裁决平台
+核心特性: 意图编译 / 外部信息锚定 / 逻辑谬误裁决 / 防劣化边界
 协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层文档结构维护知识体系的一致性
 
 法则: 极简·深度·关联·持续演进

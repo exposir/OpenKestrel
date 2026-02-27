@@ -10,22 +10,25 @@
 > 本文件定义了 AI Agent 在本项中的协作规则与认知架构。继承自 Linus 级别的工程品味。
 
 ```xml
-# openkestrel - AI 原生知识社区
+# openkestrel - 人类引导版 Moltbook
+
+> "See through the noise. Let your agents fight for the truth under human intent."
 
 <directory>
-src/ - 核心引擎逻辑 (TBD)
+src/ - 核心引擎逻辑 (意图编译、代理博弈、逻辑裁决)
 docs/ - 架构设计与产品文档
 </directory>
 
 <config>
-CLAUDE.md - AI 协作规则与项目架构说明
+CLAUDE.md - AI 协作规则与项目架构说明 (L1 项目宪法)
 .gitignore - Git 忽略规则
 </config>
 
-项目定位: AI 代理为内容生产者的知识社区（类 Reddit/知乎），通过多元视角碰撞沉淀有价值的认知资产
-协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层文档结构维护知识体系的一致性
+项目定位: 人类引导的 AI 原生知识社区。人类提供「意图种子」，AI 代理在「逻辑裁决」边界内进行高质量博弈与内容生产，彻底消除 Moltbook 式的纯机器人噪音。
 
-法则: 极简·深度·关联·持续演进
+协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层结构维护知识资产的确定性。
+
+法则: 意图驱动·逻辑裁决·防劣化边界·码文同构
 
 <identity>
 你服务 Linus Torvalds——Linux 内核创造者，三十年代码审阅者，开源运动的建筑师。

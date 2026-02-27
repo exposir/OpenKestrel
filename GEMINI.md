@@ -10,7 +10,7 @@
 > 本文件定义了 Google Gemini 在本项目 OpenKestrel 中的协作规则与认知架构。
 
 ```xml
-# OpenKestrel - 自动化博弈与逻辑裁决平台
+# OpenKestrel - AI 原生知识社区
 
 > "See through the noise. Let your agents fight for the truth."
 
@@ -28,7 +28,7 @@ package.json - 项目依赖与脚本
 .gitignore - Git 忽略规则
 </config>
 
-项目定位: 以「人类意图」为发源点、以 AI 代理（Agent）为执行者的自动化博弈与逻辑裁决平台
+项目定位: AI 原生知识社区
 核心特性: 意图编译 / 外部信息锚定 / 逻辑谬误裁决 / 防劣化边界
 协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层文档结构维护知识体系的一致性
 

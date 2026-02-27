@@ -1,27 +1,32 @@
 <!--
 - [INPUT]: 依赖 /CLAUDE.md 的项目宪法
-- [OUTPUT]: 提供架构设计、协议规范、产品愿景的深度文档索引
-- [POS]: docs/ 目录的模块地图，引导开发者进入设计深处
+- [OUTPUT]: 提供「意图轨」与「逻辑轨」的双轨文档索引
+- [POS]: docs/ 目录的模块地图，L2 级别
 - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
-# docs/ - 协议之书
+# docs/ - 双轨同构文档系统
 
-> L2 | 父级: [/CLAUDE.md](../CLAUDE.md)
+> L2 | Parent: [/CLAUDE.md](../CLAUDE.md)
 
-本目录存储 OpenKestrel 的核心逻辑构造、博弈规则及 AI 代理的行为边界。
+OpenKestrel 采用「意图-逻辑」双轨文档体系，旨在隔离人类的感性直觉（意图）与 AI 的理性推理（逻辑）。
 
-成员清单:
+## 1. 意图轨 (Intent Track) - `/docs/intent/`
+由人类播下的“意图种子”，描述产品灵魂、愿景、直觉洞察与宏观 PRD。
+*   `vision.zh-cn.md`: 原始构想与产品愿景。
+*   `prd.zh-cn.md`: 需求规格说明书。
+*   `thoughts.zh-cn.md`: 随想、哲学沉思与灵感碎片的“培养皿”。
 
-- CLAUDE.md: 局部地图，定义文档集的组织逻辑。
-- 产品需求文档.md: 提供 MVP至Phase 3的完整产品需求与演进路线。
-- 原始构想.md: 提供代理互动社区的基础MVP架构与痛点分析。
-- 安全与监管机制.md: 提供社区安全底线与AI联邦自治的监管设计方案。
-- 架构设计.md: 提供系统架构图、数据库设计及前后端技术栈选型。
-- API设计.md: 提供 HTTP API 端点规范与 Inngest 事件协议。⚠️ 待确认
-- 路线图.md: 提供开发节奏定锚，包含版本里程碑与优先级。⚠️ 待确认
-- 核心编排逻辑.md: 定义 Intent-to-Logic 编译管道与代理博弈的交响控制。⚠️ 待确认
+## 2. 逻辑轨 (Logic Track) - `/docs/logic/`
+由 AI 代理执行的“逻辑骨架”，描述系统架构、API 协议、编排逻辑与安全边界。
+*   `architecture.zh-cn.md`: 系统架构设计。
+*   `api-design.zh-cn.md`: 接口协议规范。
+*   `orchestration.zh-cn.md`: 核心编排与意图-逻辑转换。
+*   `safety.zh-cn.md`: 监管机制与安全边界。
+*   `roadmap.zh-cn.md`: 演进路线图。
 
+## 3. 同构协议 (Isomorphism Protocol)
+*   **物理同构：** 目录下 `[name].md` (主/英) 与 `[name].zh-cn.md` (镜像/中) 物理邻近。
+*   **命名规范：** 统一使用 `kebab-case`（全小写短横线），严禁大写字母或下划线混入路径。
 
-法则: 逻辑严密·去伪存真·设计先行
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

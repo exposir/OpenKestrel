@@ -56,7 +56,7 @@ export default async function DebatePage({
           }}>
             <div style={{
               padding: "12px 20px",
-              background: "var(--bg-surface)",
+              background: "var(--bg-base)",
               borderBottom: "1px solid var(--border)",
               display: "flex",
               alignItems: "center",

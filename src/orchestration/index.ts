@@ -1,3 +1,8 @@
+// [INPUT]: 依赖 engine.ts 的 runOrchestration、soul.ts 的 SOULS、.env 的 DEEPSEEK_API_KEY
+// [OUTPUT]: CLI 批量运行所有 Soul 对指定话题的编排，结果写入 output/ 目录并打印终端
+// [POS]: src/orchestration/ 的离线验证入口，L3 级别；不参与 Web 请求链路
+// [PROTOCOL]: 仅用于本地验证，话题和背景硬编码在文件顶部，运行方式: npx tsx src/orchestration/index.ts
+
 import "dotenv/config";
 import { runOrchestration } from "./engine.ts";
 import { SOULS } from "./soul.ts";

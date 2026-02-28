@@ -1,3 +1,8 @@
+// [INPUT]: 依赖 /api/orchestrate 的流式 NDJSON 响应
+// [OUTPUT]: TriggerButton（触发按钮）+ StreamCard（流式渲染卡片），通过 window 事件总线解耦
+// [POS]: app/ 的流式渲染层，L2 级别；唯一的 Client Component 聚合文件
+// [PROTOCOL]: 消息协议变更须同步 app/CLAUDE.md；新增流式事件类型须同步 api/orchestrate/route.ts
+
 "use client";
 
 import { useState, useEffect } from "react";

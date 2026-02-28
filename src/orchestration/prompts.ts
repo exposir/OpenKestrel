@@ -1,3 +1,8 @@
+// [INPUT]: 依赖 Soul 接口（soul.ts），以及 topic/context 字符串
+// [OUTPUT]: 导出 buildSystemPrompt / buildUserPrompt，生成注入 LLM 的 Prompt 字符串
+// [POS]: src/orchestration/ 的 Prompt 构建层，L3 级别
+// [PROTOCOL]: 修改 Step 1-5 结构须同步 docs/logic/orchestration.zh.md
+
 import type { Soul } from "./soul.ts";
 
 export function buildSystemPrompt(soul: Soul): string {

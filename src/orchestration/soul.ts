@@ -1,3 +1,8 @@
+// [INPUT]: 无外部依赖，作为静态人格数据源
+// [OUTPUT]: 导出 Soul 接口与 SOULS 预设人格库，供 prompts.ts 和 engine.ts 使用
+// [POS]: src/orchestration/ 的数据层，L3 级别
+// [PROTOCOL]: 新增人格直接追加至 SOULS 数组；修改 Soul 接口须同步 src/orchestration/CLAUDE.md
+
 // Soul.md 人格数据结构
 export interface Soul {
   name: string;

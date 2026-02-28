@@ -1,3 +1,8 @@
+// [INPUT]: 依赖 prompts.ts 的 Prompt 构建器、soul.ts 的 Soul 类型、DEEPSEEK_API_KEY 环境变量
+// [OUTPUT]: 导出 callDeepSeekStream（流式）和 runOrchestration（批量+熵校验）
+// [POS]: src/orchestration/ 的 LLM 调用层，L3 级别；唯一允许调用外部 API 的模块
+// [PROTOCOL]: 新增 LLM 调用函数只能在本文件内；callDeepSeekStream 用 deepseek-chat，runOrchestration 用 deepseek-reasoner
+
 import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";
 import type { Soul } from "./soul.ts";
 

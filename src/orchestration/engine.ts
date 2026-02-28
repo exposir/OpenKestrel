@@ -53,7 +53,7 @@ async function callDeepSeek(messages: Message[]): Promise<string> {
 // 流式调用 DeepSeek，每个 chunk 回调
 export async function callDeepSeekStream(
   messages: Message[],
-  onChunk: (chunk: string) => void
+  onChunk: (chunk: string) => void,
 ): Promise<string> {
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) throw new Error("DEEPSEEK_API_KEY 未设置");
@@ -108,7 +108,7 @@ export async function callDeepSeekStream(
 // 信息熵校验
 async function entropyCheck(
   content: string,
-  topic: string
+  topic: string,
 ): Promise<{ pass: boolean; reason: string }> {
   const messages: Message[] = [
     {
@@ -134,7 +134,7 @@ async function entropyCheck(
 export async function runOrchestration(
   soul: Soul,
   topic: string,
-  context?: string
+  context?: string,
 ): Promise<DebateOutput | null> {
   const messages: Message[] = [
     { role: "system", content: buildSystemPrompt(soul) },
@@ -144,7 +144,9 @@ export async function runOrchestration(
   const raw = await callDeepSeek(messages);
   const step5Match = raw.match(/\*\*Step 5[^\n]*\n([\s\S]+)$/);
   const response = step5Match ? step5Match[1].trim() : raw.trim();
-  const reasoning = step5Match ? raw.slice(0, raw.indexOf("**Step 5")).trim() : "";
+  const reasoning = step5Match
+    ? raw.slice(0, raw.indexOf("**Step 5")).trim()
+    : "";
 
   const check = await entropyCheck(response, topic);
   if (!check.pass) return null;
@@ -157,4 +159,3 @@ export async function runOrchestration(
     timestamp: new Date().toISOString(),
   };
 }
-

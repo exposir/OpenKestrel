@@ -1,77 +1,175 @@
 /* Light (default) — Notion-inspired warm tone */
 :root {
-  --bg-base:        #f7f6f3;
-  --bg-surface:     #ffffff;
-  --bg-elevated:    #eeecea;
-  --border:         #e9e9e7;
-  --border-muted:   #f0efed;
-  --text-primary:   #37352f;
+  --bg-base: #f7f6f3;
+  --bg-surface: #ffffff;
+  --bg-elevated: #eeecea;
+  --border: #e9e9e7;
+  --border-muted: #f0efed;
+  --text-primary: #37352f;
   --text-secondary: #787774;
-  --text-muted:     #9b9a97;
-  --accent:         #4d4844;
-  --accent-fg:      #f5f4f1;
-  --tag-bg:         #eeecea;
-  --tag-border:     #e3e2df;
-  --tag-text:       #787774;
-  --cursor:         #37352f;
-  --success:        #2f7a2f;
+  --text-muted: #9b9a97;
+  --accent: #4d4844;
+  --accent-fg: #f5f4f1;
+  --tag-bg: #eeecea;
+  --tag-border: #e3e2df;
+  --tag-text: #787774;
+  --cursor: #37352f;
+  --success: #2f7a2f;
 }
 
 /* Dark values — shared by system-dark and forced-dark */
 @mixin dark-vars {
-  --bg-base:        #0a0a0a;
-  --bg-surface:     #111111;
-  --bg-elevated:    #1a1a1a;
-  --border:         #222222;
-  --border-muted:   #1a1a1a;
-  --text-primary:   #e5e5e5;
+  --bg-base: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --border: #222222;
+  --border-muted: #1a1a1a;
+  --text-primary: #e5e5e5;
   --text-secondary: #888888;
-  --text-muted:     #555555;
-  --accent:         #ffffff;
-  --accent-fg:      #000000;
-  --tag-bg:         #1a1a1a;
-  --tag-border:     #333333;
-  --tag-text:       #888888;
-  --cursor:         #e5e5e5;
-  --success:        #3a9a3a;
+  --text-muted: #555555;
+  --accent: #ffffff;
+  --accent-fg: #000000;
+  --tag-bg: #1a1a1a;
+  --tag-border: #333333;
+  --tag-text: #888888;
+  --cursor: #e5e5e5;
+  --success: #3a9a3a;
 }
 
 /* System dark — only when not manually overridden to light */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg-base:        #0a0a0a;
-    --bg-surface:     #111111;
-    --bg-elevated:    #1a1a1a;
-    --border:         #222222;
-    --border-muted:   #1a1a1a;
-    --text-primary:   #e5e5e5;
+    --bg-base: #0a0a0a;
+    --bg-surface: #111111;
+    --bg-elevated: #1a1a1a;
+    --border: #222222;
+    --border-muted: #1a1a1a;
+    --text-primary: #e5e5e5;
     --text-secondary: #888888;
-    --text-muted:     #555555;
-    --accent:         #ffffff;
-    --accent-fg:      #000000;
-    --tag-bg:         #1a1a1a;
-    --tag-border:     #333333;
-    --tag-text:       #888888;
-    --cursor:         #e5e5e5;
-    --success:        #3a9a3a;
+    --text-muted: #555555;
+    --accent: #ffffff;
+    --accent-fg: #000000;
+    --tag-bg: #1a1a1a;
+    --tag-border: #333333;
+    --tag-text: #888888;
+    --cursor: #e5e5e5;
+    --success: #3a9a3a;
   }
 }
 
 /* Forced dark */
 [data-theme="dark"] {
-  --bg-base:        #0a0a0a;
-  --bg-surface:     #111111;
-  --bg-elevated:    #1a1a1a;
-  --border:         #222222;
-  --border-muted:   #1a1a1a;
-  --text-primary:   #e5e5e5;
+  --bg-base: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --border: #222222;
+  --border-muted: #1a1a1a;
+  --text-primary: #e5e5e5;
   --text-secondary: #888888;
-  --text-muted:     #555555;
-  --accent:         #ffffff;
-  --accent-fg:      #000000;
-  --tag-bg:         #1a1a1a;
-  --tag-border:     #333333;
-  --tag-text:       #888888;
-  --cursor:         #e5e5e5;
-  --success:        #3a9a3a;
+  --text-muted: #555555;
+  --accent: #ffffff;
+  --accent-fg: #000000;
+  --tag-bg: #1a1a1a;
+  --tag-border: #333333;
+  --tag-text: #888888;
+  --cursor: #e5e5e5;
+  --success: #3a9a3a;
+}
+
+/* Modal & Animations */
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: modal-fade-in 0.2s ease-out;
+}
+
+[data-theme="dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  padding: 32px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: modal-scale-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .modal-content {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.modal-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  outline: none;
+  margin-bottom: 24px;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: var(--text-secondary);
+}
+
+.modal-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@keyframes tag-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-blink {
+  animation: tag-blink 1.5s ease-in-out infinite;
 }

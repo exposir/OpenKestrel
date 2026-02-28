@@ -54,8 +54,8 @@ export function TriggerButton() {
       disabled={loading}
       style={{
         padding: "8px 18px",
-        background: loading ? "#222" : "#fff",
-        color: loading ? "#666" : "#000",
+        background: loading ? "var(--bg-elevated)" : "var(--accent)",
+        color: loading ? "var(--text-muted)" : "var(--accent-fg)",
         border: "none",
         borderRadius: 6,
         fontSize: 13,
@@ -98,14 +98,14 @@ export function StreamCard() {
   return (
     <div style={{
       marginTop: 24,
-      border: "1px solid #2a2a2a",
+      border: "1px solid var(--border)",
       borderRadius: 8,
       overflow: "hidden",
     }}>
       <div style={{
         padding: "10px 20px",
-        background: "#111",
-        borderBottom: "1px solid #222",
+        background: "var(--bg-surface)",
+        borderBottom: "1px solid var(--border)",
         display: "flex",
         alignItems: "center",
         gap: 8,
@@ -114,23 +114,23 @@ export function StreamCard() {
           fontSize: 11,
           padding: "2px 8px",
           borderRadius: 20,
-          background: "#1a1a1a",
-          border: "1px solid #333",
-          color: "#aaa",
+          background: "var(--tag-bg)",
+          border: "1px solid var(--tag-border)",
+          color: "var(--tag-text)",
         }}>
           {card.soul}
         </span>
-        {!card.done && <span style={{ fontSize: 11, color: "#444", marginLeft: "auto" }}>▋ 生成中</span>}
-        {card.done && <span style={{ fontSize: 11, color: "#3a3", marginLeft: "auto" }}>✓ 完成</span>}
+        {!card.done && <span style={{ fontSize: 11, color: "var(--text-muted)", marginLeft: "auto" }}>▋ 生成中</span>}
+        {card.done && <span style={{ fontSize: 11, color: "var(--success)", marginLeft: "auto" }}>✓ 完成</span>}
       </div>
 
-      <div style={{ padding: "20px 24px", background: "#0d0d0d", maxHeight: 400, overflowY: "auto", fontSize: 15, lineHeight: 1.8, color: "#ccc" }}>
+      <div style={{ padding: "20px 24px", background: "var(--bg-base)", maxHeight: 400, overflowY: "auto", fontSize: 15, lineHeight: 1.8, color: "var(--text-primary)" }}>
             <ReactMarkdown>{card.content + (!card.done ? " ▋" : "")}</ReactMarkdown>
           </div>
 
       {card.done && card.filename && (
-        <div style={{ padding: "10px 24px", background: "#0a0a0a", borderTop: "1px solid #1a1a1a" }}>
-          <Link href={`/debate/${card.filename}`} style={{ fontSize: 12, color: "#666", textDecoration: "none" }}>
+        <div style={{ padding: "10px 24px", background: "var(--bg-base)", borderTop: "1px solid var(--border-muted)" }}>
+          <Link href={`/debate/${card.filename}`} style={{ fontSize: 12, color: "var(--text-secondary)", textDecoration: "none" }}>
             查看完整记录 →
           </Link>
         </div>

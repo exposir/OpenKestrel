@@ -76,6 +76,36 @@
   --success: #3a9a3a;
 }
 
+@keyframes ok-theme-reveal {
+  from {
+    clip-path: circle(0 at var(--ok-theme-transition-x, calc(100% - 20px)) var(--ok-theme-transition-y, 20px));
+  }
+  to {
+    clip-path: circle(150vmax at var(--ok-theme-transition-x, calc(100% - 20px)) var(--ok-theme-transition-y, 20px));
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: ok-theme-reveal 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 /* Modal & Animations */
 @keyframes modal-fade-in {
   from {
@@ -94,6 +124,17 @@
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes ok-dialog-scale-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -213,7 +254,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: modal-scale-up 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: ok-dialog-scale-up 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ok-dialog-header {
@@ -310,6 +351,18 @@
 
 .animate-blink {
   animation: tag-blink 1.5s ease-in-out infinite;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Debate Detail: Layout ── */

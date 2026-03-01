@@ -1,13 +1,12 @@
-// [INPUT]: 依赖浏览器 localStorage / documentElement / window keydown 事件
-// [OUTPUT]: ThemeToggle — 三态主题切换按钮（system / light / dark），支持 Cmd/Ctrl + D 在 light/dark 间切换
+// [INPUT]: 依赖 `themeTransition` 主题切换内核与浏览器按钮点击事件
+// [OUTPUT]: ThemeToggle — 三态主题切换按钮（system / light / dark），支持从右上角扩散到全屏的主题切换动画
 // [POS]: app/ 的全局 UI 层，Client Component
 // [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
 
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
-
-type Theme = "system" | "light" | "dark";
+import { useState, useEffect, type MouseEvent, type ReactNode } from "react";
+import { readStoredTheme, setThemeWithMotion, type Theme } from "./themeTransition";
 
 const CYCLE: Theme[] = ["system", "light", "dark"];
 const TITLE: Record<Theme, string> = { system: "Follow system", light: "Light mode", dark: "Dark mode" };
@@ -35,51 +34,24 @@ const ICONS: Record<Theme, ReactNode> = {
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("system");
 
-  function applyTheme(next: Theme) {
-    if (next === "system") {
-      localStorage.removeItem("theme");
-      document.documentElement.removeAttribute("data-theme");
-      return;
-    }
-    localStorage.setItem("theme", next);
-    document.documentElement.setAttribute("data-theme", next);
-  }
-
   useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored === "light" || stored === "dark") setTheme(stored);
+    setTheme(readStoredTheme());
   }, []);
 
-  function cycle() {
-    setTheme((current) => {
-      const next = CYCLE[(CYCLE.indexOf(current) + 1) % CYCLE.length];
-      applyTheme(next);
-      return next;
-    });
+  function cycle(event?: MouseEvent<HTMLButtonElement>) {
+    const button = event?.currentTarget;
+    const rect = button?.getBoundingClientRect();
+    const origin = rect
+      ? { x: rect.right - rect.width / 2, y: rect.top + rect.height / 2 }
+      : undefined;
+    const next = CYCLE[(CYCLE.indexOf(theme) + 1) % CYCLE.length];
+    setTheme(next);
+    setThemeWithMotion(next, origin);
   }
-
-  function toggleLightDarkByShortcut() {
-    setTheme((current) => {
-      const next: Theme = current === "dark" ? "light" : "dark";
-      applyTheme(next);
-      return next;
-    });
-  }
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d";
-      if (!isShortcut) return;
-      event.preventDefault();
-      toggleLightDarkByShortcut();
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
 
   return (
     <button
-      onClick={cycle}
+      onClick={(event) => cycle(event)}
       title={TITLE[theme]}
       style={{
         display: "flex",

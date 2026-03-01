@@ -46,7 +46,11 @@ export default async function AuditsPage({
             <option value="auth">认证事件</option>
             <option value="orchestrate">发帖事件</option>
           </select>
-          <select name="status" defaultValue={status} className="ok-admin-select">
+          <select
+            name="status"
+            defaultValue={status}
+            className="ok-admin-select"
+          >
             <option value="all">全部状态</option>
             <option value="success">成功</option>
             <option value="failure">失败</option>
@@ -85,7 +89,10 @@ export default async function AuditsPage({
                 </tr>
               ) : (
                 records.slice(0, 200).map((record, idx) => (
-                  <tr key={`${record.timestamp}-${idx}`} className="ok-admin-row">
+                  <tr
+                    key={`${record.timestamp}-${idx}`}
+                    className="ok-admin-row"
+                  >
                     <Td>{formatTime(record.timestamp)}</Td>
                     <Td>{record.category}</Td>
                     <Td>{record.action}</Td>
@@ -148,5 +155,9 @@ function Td({
   children: ReactNode;
   className?: string;
 }) {
-  return <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>{children}</td>;
+  return (
+    <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>
+      {children}
+    </td>
+  );
 }

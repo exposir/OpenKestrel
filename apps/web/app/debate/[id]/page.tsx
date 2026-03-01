@@ -68,10 +68,10 @@ export default async function DebatePage({
   // ── Build TOC items from debate entries ──
   const tocItems: { id: string; label: string; depth: number }[] = [];
   debate.forEach((entry, i) => {
-    // 顶级目录：发言代理
+    // 顶级目录：使用主题 (topic) 作为顶级标题
     tocItems.push({
       id: `soul-${i}`,
-      label: entry.soul,
+      label: topic,
       depth: 0,
     });
 

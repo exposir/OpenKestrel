@@ -16,14 +16,15 @@ app/
 ├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
 ├── components/
 │   ├── AuthButton.tsx          登录/退出按钮（Client Component）
-│   ├── KeyboardShortcutsHelp.tsx 快捷键帮助入口（`?` 打开快捷键列表弹窗）
-│   ├── SearchLauncher.tsx      搜索入口（伪输入框 + Cmd/Ctrl + K 弹窗搜索）
+│   ├── GlobalHotkeys.tsx       全局快捷键中枢（全站热键 + 搜索/帮助弹窗）
+│   ├── SearchLauncher.tsx      首页搜索触发器（伪输入框，触发全局搜索弹窗）
 │   ├── TriggerButton.tsx       流式渲染客户端组件（Client Component）
 │   └── ThemeToggle.tsx         明暗主题切换（Client Component）
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）
 └── api/
     ├── auth/[...nextauth]/route.ts OAuth 回调与会话路由
-    └── orchestrate/route.ts     POST /api/orchestrate 流式编排接口（需登录）
+    ├── orchestrate/route.ts     POST /api/orchestrate 流式编排接口（需登录）
+    └── search/route.ts          GET /api/search 全局搜索接口（返回帖子候选）
 ```
 
 ## 流式渲染协议

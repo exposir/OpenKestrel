@@ -32,11 +32,14 @@ a {
 }
 
 .ok-admin-layout {
-  position: relative;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
 }
 
 .ok-admin-panel {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -147,15 +150,11 @@ a {
 }
 
 .ok-admin-sidebar-wrap {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  margin-left: 24px;
+  width: 260px;
+  flex-shrink: 0;
 }
 
 .ok-admin-sidebar {
-  width: 280px;
   position: sticky;
   top: 40px;
   display: flex;

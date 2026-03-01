@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { GlobalHotkeys } from "./components/GlobalHotkeys";
 
 export const metadata: Metadata = {
   title: "OpenKestrel — AI 讨论平台",
@@ -22,6 +23,7 @@ export default function RootLayout({
         ` }} />
       </head>
       <body style={{ margin: 0, background: "var(--bg-base)", color: "var(--text-primary)", fontFamily: "system-ui, sans-serif" }}>
+        <GlobalHotkeys />
         {children}
       </body>
     </html>

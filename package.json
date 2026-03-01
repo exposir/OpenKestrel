@@ -2,48 +2,24 @@
   "name": "openkestrel",
   "version": "0.1.0",
   "private": true,
-  "description": "AI-native agent interaction community and protocol",
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "description": "OpenKestrel monorepo workspace",
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
-    "dev:web": "next dev",
-    "dev:admin": "npm run dev --workspace @openkestrel/admin",
-    "dev": "next dev",
-    "build:web": "next build",
-    "build:admin": "npm run build --workspace @openkestrel/admin",
-    "build": "next build",
-    "start": "next start",
-    "orchestrate": "tsx src/orchestration/index.ts"
+    "dev": "concurrently -n web,admin -c cyan,magenta \"pnpm dev:web\" \"pnpm dev:admin\"",
+    "dev:web": "dotenv -e .env -- pnpm --filter @openkestrel/web dev",
+    "dev:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin dev",
+    "build": "pnpm -r build",
+    "build:web": "dotenv -e .env -- pnpm --filter @openkestrel/web build",
+    "build:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin build",
+    "start:web": "dotenv -e .env -- pnpm --filter @openkestrel/web start",
+    "start:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin start",
+    "orchestrate": "dotenv -e .env -- pnpm --filter @openkestrel/web orchestrate"
   },
   "workspaces": [
-    "apps/admin"
+    "apps/*"
   ],
-  "keywords": [
-    "ai",
-    "agent",
-    "protocol",
-    "openkestrel"
-  ],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^25.3.2",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "dotenv": "^17.3.1",
-    "marked": "^17.0.3",
-    "next": "^16.1.6",
-    "next-auth": "^5.0.0-beta.30",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-markdown": "^10.1.0"
+    "concurrently": "^9.1.2",
+    "dotenv-cli": "^10.0.0"
   }
 }

@@ -15,19 +15,20 @@
 > "See through the noise. Let your agents fight for the truth under human intent."
 
 <directory>
-src/ - 核心引擎逻辑（意图编译、代理执行、逻辑裁决）
-docs/ - 架构设计与产品文档
+apps/web/ - 前台主应用（Next.js App Router + 核心业务逻辑）
 apps/admin/ - 管理后台应用（审计看板与运营控制台）
+docs/ - 架构设计与产品文档
+output/ - 共享数据目录（帖子文件与审计日志）
 </directory>
 
 <config>
-CLAUDE.md - Claude AI 协作规则与项目架构说明（L1 项目宪法）
-AGENTS.md - OpenAI 等通用 AI Agent 协作规则
-CODEX.md - Codex 指令扩展
-GEMINI.md - Google Gemini 代理规则
-package.json - 项目依赖与脚本
+CLAUDE.md - L1 项目宪法·协作规则·认知架构·GEB 分形文档协议
+AGENTS.md / CODEX.md / GEMINI.md - 各 AI Agent 入口（指向 CLAUDE.md）
+package.json - Monorepo 根脚本（pnpm workspaces 编排）
+pnpm-workspace.yaml - Workspace 包范围定义（apps/*）
+tsconfig.base.json - Web/Admin 共享 TypeScript 基线配置
 .gitignore - Git 忽略规则
-auth.ts - 全局认证入口（Auth.js 配置与会话能力导出）
+apps/web/package.json - 前台应用独立依赖与脚本（默认端口 3000）
 apps/admin/package.json - 管理后台独立依赖与脚本
 </config>
 

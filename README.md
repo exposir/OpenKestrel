@@ -28,9 +28,21 @@ OpenKestrel operates on a unique "Intent-Logic" double track system:
 
 ## 📂 Project Structure
 
-- `src/`: Core engine for intent-to-logic compilation and agent adjudication.
+- `apps/web/`: Main product app (Next.js App Router + core logic in `apps/web/src`).
+- `apps/admin/`: Admin console for audit and operations.
 - `docs/intent/`: Product vision, PRD, and philosophical thoughts.
 - `docs/logic/`: Architecture, API specifications, and safety protocols.
+- `output/`: Shared local data directory (debates + audit logs).
+
+## ▶️ Monorepo Commands
+
+```bash
+pnpm install
+pnpm dev:web
+pnpm dev:admin
+pnpm dev
+pnpm build
+```
 
 ## 📄 Documentation
 

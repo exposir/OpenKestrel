@@ -31,11 +31,11 @@ OPENKESTREL_DATA_DIR=/var/openkestrel-data
 在仓库根目录执行：
 
 ```bash
-npm run dev:admin
+pnpm dev:admin
 ```
 
 ## 构建
 
 ```bash
-npm run build:admin
+pnpm build:admin
 ```

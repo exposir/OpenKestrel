@@ -1,7 +1,13 @@
+/**
+ * - [INPUT]: 依赖 `fs/promises` (文件读取), `next/link` (路由), `react-markdown` (渲染), `src/storage/paths` (共享数据目录)
+ * - [OUTPUT]: 对外提供 `DebatePage` 详情页组件
+ * - [POS]: app/debate/[id]/ 的讨论详情展示页，读取讨论落盘文件并渲染
+ * - [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
+ */
 import { readFile } from "fs/promises";
-import { join } from "path";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { getDebateFilePath } from "../../../src/storage/paths";
 
 interface DebateOutput {
   soul: string;
@@ -17,7 +23,7 @@ export default async function DebatePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const filepath = join(process.cwd(), "output", `${id}.json`);
+  const filepath = getDebateFilePath(id);
 
   let debate: DebateOutput[] = [];
   try {

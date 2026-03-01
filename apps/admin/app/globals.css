@@ -1,0 +1,32 @@
+:root {
+  --bg: #0b1220;
+  --panel: #101a2d;
+  --panel-soft: #15233d;
+  --text: #e7edf7;
+  --text-soft: #9fb0ca;
+  --line: #22304d;
+  --ok: #3ac78b;
+  --bad: #ff6d6d;
+  --chip: #1b2b47;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, #1b2a46 0%, transparent 60%),
+    radial-gradient(1000px 500px at 120% 10%, #16233d 0%, transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font-family: "SF Pro Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+}
+
+a {
+  color: inherit;
+}

@@ -1,5 +1,5 @@
 /**
- * - [INPUT]: 依赖 `fs/promises` (文件搜索), `next/link` (路由), `react-markdown` (内容渲染), `src/orchestration/soul` (人格选项), `auth.ts` (登录态)
+ * - [INPUT]: 依赖 `fs/promises` (文件搜索), `next/link` (路由), `react-markdown` (内容渲染), `src/orchestration/soul` (人格选项), `src/storage/paths` (共享数据目录), `auth.ts` (登录态)
  * - [OUTPUT]: 对外提供 `HomePage` 异步组件
  * - [POS]: 业务主页入口，负责展示讨论列表与触发新讨论
  * - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -13,6 +13,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { AuthButton } from "./AuthButton";
 import { SOULS } from "../src/orchestration/soul";
 import { auth } from "../auth";
+import { getDebateDir } from "../src/storage/paths";
 
 interface DebateOutput {
   soul: string;
@@ -30,7 +31,7 @@ interface DebateFile {
 }
 
 async function getDebates(): Promise<DebateFile[]> {
-  const outputDir = join(process.cwd(), "output");
+  const outputDir = getDebateDir();
   try {
     const files = await readdir(outputDir);
     const debates = await Promise.all(

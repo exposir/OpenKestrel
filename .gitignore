@@ -7,4 +7,5 @@ build/
 coverage/
 *.log
 .next/
+**/.next/
 output/

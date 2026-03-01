@@ -1,4 +1,4 @@
-// [INPUT]: 依赖 auth.ts 登录态、src/orchestration/soul.ts 的 SOULS、engine.ts 的 callDeepSeekStream、prompts.ts 的 Prompt 构建器、fs/promises 文件写入
+// [INPUT]: 依赖 auth.ts 登录态、src/orchestration/soul.ts 的 SOULS、engine.ts 的 callDeepSeekStream、prompts.ts 的 Prompt 构建器、src/storage/paths.ts 目录策略、fs/promises 文件写入
 // [OUTPUT]: POST /api/orchestrate，返回 ReadableStream（NDJSON：meta → chunk[] → done/error）
 // [POS]: app/api/ 的流式编排路由，L2 级别；连接前端流式渲染层与后端引擎层的桥梁
 // [PROTOCOL]: NDJSON 消息结构变更须同步 app/TriggerButton.tsx 和 app/CLAUDE.md
@@ -12,6 +12,8 @@ import {
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 import { auth } from "../../../auth";
+import { getRequestContext, logAuditEvent } from "../../../src/audit/logger";
+import { getDebateDir } from "../../../src/storage/paths";
 
 function normalizeStringList(input: unknown): string[] {
   if (!Array.isArray(input)) return [];
@@ -21,15 +23,39 @@ function normalizeStringList(input: unknown): string[] {
 }
 
 export async function POST(req: Request) {
+  const requestContext = getRequestContext(req);
   const session = await auth();
   if (!session?.user) {
+    await logAuditEvent({
+      category: "orchestrate",
+      action: "create_post",
+      status: "failure",
+      request: requestContext,
+      metadata: {
+        reason: "unauthenticated",
+      },
+    });
     return new Response("Please sign in first", { status: 401 });
   }
 
   const { topic, context, soul_id, references, must_cover, must_avoid } =
     await req.json();
+  const actor = {
+    name: session.user?.name ?? null,
+    email: session.user?.email ?? null,
+  };
 
   if (!topic || typeof topic !== "string" || !topic.trim()) {
+    await logAuditEvent({
+      category: "orchestrate",
+      action: "create_post",
+      status: "failure",
+      actor,
+      request: requestContext,
+      metadata: {
+        reason: "invalid_topic",
+      },
+    });
     return new Response("Topic is required", { status: 400 });
   }
 
@@ -37,6 +63,17 @@ export async function POST(req: Request) {
     (item) => item.id === soul_id || item.name === soul_id,
   );
   if (typeof soul_id === "string" && soul_id.trim().length > 0 && !matchedSoul) {
+    await logAuditEvent({
+      category: "orchestrate",
+      action: "create_post",
+      status: "failure",
+      actor,
+      request: requestContext,
+      metadata: {
+        reason: "invalid_soul_id",
+        soul_id,
+      },
+    });
     return new Response("Invalid soul_id", { status: 400 });
   }
   const soul = matchedSoul ?? SOULS[0];
@@ -92,7 +129,7 @@ export async function POST(req: Request) {
           response: fullContent,
           timestamp,
         };
-        const outputDir = join(process.cwd(), "output");
+        const outputDir = getDebateDir();
         await mkdir(outputDir, { recursive: true });
         await writeFile(
           join(outputDir, filename),
@@ -104,10 +141,38 @@ export async function POST(req: Request) {
           type: "done",
           filename: filename.replace(".json", ""),
         });
+        await logAuditEvent({
+          category: "orchestrate",
+          action: "create_post",
+          status: "success",
+          actor,
+          request: requestContext,
+          metadata: {
+            topic: topic.trim().slice(0, 160),
+            soul_id: soul.id,
+            references_count: normalizedReferences.length,
+            must_cover_count: normalizedMustCover.length,
+            must_avoid_count: normalizedMustAvoid.length,
+            output_file: filename,
+          },
+        });
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "编排过程发生未知错误";
         push({ type: "error", message });
+        await logAuditEvent({
+          category: "orchestrate",
+          action: "create_post",
+          status: "failure",
+          actor,
+          request: requestContext,
+          metadata: {
+            reason: "runtime_error",
+            error: message,
+            topic: topic.trim().slice(0, 160),
+            soul_id: soul.id,
+          },
+        });
       } finally {
         controller.close();
       }

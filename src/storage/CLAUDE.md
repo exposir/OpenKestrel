@@ -1,0 +1,14 @@
+<!--
+- [INPUT]: 依赖 src/CLAUDE.md 的模块索引与 OPENKESTREL_DATA_DIR 环境变量
+- [OUTPUT]: 提供 src/storage/ 的路径约定与共享目录策略
+- [POS]: src/storage/ 的 L2 模块地图
+- [PROTOCOL]: 变更时更新此头部，然后检查 src/CLAUDE.md
+-->
+
+# src/storage/
+> L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
+
+成员清单 [paths.ts](./paths.ts): 统一数据目录路径策略，默认 `process.cwd()/output`，可由 `OPENKESTREL_DATA_DIR` 覆盖。
+
+法则: 绝对路径优先·默认值可运行·单一真相源管理读写目录
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

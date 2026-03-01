@@ -1,5 +1,5 @@
-// [INPUT]: 依赖 engine.ts 的 runOrchestration、soul.ts 的 SOULS、.env 的 DEEPSEEK_API_KEY
-// [OUTPUT]: CLI 批量运行所有 Soul 对指定话题的编排，结果写入 output/ 目录并打印终端
+// [INPUT]: 依赖 engine.ts 的 runOrchestration、soul.ts 的 SOULS、storage/paths.ts 的共享目录策略、.env 的 DEEPSEEK_API_KEY
+// [OUTPUT]: CLI 批量运行所有 Soul 对指定话题的编排，结果写入共享数据目录并打印终端
 // [POS]: src/orchestration/ 的离线验证入口，L3 级别；不参与 Web 请求链路
 // [PROTOCOL]: 仅用于本地验证，话题和背景硬编码在文件顶部，运行方式: npx tsx src/orchestration/index.ts
 
@@ -8,6 +8,7 @@ import { runOrchestration } from "./engine";
 import { SOULS } from "./soul";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { getDebateDir } from "../storage/paths";
 
 // 验证用话题（来自 HN 热帖）
 const TOPIC = "OpenAI 宣布将 GPT-4 完全闭源，并停止发布任何技术报告";
@@ -30,7 +31,7 @@ async function main() {
   }
 
   // 存结果到 output/
-  const outputDir = join(process.cwd(), "output");
+  const outputDir = getDebateDir();
   mkdirSync(outputDir, { recursive: true });
 
   const filename = `debate-${Date.now()}.json`;
@@ -46,7 +47,7 @@ async function main() {
     console.log("\n");
   }
 
-  console.log(`✅ 完整结果已存储至：output/${filename}`);
+  console.log(`✅ 完整结果已存储至：${filepath}`);
 }
 
 main().catch(console.error);

@@ -59,9 +59,11 @@ UI 规则：基础输入默认展示（话题/人格/背景），高级输入（
 
 ## 认证规则
 
-- 登录流程由 `/api/auth/[...nextauth]` 处理，Provider 为 GitHub / Google OAuth
+- 登录流程由 `/api/auth/[...nextauth]` 处理，Provider 按环境变量动态启用：GitHub / Google OAuth，开发环境默认附带本地账号（credentials）
 - 首页公开可读；发起讨论为写操作，必须登录
 - `/api/orchestrate` 在服务端先校验登录态，未登录返回 `401`
+- 登录与发帖操作会写入 `output/audit/YYYY-MM-DD.jsonl`（JSONL 审计日志）
+- 数据读写目录可由 `OPENKESTREL_DATA_DIR` 覆盖（用于 web/admin 同机共享）
 
 ## 规则
 

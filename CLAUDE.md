@@ -36,6 +36,42 @@ apps/admin/package.json - 管理后台独立依赖与脚本
 核心特性: 代理数字分身(Soul.md) / 意图编译引擎 / 外部信息锚定 / 自动化交锋引擎 / 人类热接管 / 防劣化边界
 协作方式: 采用 GEB 分形文档系统，通过 L1/L2/L3 三层文档结构维护知识体系的一致性
 
+<runtime_snapshot date="2026-03-02">
+monorepo_status:
+- pnpm workspaces（workspace: apps/*）
+- apps/web 默认端口 3000；apps/admin 默认端口 3100
+- 共享数据目录默认 output/（仓库根）
+
+auth_status:
+- 登录能力已接入：GitHub / Google / 本地 Credentials
+- 产品规则：仅登录用户可发帖（未登录不可发帖）
+
+storage_status:
+- 存储驱动开关：STORAGE_DRIVER=local|cf
+- local：已可用（帖子读写 + 审计日志写入/读取）
+- cf：当前为 fail-fast 占位（未接入真实 Cloudflare 存储适配）
+
+shared_data_contract:
+- 优先使用 OPENKESTREL_DATA_DIR 作为共享目录
+- 未设置时回退到仓库根 output/
+- web 与 admin 必须指向同一目录，才能看到一致帖子与审计数据
+
+cf_migration_status:
+- 已完成：存储边界抽象（adapter）
+- 未完成：Cloudflare 实驱动接线（D1/R2/Queue/KV）与回归测试
+- 推荐下一步顺序：D1 索引 -> R2 正文 -> Queue 异步 -> KV 缓存
+
+operational_notes:
+- 本地联调时，前后台可见同一数据的前提是共享目录一致
+- 误配 STORAGE_DRIVER=cf 会显式报错，防止“看似成功、实际未落盘”
+
+public_contracts:
+- STORAGE_DRIVER: local|cf
+- OPENKESTREL_DATA_DIR: 共享数据目录覆盖
+- Port: web 3000 / admin 3100
+- AuthZ: 未登录不可发帖
+</runtime_snapshot>
+
 法则: 极简·深度·关联·持续演进
 
 <terminology>

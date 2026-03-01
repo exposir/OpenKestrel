@@ -19,6 +19,11 @@
 OPENKESTREL_DATA_DIR=/var/openkestrel-data
 ```
 
+## 存储驱动切换
+
+- `STORAGE_DRIVER=local`（默认）：读本地共享目录
+- `STORAGE_DRIVER=cf`：预留 Cloudflare 存储驱动（当前未接入，启用会显式报错）
+
 ## 可选环境变量（后台门禁）
 
 - `ADMIN_BASIC_USER`

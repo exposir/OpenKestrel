@@ -1,13 +1,12 @@
 /**
- * - [INPUT]: 依赖 `fs/promises` (文件读取), `next/link` (路由), `react-markdown` (渲染), `src/storage/paths` (共享数据目录), `DebateToc` (目录导航)
+ * - [INPUT]: 依赖 `next/link` (路由), `react-markdown` (渲染), `src/storage/adapter` (存储适配器), `DebateToc` (目录导航)
  * - [OUTPUT]: 对外提供 `DebatePage` 详情页组件
  * - [POS]: app/debate/[id]/ 的讨论详情展示页，读取讨论落盘文件并渲染，左侧 TOC + 右侧内容双栏布局
  * - [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
  */
-import { readFile } from "fs/promises";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import { getDebateFilePath } from "../../../src/storage/paths";
+import { readDebateFile } from "../../../src/storage/adapter";
 import { DebateToc } from "./DebateToc";
 
 function extractHeadingsFromMarkdown(markdown: string) {
@@ -38,7 +37,7 @@ function slugify(text: string) {
 interface DebateOutput {
   soul: string;
   topic: string;
-  reasoning: string;
+  reasoning?: string;
   response: string;
   timestamp: string;
 }
@@ -49,12 +48,9 @@ export default async function DebatePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const filepath = getDebateFilePath(id);
-
   let debate: DebateOutput[] = [];
   try {
-    const raw = await readFile(filepath, "utf-8");
-    debate = JSON.parse(raw);
+    debate = await readDebateFile(id);
   } catch (error) {
     console.warn(`Failed to load debate file: ${id}`, error);
     return (

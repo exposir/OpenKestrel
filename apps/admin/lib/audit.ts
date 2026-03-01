@@ -1,12 +1,13 @@
 /**
- * - [INPUT]: 依赖 fs/promises 与 OPENKESTREL_DATA_DIR 环境变量，读取共享审计 JSONL
+ * - [INPUT]: 依赖 fs/promises 与存储驱动解析层（storage.ts），读取共享审计 JSONL
  * - [OUTPUT]: 导出审计记录读取与统计函数，供后台页面渲染
  * - [POS]: apps/admin/lib 的数据访问层
  * - [PROTOCOL]: 变更时更新此头部，然后检查 apps/admin/CLAUDE.md
  */
 import { readdir, readFile } from "fs/promises";
-import { existsSync } from "fs";
 import { join } from "path";
+import { assertStorageReady, getDataDir } from "./storage";
+export { getDataDir } from "./storage";
 
 export interface AuditRecord {
   timestamp: string;
@@ -23,22 +24,6 @@ export interface AuditRecord {
     userAgent?: string | null;
   };
   metadata?: Record<string, unknown>;
-}
-
-export function getDataDir(): string {
-  const configured = process.env.OPENKESTREL_DATA_DIR?.trim();
-  if (configured) return configured;
-
-  // Fallback candidates:
-  // 1) workspace-run from repo root: <repo>/output
-  // 2) standalone-run from apps/admin: ../../output
-  const fromRepoRoot = join(process.cwd(), "output");
-  if (existsSync(fromRepoRoot)) return fromRepoRoot;
-
-  const fromAdminApp = join(process.cwd(), "..", "..", "output");
-  if (existsSync(fromAdminApp)) return fromAdminApp;
-
-  return fromRepoRoot;
 }
 
 function getAuditDir(): string {
@@ -60,6 +45,7 @@ function parseJsonLine(line: string): AuditRecord | null {
 }
 
 export async function readRecentAuditRecords(limit = 300): Promise<AuditRecord[]> {
+  assertStorageReady();
   const auditDir = getAuditDir();
   let files: string[] = [];
   try {
@@ -122,6 +108,7 @@ export interface DebateSummary {
 export async function readRecentDebateSummaries(
   limit = 50,
 ): Promise<DebateSummary[]> {
+  assertStorageReady();
   const dir = getDebateDir();
   let files: string[] = [];
   try {

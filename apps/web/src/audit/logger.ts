@@ -1,11 +1,9 @@
-// [INPUT]: 依赖 fs/promises、storage/paths.ts 与 Request 头信息，接收认证/业务操作事件
+// [INPUT]: 依赖 storage/adapter.ts 与 Request 头信息，接收认证/业务操作事件
 // [OUTPUT]: 导出 logAuditEvent/getRequestContext，将审计事件写入 output/audit/*.jsonl
 // [POS]: src/audit/ 的日志落盘层，供 auth.ts 与 API 路由复用
 // [PROTOCOL]: 变更时更新此头部，然后检查 src/audit/CLAUDE.md
 
-import { appendFile, mkdir } from "fs/promises";
-import { join } from "path";
-import { getAuditDir } from "../storage/paths";
+import { appendAuditRecord } from "../storage/adapter";
 
 export interface AuditActor {
   id?: string | null;
@@ -26,11 +24,6 @@ export interface AuditEvent {
   request?: AuditRequestContext;
   metadata?: Record<string, unknown>;
   timestamp?: string;
-}
-
-function getDailyAuditFilePath(): string {
-  const date = new Date().toISOString().slice(0, 10);
-  return join(getAuditDir(), `${date}.jsonl`);
 }
 
 export function getRequestContext(req: Request): AuditRequestContext {
@@ -58,9 +51,7 @@ export async function logAuditEvent(event: AuditEvent): Promise<void> {
   };
 
   try {
-    const filePath = getDailyAuditFilePath();
-    await mkdir(getAuditDir(), { recursive: true });
-    await appendFile(filePath, JSON.stringify(record) + "\n", "utf-8");
+    await appendAuditRecord(record);
   } catch (error) {
     console.warn("Audit log write failed:", error);
   }

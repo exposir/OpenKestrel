@@ -14,5 +14,6 @@
 ## 成员清单
 
 - [AuthButton.tsx](./AuthButton.tsx): 登录/登出按钮，依赖 `next-auth/react`
+- [SearchLauncher.tsx](./SearchLauncher.tsx): 全局搜索入口，支持 `Cmd/Ctrl + K` 打开搜索框并提交 `q` 查询参数
 - [ThemeToggle.tsx](./ThemeToggle.tsx): 明暗主题切换开关
 - [TriggerButton.tsx](./TriggerButton.tsx): 发起讨论按钮 + 流式响应卡片 (`StreamCard`)，通过 SSE 调用编排 API

@@ -17,16 +17,20 @@ interface TocItem {
 export function DebateToc({ items }: { items: TocItem[] }) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   useEffect(() => {
-    const handleScroll = () => {
-      const headingElements = items
-        .map((item) => {
-          const el = document.getElementById(item.id);
-          return el ? { id: item.id, el } : null;
-        })
-        .filter(Boolean) as { id: string; el: HTMLElement }[];
+    // 1. 缓存 DOM 元素，不用每次 scroll 都查
+    // 这样避免了由于频繁调用 getElementById 和导致 layout 抖动
+    const headingElements = items
+      .map((item) => {
+        const el = document.getElementById(item.id);
+        return el ? { id: item.id, el } : null;
+      })
+      .filter(Boolean) as { id: string; el: HTMLElement }[];
 
-      if (headingElements.length === 0) return;
+    if (headingElements.length === 0) return;
 
+    let ticking = false;
+
+    const updateActiveId = () => {
       let currentActiveId = items[0].id;
       for (const { id, el } of headingElements) {
         const rect = el.getBoundingClientRect();
@@ -49,11 +53,20 @@ export function DebateToc({ items }: { items: TocItem[] }) {
       }
 
       setActiveId(currentActiveId);
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      // 2. 使用 requestAnimationFrame 节流，确保 1 帧内只执行一次计算
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveId);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     // 首次载入也检查一次位置
-    handleScroll();
+    updateActiveId();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [items]);

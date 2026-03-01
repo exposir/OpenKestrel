@@ -27,7 +27,8 @@ src/
 ├── env/             环境变量加载模块（L3）
 │   └── load.ts      兼容 apps/web 与仓库根目录的 .env/.env.local 加载
 └── storage/         共享目录路径策略（L3）
-    └── paths.ts     数据目录/审计目录/讨论文件路径统一解析
+    ├── paths.ts     数据目录/审计目录/讨论文件路径统一解析
+    └── adapter.ts   存储适配器切换层（local/cf）
 ```
 
 ## 模块职责边界
@@ -42,6 +43,7 @@ src/
 | `audit/logger.ts`  | 审计事件统一写入与请求上下文提取                    | 权限判定 / 业务逻辑  |
 | `env/load.ts`      | 统一加载环境变量，兼容 monorepo 下不同 cwd          | 业务逻辑 / 鉴权规则  |
 | `storage/paths.ts` | 数据目录路径统一管理（支持 `OPENKESTREL_DATA_DIR`） | 业务审计内容本身     |
+| `storage/adapter.ts` | 统一读写接口与驱动切换（`STORAGE_DRIVER`）         | LLM 调用与鉴权规则   |
 
 ## 规则
 

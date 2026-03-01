@@ -1,4 +1,4 @@
-// [INPUT]: 依赖 auth.ts 登录态、src/orchestration/soul.ts 的 SOULS、engine.ts 的 callDeepSeekStream、prompts.ts 的 Prompt 构建器、src/storage/paths.ts 目录策略、fs/promises 文件写入
+// [INPUT]: 依赖 auth.ts 登录态、src/orchestration/soul.ts 的 SOULS、engine.ts 的 callDeepSeekStream、prompts.ts 的 Prompt 构建器、src/storage/adapter.ts 存储适配器
 // [OUTPUT]: POST /api/orchestrate，返回 ReadableStream（NDJSON：meta → chunk[] → done/error）
 // [POS]: app/api/ 的流式编排路由，L2 级别；连接前端流式渲染层与后端引擎层的桥梁
 // [PROTOCOL]: NDJSON 消息结构变更须同步 app/components/TriggerButton.tsx 和 app/CLAUDE.md
@@ -9,11 +9,9 @@ import {
   buildSystemPrompt,
   buildUserPrompt,
 } from "../../../src/orchestration/prompts";
-import { mkdir, writeFile } from "fs/promises";
-import { join } from "path";
 import { auth } from "../../../src/auth/auth";
 import { getRequestContext, logAuditEvent } from "../../../src/audit/logger";
-import { getDebateDir } from "../../../src/storage/paths";
+import { writeDebateFile } from "../../../src/storage/adapter";
 
 function normalizeStringList(input: unknown): string[] {
   if (!Array.isArray(input)) return [];
@@ -133,13 +131,7 @@ export async function POST(req: Request) {
           response: fullContent,
           timestamp,
         };
-        const outputDir = getDebateDir();
-        await mkdir(outputDir, { recursive: true });
-        await writeFile(
-          join(outputDir, filename),
-          JSON.stringify([output], null, 2),
-          "utf-8",
-        );
+        await writeDebateFile(filename, [output]);
 
         push({
           type: "done",

@@ -4,12 +4,7 @@
  * - [POS]: apps/admin 的主控制台页面
  * - [PROTOCOL]: 变更时更新此头部，然后检查 apps/admin/CLAUDE.md
  */
-import {
-  getAuditMetrics,
-  getDataDir,
-  readRecentAuditRecords,
-  readRecentDebateSummaries,
-} from "../lib/audit";
+import { readRecentDebateSummaries } from "../lib/audit";
 import type { CSSProperties, ReactNode } from "react";
 import Form from "next/form";
 
@@ -24,33 +19,11 @@ function formatTime(iso: string): string {
 export default async function AdminHome({
   searchParams,
 }: {
-  searchParams: Promise<{
-    category?: string;
-    status?: string;
-    q?: string;
-    dq?: string;
-  }>;
+  searchParams: Promise<{ dq?: string }>;
 }) {
-  const {
-    category = "all",
-    status = "all",
-    q = "",
-    dq = "",
-  } = await searchParams;
-  const allRecords = await readRecentAuditRecords(500);
+  const { dq = "" } = await searchParams;
   const allDebates = await readRecentDebateSummaries(80);
-  const metrics = getAuditMetrics(allRecords);
-  const dataDir = getDataDir();
-  const keyword = q.trim().toLowerCase();
   const debateKeyword = dq.trim().toLowerCase();
-
-  const records = allRecords.filter((record) => {
-    if (category !== "all" && record.category !== category) return false;
-    if (status !== "all" && record.status !== status) return false;
-    if (!keyword) return true;
-    const haystack = JSON.stringify(record).toLowerCase();
-    return haystack.includes(keyword);
-  });
 
   const debates = allDebates.filter((item) => {
     if (!debateKeyword) return true;
@@ -60,78 +33,14 @@ export default async function AdminHome({
   });
 
   return (
-    <main
-      style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 56px" }}
-    >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          gap: 16,
-          marginBottom: 24,
-        }}
-      >
-        <div>
-          <p
-            style={{
-              margin: 0,
-              color: "var(--text-soft)",
-              fontSize: 12,
-              letterSpacing: 1,
-            }}
-          >
-            OPENKESTREL CONSOLE
-          </p>
-          <h1 style={{ margin: "10px 0 0", fontSize: 30, fontWeight: 700 }}>
-            运营后台
-          </h1>
-        </div>
-        <span
-          style={{
-            fontSize: 12,
-            color: "var(--text-soft)",
-            border: "1px solid var(--line)",
-            borderRadius: 999,
-            padding: "6px 10px",
-            background: "var(--panel)",
-          }}
-        >
-          共享目录：{dataDir}
-        </span>
-      </header>
-
+    <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
       <section
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 12,
-          marginBottom: 16,
-        }}
-      >
-        <MetricCard title="今日总事件" value={String(metrics.todayTotal)} />
-        <MetricCard
-          title="今日登录成功"
-          value={String(metrics.todayAuthSignIn)}
-        />
-        <MetricCard
-          title="今日发帖成功"
-          value={String(metrics.todayPostsSuccess)}
-        />
-        <MetricCard
-          title="今日发帖失败"
-          value={String(metrics.todayPostsFailure)}
-        />
-        <MetricCard title="历史讨论文件" value={String(allDebates.length)} />
-      </section>
-
-      <section
-        style={{
+          flex: 1,
           background: "var(--panel)",
           border: "1px solid var(--line)",
           borderRadius: 14,
           overflow: "hidden",
-          marginTop: 14,
         }}
       >
         <Form
@@ -151,9 +60,6 @@ export default async function AdminHome({
             最近已发讨论（来自 debate-*.json）
           </div>
           <div style={{ display: "flex", gap: 8 }}>
-            <input type="hidden" name="category" value={category} />
-            <input type="hidden" name="status" value={status} />
-            <input type="hidden" name="q" value={q} />
             <input
               name="dq"
               defaultValue={dq}
@@ -230,128 +136,22 @@ export default async function AdminHome({
         </div>
       </section>
 
-      <section
+      <aside
         style={{
-          background: "var(--panel)",
-          border: "1px solid var(--line)",
-          borderRadius: 14,
-          overflow: "hidden",
-          marginTop: 14,
+          width: 280,
+          position: "sticky",
+          top: 40,
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
         }}
       >
-        <Form
-          action="/"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 10,
-            padding: 14,
-            borderBottom: "1px solid var(--line)",
-            background: "var(--panel-soft)",
-          }}
-        >
-          <input type="hidden" name="dq" value={dq} />
-          <select
-            name="category"
-            defaultValue={category}
-            style={filterInputStyle}
-          >
-            <option value="all">全部分类</option>
-            <option value="auth">认证事件</option>
-            <option value="orchestrate">发帖事件</option>
-          </select>
-          <select name="status" defaultValue={status} style={filterInputStyle}>
-            <option value="all">全部状态</option>
-            <option value="success">成功</option>
-            <option value="failure">失败</option>
-          </select>
-          <input
-            name="q"
-            defaultValue={q}
-            placeholder="搜索邮箱 / action / metadata"
-            style={{ ...filterInputStyle, minWidth: 260, flex: 1 }}
-          />
-          <button
-            type="submit"
-            style={{
-              border: "1px solid var(--line)",
-              background: "var(--chip)",
-              color: "var(--text)",
-              borderRadius: 8,
-              padding: "8px 12px",
-
-        <div style={{ overflowX: "auto" }}>
-          <table
-            style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
-          >
-            <thead>
-              <tr style={{ color: "var(--text-soft)", textAlign: "left" }}>
-                <Th>时间</Th>
-                <Th>分类</Th>
-                <Th>动作</Th>
-                <Th>状态</Th>
-                <Th>用户</Th>
-                <Th>IP</Th>
-                <Th>摘要</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={7}
-                    style={{ padding: "24px 16px", color: "var(--text-soft)" }}
-                  >
-                    暂无匹配的审计记录
-                  </td>
-                </tr>
-              ) : (
-                records.slice(0, 200).map((record, idx) => (
-                  <tr
-                    key={`${record.timestamp}-${idx}`}
-                    style={{ borderTop: "1px solid var(--line)" }}
-                  >
-                    <Td>{formatTime(record.timestamp)}</Td>
-                    <Td>{record.category}</Td>
-                    <Td>{record.action}</Td>
-                    <Td>
-                      <span
-                        style={{
-                          padding: "2px 8px",
-                          borderRadius: 999,
-                          background:
-                            record.status === "success"
-                              ? "rgba(58,199,139,0.16)"
-                              : "rgba(255,109,109,0.16)",
-                          color:
-                            record.status === "success"
-                              ? "var(--ok)"
-                              : "var(--bad)",
-                        }}
-                      >
-                        {record.status}
-                      </span>
-                    </Td>
-                    <Td>{record.actor?.email || record.actor?.name || "-"}</Td>
-                    <Td>{record.request?.ip || "-"}</Td>
-                    <Td
-                      style={{
-                        maxWidth: 360,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {JSON.stringify(record.metadata ?? {})}
-                    </Td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+        <MetricCard
+          title="历史讨论文件总数"
+          value={String(allDebates.length)}
+        />
+      </aside>
+    </div>
   );
 }
 

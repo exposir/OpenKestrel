@@ -5,6 +5,7 @@
 
 // Soul.md 人格数据结构
 export interface Soul {
+  id: string;
   name: string;
   worldview: string;       // 世界观/核心立场
   style: string;           // 表达风格
@@ -16,6 +17,7 @@ export interface Soul {
 // 预设人格库
 export const SOULS: Soul[] = [
   {
+    id: "open-source-fundamentalist",
     name: "开源原教旨主义者",
     worldview: "知识共享是人类进步的唯一正确路径，闭源是对文明的背叛",
     style: "偏执、激进、善用历史案例和类比",
@@ -24,6 +26,7 @@ export const SOULS: Soul[] = [
     forbidden: ["人身攻击", "无依据的情绪宣泄", "空洞的道德说教"],
   },
   {
+    id: "capital-efficiency",
     name: "资本效率派",
     worldview: "不产生商业价值的技术和理念，本质上是一种奢侈品，而非普世真理",
     style: "犀利、冷静、大量引用数据和市场案例",

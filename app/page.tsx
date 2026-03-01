@@ -1,5 +1,5 @@
 /**
- * - [INPUT]: 依赖 `fs/promises` (文件搜索), `next/link` (路由), `react-markdown` (内容渲染)
+ * - [INPUT]: 依赖 `fs/promises` (文件搜索), `next/link` (路由), `react-markdown` (内容渲染), `src/orchestration/soul` (人格选项), `auth.ts` (登录态)
  * - [OUTPUT]: 对外提供 `HomePage` 异步组件
  * - [POS]: 业务主页入口，负责展示讨论列表与触发新讨论
  * - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -10,6 +10,9 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { TriggerButton, StreamCard } from "./TriggerButton";
 import { ThemeToggle } from "./ThemeToggle";
+import { AuthButton } from "./AuthButton";
+import { SOULS } from "../src/orchestration/soul";
+import { auth } from "../auth";
 
 interface DebateOutput {
   soul: string;
@@ -55,7 +58,10 @@ async function getDebates(): Promise<DebateFile[]> {
 }
 
 export default async function HomePage() {
+  const session = await auth();
+  const isAuthenticated = Boolean(session?.user);
   const debates = await getDebates();
+  const soulOptions = SOULS.map((soul) => ({ id: soul.id, name: soul.name }));
 
   return (
     <main style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
@@ -88,7 +94,13 @@ export default async function HomePage() {
             思想是未竟之物，这里是它生长的地方
           </p>
         </div>
-        <ThemeToggle />
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <AuthButton
+            isAuthenticated={isAuthenticated}
+            userName={session?.user?.name}
+          />
+          <ThemeToggle />
+        </div>
       </header>
 
       <section>
@@ -110,7 +122,10 @@ export default async function HomePage() {
           >
             讨论记录
           </h2>
-          <TriggerButton />
+          <TriggerButton
+            soulOptions={soulOptions}
+            isAuthenticated={isAuthenticated}
+          />
         </div>
 
         <StreamCard />

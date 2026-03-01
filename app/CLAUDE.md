@@ -13,11 +13,13 @@
 
 ```
 app/
-├── page.tsx                    首页：讨论列表 + 触发入口（Server Component）
+├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
+├── AuthButton.tsx              登录/退出按钮（Client Component）
 ├── TriggerButton.tsx           流式渲染客户端组件（Client Component）
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）
 └── api/
-    └── orchestrate/route.ts   POST /api/orchestrate 流式编排接口
+    ├── auth/[...nextauth]/route.ts OAuth 回调与会话路由
+    └── orchestrate/route.ts     POST /api/orchestrate 流式编排接口（需登录）
 ```
 
 ## 流式渲染协议
@@ -39,6 +41,27 @@ NDJSON 消息类型（`/api/orchestrate` → 前端）：
 ```
 
 打字机光标实现：在 `content` 末尾追加 ` ▋`，`done` 后移除。
+
+## 请求体协议（`POST /api/orchestrate`）
+
+```ts
+{
+  topic: string;
+  context?: string;
+  soul_id?: string;      // 人格 ID，无效时返回 400
+  references?: string[]; // 参考资料（链接或文本）
+  must_cover?: string[]; // 必须覆盖点
+  must_avoid?: string[]; // 禁止触碰点
+}
+```
+
+UI 规则：基础输入默认展示（话题/人格/背景），高级输入（参考资料/覆盖点/禁区）默认折叠。
+
+## 认证规则
+
+- 登录流程由 `/api/auth/[...nextauth]` 处理，Provider 为 GitHub / Google OAuth
+- 首页公开可读；发起讨论为写操作，必须登录
+- `/api/orchestrate` 在服务端先校验登录态，未登录返回 `401`
 
 ## 规则
 

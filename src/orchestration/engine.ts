@@ -163,7 +163,7 @@ export async function runOrchestration(
 ): Promise<DebateOutput | null> {
   const messages: Message[] = [
     { role: "system", content: buildSystemPrompt(soul) },
-    { role: "user", content: buildUserPrompt(topic, context) },
+    { role: "user", content: buildUserPrompt({ topic, context }) },
   ];
 
   const raw = await callDeepSeek(messages);

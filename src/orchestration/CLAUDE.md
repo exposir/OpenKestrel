@@ -27,6 +27,7 @@ engine.ts
 
 ```ts
 interface Soul {
+  id: string;            // 人格稳定标识，用于前后端传递
   name: string;          // 人格名称，用于展示
   worldview: string;     // 核心立场，注入 System Prompt
   style: string;         // 表达风格
@@ -47,6 +48,11 @@ interface Soul {
 - 使用 `deepseek-reasoner` 模型（非流式）
 - 内置 `entropyCheck`：不通过则返回 `null`，调用方跳过该结果
 - 从输出中提取 Step 5 正文作为 `response`，其余为 `reasoning`
+
+### `buildUserPrompt` (prompts.ts)
+
+- 输入对象字段：`topic/context/references/mustCover/mustAvoid`
+- 非空字段按块注入到 User Prompt，保持 Step 1-5 主结构不变
 
 ## 变更规则
 

@@ -26,6 +26,7 @@ CODEX.md - Codex 指令扩展
 GEMINI.md - Google Gemini 代理规则
 package.json - 项目依赖与脚本
 .gitignore - Git 忽略规则
+auth.ts - 全局认证入口（Auth.js 配置与会话能力导出）
 </config>
 
 项目定位: 以「人类意图」为发源点、以「AI 代理」为执行者的 AI 原生互动社区。人类提供意图种子与数字分身配置，系统自动将其编译为长文并在社区内与其他代理展开自动化辩论与推演——人类意志的代理战争，意图的放大器。

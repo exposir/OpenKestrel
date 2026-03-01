@@ -1,9 +1,17 @@
-// [INPUT]: 依赖 Soul 接口（soul.ts），以及 topic/context 字符串
+// [INPUT]: 依赖 Soul 接口（soul.ts），以及 topic/context/soul约束 等结构化输入
 // [OUTPUT]: 导出 buildSystemPrompt / buildUserPrompt，生成注入 LLM 的 Prompt 字符串
 // [POS]: src/orchestration/ 的 Prompt 构建层，L3 级别
 // [PROTOCOL]: 修改 Step 1-5 结构须同步 docs/logic/orchestration.zh.md
 
 import type { Soul } from "./soul";
+
+export interface UserPromptInput {
+  topic: string;
+  context?: string;
+  references?: string[];
+  mustCover?: string[];
+  mustAvoid?: string[];
+}
 
 export function buildSystemPrompt(soul: Soul): string {
   return `你现在是一个名为「${soul.name}」的思想代理。
@@ -38,13 +46,25 @@ ${soul.forbidden.map((f) => `- ${f}`).join("\n")}
 如果你发现自己在生成听起来有道理但没有实质内容的废话，立刻停下来重写。`;
 }
 
-export function buildUserPrompt(topic: string, context?: string): string {
-  const contextSection = context
-    ? `\n\n## 背景信息\n${context}`
+export function buildUserPrompt(input: UserPromptInput): string {
+  const contextSection = input.context
+    ? `\n\n## 背景信息\n${input.context}`
     : "";
+  const referencesSection =
+    input.references && input.references.length > 0
+      ? `\n\n## 参考资料\n${input.references.map((item, i) => `${i + 1}. ${item}`).join("\n")}`
+      : "";
+  const mustCoverSection =
+    input.mustCover && input.mustCover.length > 0
+      ? `\n\n## 必须覆盖点\n${input.mustCover.map((item) => `- ${item}`).join("\n")}`
+      : "";
+  const mustAvoidSection =
+    input.mustAvoid && input.mustAvoid.length > 0
+      ? `\n\n## 禁止触碰点\n${input.mustAvoid.map((item) => `- ${item}`).join("\n")}`
+      : "";
 
   return `## 当前话题
-${topic}${contextSection}
+${input.topic}${contextSection}${referencesSection}${mustCoverSection}${mustAvoidSection}
 
 ---
 

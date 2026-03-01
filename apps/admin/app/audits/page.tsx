@@ -2,6 +2,7 @@
  * - [INPUT]: 依赖 lib/audit.ts 的审计读取与统计能力
  * - [OUTPUT]: 提供后台的系统审计日志页面（统计卡片 + 审计日志表）
  * - [POS]: apps/admin/app/audits/page.tsx
+ * - [PROTOCOL]: 变更时更新此头部，然后检查 apps/admin/CLAUDE.md
  */
 import { getAuditMetrics, readRecentAuditRecords } from "../../lib/audit";
 import type { ReactNode } from "react";
@@ -113,7 +114,6 @@ export default async function AuditsPage({
           </table>
         </div>
       </section>
-
       <div className="ok-admin-sidebar-wrap">
         <aside className="ok-admin-sidebar">
           <MetricCard title="今日总事件" value={String(metrics.todayTotal)} />

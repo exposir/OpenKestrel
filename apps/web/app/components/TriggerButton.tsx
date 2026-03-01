@@ -34,14 +34,13 @@ export function TriggerButton({ isAuthenticated }: TriggerButtonProps) {
 
   return (
     <button
+      className={`ok-compose-trigger-btn ${isAuthenticated ? "ok-compose-trigger-btn-enabled" : "ok-compose-trigger-btn-disabled"}`}
       type="button"
       onClick={() => open("compose", "button")}
       disabled={!isAuthenticated}
       title={!isAuthenticated ? "请先登录后再发帖" : undefined}
       style={{
         padding: "8px 18px",
-        background: !isAuthenticated ? "var(--bg-elevated)" : "var(--accent)",
-        color: !isAuthenticated ? "var(--text-muted)" : "var(--accent-fg)",
         border: "none",
         borderRadius: 6,
         fontSize: 13,

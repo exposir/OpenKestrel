@@ -67,14 +67,10 @@ export default async function AdminHome({
                 debates.slice(0, 50).map((item) => (
                   <tr key={item.filename} className="ok-admin-row">
                     <Td>{item.timestamp ? formatTime(item.timestamp) : "-"}</Td>
-                    <Td className="ok-admin-topic-cell">
-                      {item.topic}
-                    </Td>
+                    <Td className="ok-admin-topic-cell">{item.topic}</Td>
                     <Td>{item.souls.join(", ") || "-"}</Td>
                     <Td>
-                      <code className="ok-admin-chip">
-                        {item.filename}
-                      </code>
+                      <code className="ok-admin-chip">{item.filename}</code>
                     </Td>
                   </tr>
                 ))
@@ -85,7 +81,7 @@ export default async function AdminHome({
       </section>
 
       <div className="ok-admin-sidebar-wrap">
-        <aside className="ok-admin-sidebar" style={{ width: 260 }}>
+        <aside className="ok-admin-sidebar">
           <MetricCard
             title="历史讨论文件总数"
             value={String(allDebates.length)}
@@ -116,5 +112,9 @@ function Td({
   children: ReactNode;
   className?: string;
 }) {
-  return <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>{children}</td>;
+  return (
+    <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>
+      {children}
+    </td>
+  );
 }

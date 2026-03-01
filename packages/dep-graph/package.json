@@ -1,0 +1,38 @@
+{
+  "name": "@openkestrel/dep-graph",
+  "version": "0.1.0",
+  "description": "High-performance dependency graph analyzer and WebGL viewer for TS/JS projects",
+  "type": "module",
+  "private": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "okdep": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && cp -R src/viewer-app dist/viewer-app",
+    "clean": "rm -rf dist",
+    "okdep": "node ./dist/cli.js",
+    "test": "pnpm build && node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "es-module-lexer": "^1.7.0",
+    "fast-glob": "^3.3.3",
+    "open": "^10.2.0",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0"
+  }
+}

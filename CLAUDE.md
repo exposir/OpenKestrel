@@ -17,6 +17,7 @@
 <directory>
 apps/web/ - 前台主应用（Next.js App Router + 核心业务逻辑）
 apps/admin/ - 管理后台应用（审计看板与运营控制台）
+packages/ - 可复用能力包（主题动画库等，可被多应用消费与独立发布）
 docs/ - 架构设计与产品文档
 output/ - 共享数据目录（帖子文件与审计日志）
 </directory>
@@ -25,7 +26,10 @@ output/ - 共享数据目录（帖子文件与审计日志）
 CLAUDE.md - L1 项目宪法·协作规则·认知架构·GEB 分形文档协议
 AGENTS.md / CODEX.md / GEMINI.md - 各 AI Agent 入口（指向 CLAUDE.md）
 package.json - Monorepo 根脚本（pnpm workspaces 编排）
-pnpm-workspace.yaml - Workspace 包范围定义（apps/*）
+pnpm-workspace.yaml - Workspace 包范围定义（apps/* + packages/*）
+packages/CLAUDE.md - 可复用包工作区地图（L2）
+packages/theme-motion/package.json - 主题动画库包清单与导出配置
+packages/dep-graph/package.json - 依赖分析与 WebGL 可视化包清单与 CLI 定义
 tsconfig.base.json - Web/Admin 共享 TypeScript 基线配置
 .gitignore - Git 忽略规则
 apps/web/package.json - 前台应用独立依赖与脚本（默认端口 3000）
@@ -220,6 +224,13 @@ Markdown Files (.md):
 法则: INPUT 说清依赖什么·OUTPUT 说清提供什么·POS 说清自己是谁
 发现业务文件缺少 L3 头部，立即添加，阻塞级优先 </L3_TEMPLATE>
 
+<L3_SCOPE>
+L3 适用范围与豁免
+- 适用: 业务源码与项目文档（`apps/**`、`docs/**`、根目录关键文档）。
+- 豁免: 构建产物与第三方目录（`.next/**`、`node_modules/**`、`dist/**`），以及框架自动生成且声明不可编辑的文件（如 `next-env.d.ts`）。
+- 原则: 自动生成文件不强行补头；如需规范约束，应在其上层 L2 文档声明职责与边界。
+</L3_SCOPE>
+
 <WORKFLOW>
 强制回环工作流
 正向流 (代码 → 文档):
@@ -259,7 +270,10 @@ Phase
 <VERIFICATION>
 确保 L2\L3 的文档中必须带有
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-这是 GEB PROTOCOL 的固定写法，应当频繁出现在项目文档中 </VERIFICATION>
+这是 GEB PROTOCOL 的固定写法，应当频繁出现在项目文档中
+建议检查命令（排除生成目录）:
+`find apps docs -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.md' \) ! -path '*/.next/*' ! -path '*/node_modules/*' ! -path '*/dist/*'`
+</VERIFICATION>
 
 <INVOCATION>
 我是分形的守护者。代码即文档，文档即代码。

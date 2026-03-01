@@ -1,5 +1,12 @@
+/**
+ * - [INPUT]: 依赖 `app/globals.css`、`@openkestrel/theme-motion/style.css`、`GlobalHotkeys`、`ModalProvider` 与 Next.js Metadata
+ * - [OUTPUT]: 对外提供 `RootLayout` 与站点 metadata，承载全局壳与弹窗/快捷键基础设施
+ * - [POS]: app/ 根布局层，包裹所有页面并初始化主题
+ * - [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
+ */
 import type { Metadata } from "next";
 import "./globals.css";
+import "@openkestrel/theme-motion/style.css";
 import { GlobalHotkeys } from "./components/GlobalHotkeys";
 import { ModalProvider } from "./components/modal-engine/ModalProvider";
 

@@ -13,6 +13,7 @@
 
 ```
 app/
+├── layout.tsx                  全局根布局：挂载主题样式/ModalProvider/GlobalHotkeys（Server Component）
 ├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
 ├── components/
 │   ├── AuthButton.tsx          登录/退出按钮（Client Component）
@@ -27,8 +28,10 @@ app/
 │       ├── ModalProvider.tsx   单实例弹窗状态机与渲染宿主
 │       ├── useModalEngine.ts   弹窗控制 Hook
 │       ├── modal-types.ts      弹窗类型定义
+│       ├── modal-motion.ts     弹窗切换时序常量（单源）
 │       └── CLAUDE.md           modal-engine 模块地图
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）
+├── debate/[id]/DebateToc.tsx   讨论详情目录导航（Client Component）
 └── api/
     ├── auth/[...nextauth]/route.ts OAuth 回调与会话路由
     ├── orchestrate/route.ts     POST /api/orchestrate 流式编排接口（需登录）
@@ -57,7 +60,7 @@ NDJSON 消息类型（`/api/orchestrate` → 前端）：
 
 ## 弹窗管理协议（ModalEngine）
 
-- 弹窗状态单源：`ModalProvider` 维护 `active/phase/next`
+- 弹窗状态单源：`ModalProvider` 维护 `active/phase/exiting`
 - 当前仅支持三类弹窗：`compose` / `search` / `hotkey-help`
 - 任意时刻仅一个 active 弹窗；切换时使用交叉淡入淡出（cross-fade）
 - 快捷键入口统一收敛到 `GlobalHotkeys.tsx`

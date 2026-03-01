@@ -1,12 +1,13 @@
-// [INPUT]: 依赖 `themeTransition` 主题切换内核与浏览器按钮点击事件
+// [INPUT]: 依赖 `@openkestrel/theme-motion/react` 与浏览器按钮点击事件
 // [OUTPUT]: ThemeToggle — 三态主题切换按钮（system / light / dark），支持从右上角扩散到全屏的主题切换动画
 // [POS]: app/ 的全局 UI 层，Client Component
 // [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
 
 "use client";
 
-import { useState, useEffect, type MouseEvent, type ReactNode } from "react";
-import { readStoredTheme, setThemeWithMotion, type Theme } from "./themeTransition";
+import { type MouseEvent, type ReactNode } from "react";
+import { type Theme } from "@openkestrel/theme-motion/core";
+import { getElementCenterOrigin, useThemeMotion } from "@openkestrel/theme-motion/react";
 
 const CYCLE: Theme[] = ["system", "light", "dark"];
 const TITLE: Record<Theme, string> = { system: "Follow system", light: "Light mode", dark: "Dark mode" };
@@ -32,26 +33,17 @@ const ICONS: Record<Theme, ReactNode> = {
 };
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("system");
+  const { theme, setTheme } = useThemeMotion();
 
-  useEffect(() => {
-    setTheme(readStoredTheme());
-  }, []);
-
-  function cycle(event?: MouseEvent<HTMLButtonElement>) {
-    const button = event?.currentTarget;
-    const rect = button?.getBoundingClientRect();
-    const origin = rect
-      ? { x: rect.right - rect.width / 2, y: rect.top + rect.height / 2 }
-      : undefined;
+  function cycle(event: MouseEvent<HTMLButtonElement>) {
+    const origin = getElementCenterOrigin(event.currentTarget);
     const next = CYCLE[(CYCLE.indexOf(theme) + 1) % CYCLE.length];
-    setTheme(next);
-    setThemeWithMotion(next, origin);
+    setTheme(next, origin);
   }
 
   return (
     <button
-      onClick={(event) => cycle(event)}
+      onClick={cycle}
       title={TITLE[theme]}
       style={{
         display: "flex",

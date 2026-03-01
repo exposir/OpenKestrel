@@ -19,7 +19,6 @@
 - [HotkeyHelpDialog.tsx](./HotkeyHelpDialog.tsx): 快捷键帮助弹窗内容
 - [SearchDialog.tsx](./SearchDialog.tsx): 全局搜索弹窗内容，调用 `/api/search` 展示结果并跳转
 - [SearchLauncher.tsx](./SearchLauncher.tsx): 首页搜索触发器，展示查询 Tag，点击后通过 ModalEngine 打开搜索
-- [ThemeToggle.tsx](./ThemeToggle.tsx): 明暗主题三态切换按钮（仅按钮逻辑）
-- [themeTransition.ts](./themeTransition.ts): 主题切换共享内核，统一处理 View Transition 动画与即时切换逻辑
+- [ThemeToggle.tsx](./ThemeToggle.tsx): 明暗主题三态切换按钮，依赖 `@openkestrel/theme-motion/react` 完成状态与动画切换
 - [TriggerButton.tsx](./TriggerButton.tsx): 发起讨论按钮 + 流式响应卡片 (`StreamCard`)，通过 ModalEngine 打开发帖弹窗
 - [modal-engine/CLAUDE.md](./modal-engine/CLAUDE.md): 弹窗引擎模块地图（单实例状态机 + 统一渲染）

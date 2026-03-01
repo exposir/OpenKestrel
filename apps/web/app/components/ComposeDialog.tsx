@@ -9,6 +9,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SOULS } from "../../src/orchestration/soul";
+import { MODAL_SWITCH_MS } from "./modal-engine/modal-motion";
 
 type StreamMessage =
   | { type: "meta"; soul: string; topic: string; timestamp: string }
@@ -55,7 +56,7 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
         setReferencesText("");
         setMustCoverText("");
         setMustAvoidText("");
-      }, 220);
+      }, MODAL_SWITCH_MS);
       return () => window.clearTimeout(timer);
     }
   }, [active]);

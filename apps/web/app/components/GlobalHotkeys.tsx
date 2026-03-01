@@ -1,5 +1,5 @@
 /**
- * - [INPUT]: 依赖 ModalEngine 与浏览器键盘事件
+ * - [INPUT]: 依赖 ModalEngine、浏览器键盘事件与 `@openkestrel/theme-motion/core`
  * - [OUTPUT]: 导出 GlobalHotkeys 组件，提供全局快捷键分发（Cmd/Ctrl+K、Cmd/Ctrl+D、?、Esc）
  * - [POS]: app/components/ 的全局热键中枢，挂载于 layout 覆盖全部页面
  * - [PROTOCOL]: 快捷键映射变更须同步 HotkeyHelpDialog.tsx 与 app/CLAUDE.md
@@ -7,8 +7,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { toggleLightDarkWithMotion } from "@openkestrel/theme-motion/core";
 import { useModalEngine } from "./modal-engine/useModalEngine";
-import { toggleLightDarkWithMotion } from "./themeTransition";
 
 export function GlobalHotkeys() {
   const { open, close } = useModalEngine();

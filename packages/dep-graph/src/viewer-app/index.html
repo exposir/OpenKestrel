@@ -1,0 +1,54 @@
+<!--
+- [INPUT]: 依赖 /api/report 提供的 AnalysisReport JSON
+- [OUTPUT]: 提供依赖图可视化页面骨架与交互容器
+- [POS]: dep-graph Web Viewer 静态入口，承载图与搜索面板
+- [PROTOCOL]: 变更时更新此头部，然后检查 ../CLAUDE.md
+-->
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenKestrel Dep Graph</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Dependency Graph</h1>
+        <p id="meta"></p>
+      </div>
+      <div class="actions">
+        <button id="show-aggregate">聚合图</button>
+        <button id="show-file">文件图</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="left">
+        <label class="search-wrap">
+          <span>搜索文件</span>
+          <input id="search" placeholder="输入路径关键字..." />
+        </label>
+        <div id="search-results" class="results"></div>
+
+        <h2>网状热点 Top 20</h2>
+        <div id="mesh-list" class="results"></div>
+
+        <h2>循环依赖 Top 20</h2>
+        <div id="cycle-list" class="results"></div>
+      </section>
+
+      <section class="center">
+        <div id="graph-container"></div>
+      </section>
+
+      <section class="right">
+        <h2>节点详情</h2>
+        <pre id="details">点击左侧结果或图节点查看详情</pre>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

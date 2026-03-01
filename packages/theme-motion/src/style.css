@@ -1,0 +1,36 @@
+@keyframes ok-theme-reveal {
+  from {
+    clip-path: circle(0 at var(--ok-theme-transition-x, calc(100% - 20px)) var(--ok-theme-transition-y, 20px));
+  }
+  to {
+    clip-path: circle(var(--ok-theme-transition-r, 150vmax) at var(--ok-theme-transition-x, calc(100% - 20px)) var(--ok-theme-transition-y, 20px));
+  }
+}
+
+::view-transition {
+  pointer-events: none !important;
+}
+
+::view-transition-group(root),
+::view-transition-image-pair(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  pointer-events: none !important;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: ok-theme-reveal 600ms linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

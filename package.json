@@ -13,10 +13,13 @@
     "build:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin build",
     "start:web": "dotenv -e .env -- pnpm --filter @openkestrel/web start",
     "start:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin start",
-    "orchestrate": "dotenv -e .env -- pnpm --filter @openkestrel/web orchestrate"
+    "orchestrate": "dotenv -e .env -- pnpm --filter @openkestrel/web orchestrate",
+    "okdep:build": "pnpm --filter @openkestrel/dep-graph build",
+    "okdep": "pnpm --filter @openkestrel/dep-graph okdep"
   },
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "devDependencies": {
     "concurrently": "^9.1.2",

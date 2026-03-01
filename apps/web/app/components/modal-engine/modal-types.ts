@@ -18,5 +18,4 @@ export interface ModalRequest {
 export interface ModalState {
   active: ModalId | null;
   phase: "idle" | "switching";
-  next: ModalId | null;
 }

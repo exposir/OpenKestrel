@@ -9,6 +9,7 @@
 > L2 | 父级: [app/components/CLAUDE.md](../CLAUDE.md)
 
 成员清单 [modal-types.ts](./modal-types.ts): 弹窗 ID/请求/状态类型定义（`compose`/`search`/`hotkey-help`）。
+成员清单 [modal-motion.ts](./modal-motion.ts): 弹窗切换时序常量（`MODAL_SWITCH_MS`）单源定义。
 成员清单 [ModalProvider.tsx](./ModalProvider.tsx): 单实例弹窗状态机与统一渲染宿主（交叉淡入淡出切换）。
 成员清单 [useModalEngine.ts](./useModalEngine.ts): 业务组件调用入口，统一 `open/close/isOpen/activeModal`。
 

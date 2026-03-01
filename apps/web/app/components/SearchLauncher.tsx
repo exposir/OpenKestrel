@@ -30,6 +30,7 @@ export function SearchLauncher({ initialQuery = "" }: SearchLauncherProps) {
 
   return (
     <button
+      className="ok-search-launcher-btn"
       type="button"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

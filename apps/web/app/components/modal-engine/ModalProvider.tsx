@@ -7,13 +7,13 @@
 "use client";
 
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { ModalId, ModalSource, ModalState } from "./modal-types";
 import { ComposeDialog } from "../ComposeDialog";
 import { SearchDialog } from "../SearchDialog";
 import { HotkeyHelpDialog } from "../HotkeyHelpDialog";
-
-const SWITCH_MS = 220;
+import { MODAL_SWITCH_MS } from "./modal-motion";
 
 interface InternalModalState extends ModalState {
   exiting: ModalId | null;
@@ -56,7 +56,6 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<InternalModalState>({
     active: null,
     phase: "idle",
-    next: null,
     exiting: null,
   });
   const switchTimerRef = useRef<number | null>(null);
@@ -70,14 +69,12 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
         return {
           active: id,
           phase: prev.exiting ? "switching" : "idle",
-          next: prev.exiting ? id : null,
           exiting: prev.exiting,
         };
       }
       return {
         active: id,
         phase: "switching",
-        next: id,
         exiting: prev.active,
       };
     });
@@ -89,10 +86,17 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       return {
         active: null,
         phase: "switching",
-        next: null,
         exiting: prev.active,
       };
     });
+    if (typeof window !== "undefined") {
+      window.requestAnimationFrame(() => {
+        const activeEl = document.activeElement;
+        if (activeEl instanceof HTMLElement) {
+          activeEl.blur();
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -104,11 +108,10 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       setState((prev) => ({
         ...prev,
         phase: "idle",
-        next: null,
         exiting: null,
       }));
       switchTimerRef.current = null;
-    }, SWITCH_MS);
+    }, MODAL_SWITCH_MS);
     return () => {
       if (switchTimerRef.current) {
         window.clearTimeout(switchTimerRef.current);
@@ -134,6 +137,17 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   }, [open, close]);
 
   const currentModal = state.active ?? state.exiting;
+  const isClosing = state.phase === "switching" && state.active === null && state.exiting !== null;
+  const overlayStateClass = !currentModal
+    ? "ok-modal-overlay-hidden"
+    : isClosing
+      ? "ok-modal-overlay-close"
+      : "ok-modal-overlay-open";
+  const shellStateClass = !currentModal
+    ? "ok-modal-shell-hidden"
+    : isClosing
+      ? "ok-modal-shell-closing"
+      : "ok-modal-shell-open";
   const contextValue = useMemo<ModalEngineContextValue>(
     () => ({
       open,
@@ -160,8 +174,17 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       {children}
       <Dialog.Root open={Boolean(currentModal)} onOpenChange={(isOpen) => !isOpen && close()}>
         <Dialog.Portal>
-          <Dialog.Overlay className="ok-modal-overlay" />
-          <Dialog.Content className={getShellClassName(currentModal)}>
+          <Dialog.Overlay
+            className={`ok-modal-overlay ${overlayStateClass}`}
+            style={{ "--ok-modal-switch-ms": `${MODAL_SWITCH_MS}ms` } as CSSProperties}
+          />
+          <Dialog.Content
+            className={`${getShellClassName(currentModal)} ${shellStateClass}`}
+            style={{ "--ok-modal-switch-ms": `${MODAL_SWITCH_MS}ms` } as CSSProperties}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+            }}
+          >
             <Dialog.Title className="sr-only">
               {currentModal ? getModalLabel(currentModal) : "对话弹窗"}
             </Dialog.Title>

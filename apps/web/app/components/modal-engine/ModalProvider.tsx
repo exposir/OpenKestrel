@@ -8,7 +8,7 @@
 
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import type { ModalId, ModalRequest, ModalSource, ModalState } from "./modal-types";
+import type { ModalId, ModalSource, ModalState } from "./modal-types";
 import { ComposeDialog } from "../ComposeDialog";
 import { SearchDialog } from "../SearchDialog";
 import { HotkeyHelpDialog } from "../HotkeyHelpDialog";
@@ -60,10 +60,8 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
     exiting: null,
   });
   const switchTimerRef = useRef<number | null>(null);
-  const lastRequestRef = useRef<ModalRequest | null>(null);
 
-  const open = useCallback((id: ModalId, source: ModalSource = "event", payload?: unknown) => {
-    lastRequestRef.current = { id, source, payload };
+  const open = useCallback((id: ModalId, _source: ModalSource = "event", _payload?: unknown) => {
     setState((prev) => {
       if (prev.active === id && prev.phase !== "switching") {
         return prev;

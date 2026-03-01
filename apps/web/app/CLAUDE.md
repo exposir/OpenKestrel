@@ -16,10 +16,18 @@ app/
 ├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
 ├── components/
 │   ├── AuthButton.tsx          登录/退出按钮（Client Component）
-│   ├── GlobalHotkeys.tsx       全局快捷键中枢（全站热键 + 搜索/帮助弹窗）
-│   ├── SearchLauncher.tsx      首页搜索触发器（伪输入框，触发全局搜索弹窗）
-│   ├── TriggerButton.tsx       流式渲染客户端组件（Client Component）
-│   └── ThemeToggle.tsx         明暗主题切换（Client Component）
+│   ├── GlobalHotkeys.tsx       全局快捷键分发（Cmd/Ctrl+K、?、Esc、Cmd/Ctrl+D）
+│   ├── SearchLauncher.tsx      首页搜索触发器（伪输入框，触发 ModalEngine）
+│   ├── ComposeDialog.tsx       发帖弹窗内容（话题/人格/高级输入）
+│   ├── SearchDialog.tsx        搜索弹窗内容（调用 /api/search）
+│   ├── HotkeyHelpDialog.tsx    快捷键帮助弹窗内容
+│   ├── TriggerButton.tsx       发起讨论按钮 + 流式渲染卡片（Client Component）
+│   ├── ThemeToggle.tsx         明暗主题切换（Client Component）
+│   └── modal-engine/
+│       ├── ModalProvider.tsx   单实例弹窗状态机与渲染宿主
+│       ├── useModalEngine.ts   弹窗控制 Hook
+│       ├── modal-types.ts      弹窗类型定义
+│       └── CLAUDE.md           modal-engine 模块地图
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）
 └── api/
     ├── auth/[...nextauth]/route.ts OAuth 回调与会话路由
@@ -46,6 +54,15 @@ NDJSON 消息类型（`/api/orchestrate` → 前端）：
 ```
 
 打字机光标实现：在 `content` 末尾追加 ` ▋`，`done` 后移除。
+
+## 弹窗管理协议（ModalEngine）
+
+- 弹窗状态单源：`ModalProvider` 维护 `active/phase/next`
+- 当前仅支持三类弹窗：`compose` / `search` / `hotkey-help`
+- 任意时刻仅一个 active 弹窗；切换时使用交叉淡入淡出（cross-fade）
+- 快捷键入口统一收敛到 `GlobalHotkeys.tsx`
+- `SearchLauncher` / `TriggerButton` 只发起 `open()` 请求，不私有维护弹窗 `open` 状态
+- 从 `compose` 切走时，表单草稿按策略清空
 
 ## 请求体协议（`POST /api/orchestrate`）
 

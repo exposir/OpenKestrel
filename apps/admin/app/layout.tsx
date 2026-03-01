@@ -25,7 +25,7 @@ export default function RootLayout({
       <body>
         <main
           style={{
-            maxWidth: 1200,
+            maxWidth: 1000,
             margin: "0 auto",
             padding: "40px 24px 56px",
           }}

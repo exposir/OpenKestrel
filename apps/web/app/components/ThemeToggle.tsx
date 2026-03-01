@@ -1,5 +1,5 @@
-// [INPUT]: 无外部依赖
-// [OUTPUT]: ThemeToggle — 三态主题切换按钮（system / light / dark）
+// [INPUT]: 依赖浏览器 localStorage / documentElement / window keydown 事件
+// [OUTPUT]: ThemeToggle — 三态主题切换按钮（system / light / dark），支持 Cmd/Ctrl + D 在 light/dark 间切换
 // [POS]: app/ 的全局 UI 层，Client Component
 // [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
 
@@ -35,22 +35,47 @@ const ICONS: Record<Theme, ReactNode> = {
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("system");
 
+  function applyTheme(next: Theme) {
+    if (next === "system") {
+      localStorage.removeItem("theme");
+      document.documentElement.removeAttribute("data-theme");
+      return;
+    }
+    localStorage.setItem("theme", next);
+    document.documentElement.setAttribute("data-theme", next);
+  }
+
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored === "light" || stored === "dark") setTheme(stored);
   }, []);
 
   function cycle() {
-    const next = CYCLE[(CYCLE.indexOf(theme) + 1) % CYCLE.length];
-    setTheme(next);
-    if (next === "system") {
-      localStorage.removeItem("theme");
-      document.documentElement.removeAttribute("data-theme");
-    } else {
-      localStorage.setItem("theme", next);
-      document.documentElement.setAttribute("data-theme", next);
-    }
+    setTheme((current) => {
+      const next = CYCLE[(CYCLE.indexOf(current) + 1) % CYCLE.length];
+      applyTheme(next);
+      return next;
+    });
   }
+
+  function toggleLightDarkByShortcut() {
+    setTheme((current) => {
+      const next: Theme = current === "dark" ? "light" : "dark";
+      applyTheme(next);
+      return next;
+    });
+  }
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d";
+      if (!isShortcut) return;
+      event.preventDefault();
+      toggleLightDarkByShortcut();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   return (
     <button

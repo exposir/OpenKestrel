@@ -81,7 +81,6 @@ export function DebateToc({ items }: { items: TocItem[] }) {
 
   return (
     <nav className="debate-toc" aria-label="目录导航">
-      <p className="debate-toc-title">目录</p>
       <ul className="debate-toc-list">
         {items.map((item) => (
           <li

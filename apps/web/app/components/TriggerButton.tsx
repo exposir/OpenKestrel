@@ -8,6 +8,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import * as Dialog from "@radix-ui/react-dialog";
+import * as Collapsible from "@radix-ui/react-collapsible";
 
 interface StreamCard {
   soul: string;
@@ -63,6 +65,7 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
     if (!isAuthenticated || !topic.trim() || loading) return;
     setLoading(true);
     setShowModal(false);
+    setShowAdvanced(false);
     window.dispatchEvent(new CustomEvent("stream:start"));
 
     try {
@@ -136,75 +139,49 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
     }
   }
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setShowModal(false);
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
-
-  useEffect(() => {
-    if (!showModal) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [showModal]);
-
   return (
     <>
-      <button
-        onClick={() => setShowModal(true)}
-        disabled={loading || !isAuthenticated}
-        title={!isAuthenticated ? "请先登录后再发帖" : undefined}
-        style={{
-          padding: "8px 18px",
-          background:
-            loading || !isAuthenticated ? "var(--bg-elevated)" : "var(--accent)",
-          color:
-            loading || !isAuthenticated
-              ? "var(--text-muted)"
-              : "var(--accent-fg)",
-          border: "none",
-          borderRadius: 6,
-          fontSize: 13,
-          fontWeight: 600,
-          cursor: loading || !isAuthenticated ? "not-allowed" : "pointer",
-          whiteSpace: "nowrap",
+      <Dialog.Root
+        open={showModal}
+        onOpenChange={(open) => {
+          setShowModal(open);
+          if (!open) setShowAdvanced(false);
         }}
       >
-        {!isAuthenticated ? "登录后可发帖" : loading ? "正在播种..." : "+ 发起讨论"}
-      </button>
-
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()}
+        <Dialog.Trigger asChild>
+          <button
+            disabled={loading || !isAuthenticated}
+            title={!isAuthenticated ? "请先登录后再发帖" : undefined}
             style={{
-              width: "min(800px, calc(100vw - 48px))",
-              maxHeight: "calc(100vh - 80px)",
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-              padding: 0,
+              padding: "8px 18px",
+              background:
+                loading || !isAuthenticated ? "var(--bg-elevated)" : "var(--accent)",
+              color:
+                loading || !isAuthenticated
+                  ? "var(--text-muted)"
+                  : "var(--accent-fg)",
+              border: "none",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: loading || !isAuthenticated ? "not-allowed" : "pointer",
+              whiteSpace: "nowrap",
             }}
           >
-            <div style={{ padding: "24px 28px 16px", borderBottom: "1px solid var(--border)" }}>
-              <h2 style={{ fontSize: 20, margin: 0, fontWeight: 600 }}>
+            {!isAuthenticated ? "登录后可发帖" : loading ? "正在播种..." : "+ 发起讨论"}
+          </button>
+        </Dialog.Trigger>
+
+        <Dialog.Portal>
+          <Dialog.Overlay className="ok-dialog-overlay" />
+          <Dialog.Content className="ok-dialog-content">
+            <div className="ok-dialog-header">
+              <Dialog.Title style={{ fontSize: 20, margin: 0, fontWeight: 600 }}>
                 发起新的思想博弈
-              </h2>
+              </Dialog.Title>
             </div>
 
-            <div
-              style={{
-                flex: 1,
-                overflowY: "auto",
-                padding: "18px 28px",
-              }}
-            >
+            <div className="ok-dialog-body">
               <label className="modal-label">讨论话题</label>
               <input
                 autoFocus
@@ -237,43 +214,18 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
                 onChange={(e) => setContext(e.target.value)}
               />
 
-              <button
-                type="button"
-                onClick={() => setShowAdvanced((prev) => !prev)}
-                style={{
-                  width: "100%",
-                  padding: "10px 12px",
-                  margin: "4px 0 14px",
-                  background: "var(--bg-base)",
-                  border: "1px solid var(--border)",
-                  borderRadius: 8,
-                  color: "var(--text-primary)",
-                  cursor: "pointer",
-                  fontSize: 13,
-                  textAlign: "left",
-                  fontWeight: 500,
-                }}
+              <Collapsible.Root
+                open={showAdvanced}
+                onOpenChange={setShowAdvanced}
               >
-                {showAdvanced ? "▾ 收起高级输入" : "▸ 展开高级输入"}
-              </button>
+                <Collapsible.Trigger asChild>
+                  <button type="button" className="ok-advanced-trigger">
+                    {showAdvanced ? "▾ 收起高级输入" : "▸ 展开高级输入"}
+                  </button>
+                </Collapsible.Trigger>
 
-              {showAdvanced && (
-                <div
-                  style={{
-                    border: "1px solid var(--border)",
-                    borderRadius: 10,
-                    padding: "14px 14px 8px",
-                    background: "var(--bg-base)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 10,
-                    }}
-                  >
+                <Collapsible.Content className="ok-advanced-content">
+                  <div className="ok-advanced-head">
                     <p
                       style={{
                         margin: 0,
@@ -306,26 +258,20 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
                   <label className="modal-label">参考资料 (每行一条，可填链接或文本)</label>
                   <textarea
                     className="modal-input"
-                    style={{ minHeight: 76, resize: "vertical" }}
-                    placeholder="https://example.com/article\n关键数据：2025 年渗透率为 37%"
+                    style={{ minHeight: 92, resize: "vertical" }}
+                    placeholder={"https://example.com/article\n关键数据：2025 年渗透率为 37%"}
                     value={referencesText}
                     onChange={(e) => setReferencesText(e.target.value)}
                   />
-                  <p
-                    style={{
-                      margin: "-16px 0 16px",
-                      fontSize: 11,
-                      color: "var(--text-muted)",
-                    }}
-                  >
+                  <p className="ok-dialog-hint">
                     支持直接粘贴带 `\n` 的文本，系统会自动分行。
                   </p>
 
                   <label className="modal-label">必须覆盖点 (每行一条)</label>
                   <textarea
                     className="modal-input"
-                    style={{ minHeight: 76, resize: "vertical" }}
-                    placeholder="商业激励机制\n技术伦理边界"
+                    style={{ minHeight: 92, resize: "vertical" }}
+                    placeholder={"商业激励机制\n技术伦理边界"}
                     value={mustCoverText}
                     onChange={(e) => setMustCoverText(e.target.value)}
                   />
@@ -333,39 +279,32 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
                   <label className="modal-label">禁止触碰点 (每行一条)</label>
                   <textarea
                     className="modal-input"
-                    style={{ minHeight: 76, resize: "vertical" }}
-                    placeholder="避免人身攻击\n不输出无证据断言"
+                    style={{ minHeight: 92, resize: "vertical" }}
+                    placeholder={"避免人身攻击\n不输出无证据断言"}
                     value={mustAvoidText}
                     onChange={(e) => setMustAvoidText(e.target.value)}
                   />
-                </div>
-              )}
+                </Collapsible.Content>
+              </Collapsible.Root>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                gap: 12,
-                borderTop: "1px solid var(--border)",
-                padding: "14px 28px 20px",
-                background: "var(--bg-surface)",
-              }}
-            >
-              <button
-                onClick={() => setShowModal(false)}
-                style={{
-                  flex: 1,
-                  padding: "12px",
-                  background: "transparent",
-                  border: "1px solid var(--border)",
-                  borderRadius: 6,
-                  color: "var(--text-secondary)",
-                  cursor: "pointer",
-                  fontSize: 14,
-                }}
-              >
-                取消
-              </button>
+            <div className="ok-dialog-footer">
+              <Dialog.Close asChild>
+                <button
+                  style={{
+                    flex: 1,
+                    padding: "12px",
+                    background: "transparent",
+                    border: "1px solid var(--border)",
+                    borderRadius: 6,
+                    color: "var(--text-secondary)",
+                    cursor: "pointer",
+                    fontSize: 14,
+                  }}
+                >
+                  取消
+                </button>
+              </Dialog.Close>
               <button
                 onClick={handleStart}
                 disabled={!topic.trim()}
@@ -388,9 +327,9 @@ export function TriggerButton({ soulOptions, isAuthenticated }: TriggerButtonPro
                 播种意图
               </button>
             </div>
-          </div>
-        </div>
-      )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </>
   );
 }

@@ -5,7 +5,7 @@
  * - [PROTOCOL]: 变更时更新此头部，然后检查 apps/admin/CLAUDE.md
  */
 import { readRecentDebateSummaries } from "../lib/audit";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import Form from "next/form";
 
 function formatTime(iso: string): string {
@@ -33,66 +33,23 @@ export default async function AdminHome({
   });
 
   return (
-    <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
-      <section
-        style={{
-          flex: 1,
-          background: "var(--panel)",
-          border: "1px solid var(--line)",
-          borderRadius: 14,
-          overflow: "hidden",
-        }}
-      >
-        <Form
-          action="/"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 10,
-            padding: "12px 14px",
-            borderBottom: "1px solid var(--line)",
-            background: "var(--panel-soft)",
-          }}
-        >
-          <div style={{ fontSize: 13, fontWeight: 600 }}>
-            最近已发讨论（来自 debate-*.json）
-          </div>
-          <div style={{ display: "flex", gap: 8 }}>
-            <input
-              name="dq"
-              defaultValue={dq}
-              placeholder="搜索话题 / 文件 / Soul"
-              style={{
-                ...filterInputStyle,
-                minWidth: 200,
-                padding: "4px 10px",
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                border: "1px solid var(--line)",
-                background: "var(--chip)",
-                color: "var(--text)",
-                borderRadius: 8,
-                padding: "4px 12px",
-                cursor: "pointer",
-                fontWeight: 600,
-                fontSize: 13,
-              }}
-            >
-              筛选
-            </button>
-          </div>
+    <div className="ok-admin-layout">
+      <section className="ok-admin-panel">
+        <Form action="/" className="ok-admin-toolbar">
+          <input
+            name="q"
+            defaultValue={dq}
+            placeholder="搜索话题"
+            className="ok-admin-input"
+          />
+          <button type="submit" className="ok-admin-button">
+            筛选
+          </button>
         </Form>
-        <div style={{ overflowX: "auto" }}>
-          <table
-            style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
-          >
+        <div className="ok-admin-table-wrap">
+          <table className="ok-admin-table">
             <thead>
-              <tr style={{ color: "var(--text-soft)", textAlign: "left" }}>
+              <tr className="ok-admin-table-head-row">
                 <Th>时间</Th>
                 <Th>话题</Th>
                 <Th>Soul</Th>
@@ -102,32 +59,23 @@ export default async function AdminHome({
             <tbody>
               {debates.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={4}
-                    style={{ padding: "20px 16px", color: "var(--text-soft)" }}
-                  >
+                  <td colSpan={4} className="ok-admin-empty">
                     未发现讨论文件
                   </td>
                 </tr>
               ) : (
                 debates.slice(0, 50).map((item) => (
-                  <tr
-                    key={item.filename}
-                    style={{ borderTop: "1px solid var(--line)" }}
-                  >
+                  <tr key={item.filename} className="ok-admin-row">
                     <Td>{item.timestamp ? formatTime(item.timestamp) : "-"}</Td>
-                    <Td
-                      style={{
-                        maxWidth: 540,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <Td className="ok-admin-topic-cell">
                       {item.topic}
                     </Td>
                     <Td>{item.souls.join(", ") || "-"}</Td>
-                    <Td>{item.filename}</Td>
+                    <Td>
+                      <code className="ok-admin-chip">
+                        {item.filename}
+                      </code>
+                    </Td>
                   </tr>
                 ))
               )}
@@ -136,78 +84,37 @@ export default async function AdminHome({
         </div>
       </section>
 
-      <aside
-        style={{
-          width: 280,
-          position: "sticky",
-          top: 40,
-          display: "flex",
-          flexDirection: "column",
-          gap: 12,
-        }}
-      >
-        <MetricCard
-          title="历史讨论文件总数"
-          value={String(allDebates.length)}
-        />
-      </aside>
+      <div className="ok-admin-sidebar-wrap">
+        <aside className="ok-admin-sidebar" style={{ width: 260 }}>
+          <MetricCard
+            title="历史讨论文件总数"
+            value={String(allDebates.length)}
+          />
+        </aside>
+      </div>
     </div>
   );
 }
 
 function MetricCard({ title, value }: { title: string; value: string }) {
   return (
-    <div
-      style={{
-        background: "var(--panel)",
-        border: "1px solid var(--line)",
-        borderRadius: 12,
-        padding: "14px 16px",
-      }}
-    >
-      <p style={{ margin: 0, color: "var(--text-soft)", fontSize: 12 }}>
-        {title}
-      </p>
-      <p style={{ margin: "8px 0 0", fontSize: 28, fontWeight: 700 }}>
-        {value}
-      </p>
+    <div className="ok-admin-metric">
+      <p className="ok-admin-metric-label">{title}</p>
+      <p className="ok-admin-metric-value">{value}</p>
     </div>
   );
 }
 
 function Th({ children }: { children: ReactNode }) {
-  return (
-    <th
-      style={{
-        padding: "12px 16px",
-        fontSize: 12,
-        fontWeight: 600,
-        borderBottom: "1px solid var(--line)",
-      }}
-    >
-      {children}
-    </th>
-  );
+  return <th className="ok-admin-th">{children}</th>;
 }
 
 function Td({
   children,
-  style,
+  className,
 }: {
   children: ReactNode;
-  style?: CSSProperties;
+  className?: string;
 }) {
-  return (
-    <td style={{ padding: "10px 16px", color: "var(--text)", ...style }}>
-      {children}
-    </td>
-  );
+  return <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>{children}</td>;
 }
-
-const filterInputStyle: CSSProperties = {
-  border: "1px solid var(--line)",
-  background: "var(--panel)",
-  color: "var(--text)",
-  borderRadius: 8,
-  padding: "8px 10px",
-};

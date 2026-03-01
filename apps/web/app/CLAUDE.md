@@ -16,7 +16,8 @@ app/
 ├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
 ├── components/
 │   ├── AuthButton.tsx          登录/退出按钮（Client Component）
-│   ├── SearchLauncher.tsx      搜索入口（Cmd/Ctrl + K 快捷键 + 查询参数提交）
+│   ├── KeyboardShortcutsHelp.tsx 快捷键帮助入口（`?` 打开快捷键列表弹窗）
+│   ├── SearchLauncher.tsx      搜索入口（伪输入框 + Cmd/Ctrl + K 弹窗搜索）
 │   ├── TriggerButton.tsx       流式渲染客户端组件（Client Component）
 │   └── ThemeToggle.tsx         明暗主题切换（Client Component）
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）

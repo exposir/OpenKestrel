@@ -10,6 +10,31 @@ import ReactMarkdown from "react-markdown";
 import { getDebateFilePath } from "../../../src/storage/paths";
 import { DebateToc } from "./DebateToc";
 
+function extractHeadingsFromMarkdown(markdown: string) {
+  const headings: { text: string; depth: number }[] = [];
+  const lines = markdown.split("\n");
+  for (const line of lines) {
+    // match `# Heading` to `###### Heading`
+    const match = line.match(/^(#{1,6})\s+(.+)$/);
+    if (match) {
+      headings.push({
+        depth: match[1].length,
+        text: match[2].trim(),
+      });
+    }
+  }
+  return headings;
+}
+
+// Helper to generate a consistent HTML id from a heading text
+// simple slugify (lowercased, spaces to hyphens, remove special characters)
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\u4e00-\u9fa5-]+/g, "");
+}
+
 interface DebateOutput {
   soul: string;
   topic: string;
@@ -45,19 +70,34 @@ export default async function DebatePage({
   const topic = debate[0]?.topic ?? "";
 
   // ── Build TOC items from debate entries ──
-  const tocItems = debate.map((entry, i) => ({
-    id: `soul-${i}`,
-    label: entry.soul,
-  }));
+  const tocItems: { id: string; label: string; depth: number }[] = [];
+  debate.forEach((entry, i) => {
+    // 顶级目录：发言代理
+    tocItems.push({
+      id: `soul-${i}`,
+      label: entry.soul,
+      depth: 0,
+    });
+
+    // 提取正文里的各级子标题
+    const headings = extractHeadingsFromMarkdown(entry.response);
+    headings.forEach((h, hidx) => {
+      // id 不能只由文本生成，因为不同的 soul 可能会有相同的标题，这里加上 soul-${i} 前缀防止冲突
+      // 但由于 MarkdownRenderer 里我们在生成 DOM ID 时无法获知是哪个 soul，最简单的办法是在页面级要求 slug 全局唯一。
+      // 但为了简单稳定，我们在 ReactMarkdown 环节仅由 child 文本生成 slug，TOC 这边只要也按同样规则即可。
+      // 问题是，如果文章中有两个完全一样的标题 "## 结论"，会选到第一个。这对现在的轻量场景可接受，暂用全局的 slugify(text) 作为 id，但加上前置一个统一人为前缀来区别卡片
+      const anchorId = `heading-${i}-${slugify(h.text)}`;
+      tocItems.push({
+        id: anchorId,
+        label: h.text,
+        depth: h.depth,
+      });
+    });
+  });
 
   return (
     <div className="debate-layout">
-      {/* ── Left: TOC ── */}
-      <aside className="debate-sidebar">
-        <DebateToc items={tocItems} />
-      </aside>
-
-      {/* ── Right: Content ── */}
+      {/* ── Left: Content ── */}
       <main className="debate-content">
         <Link
           href="/"
@@ -136,7 +176,84 @@ export default async function DebatePage({
                   color: "var(--text-primary)",
                 }}
               >
-                <ReactMarkdown>{entry.response}</ReactMarkdown>
+                <ReactMarkdown
+                  components={{
+                    h1: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h1
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h1>
+                      );
+                    },
+                    h2: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h2
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h3
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h3>
+                      );
+                    },
+                    h4: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h4
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h4>
+                      );
+                    },
+                    h5: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h5
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h5>
+                      );
+                    },
+                    h6: ({ children, ...props }) => {
+                      const text = String(children);
+                      return (
+                        <h6
+                          id={`heading-${i}-${slugify(text)}`}
+                          style={{ scrollMarginTop: 60 }}
+                          {...props}
+                        >
+                          {children}
+                        </h6>
+                      );
+                    },
+                  }}
+                >
+                  {entry.response}
+                </ReactMarkdown>
               </div>
 
               {entry.reasoning && (
@@ -169,6 +286,11 @@ export default async function DebatePage({
           ))}
         </div>
       </main>
+
+      {/* ── Right: TOC ── */}
+      <aside className="debate-sidebar">
+        <DebateToc items={tocItems} />
+      </aside>
     </div>
   );
 }

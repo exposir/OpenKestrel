@@ -179,13 +179,21 @@
   animation: tag-blink 1.5s ease-in-out infinite;
 }
 
-/* ── Debate Detail: Two-column Layout ── */
+/* ── Debate Detail: Layout ── */
 .debate-layout {
   display: flex;
-  max-width: 1100px;
+  justify-content: center;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 48px 24px;
   gap: 40px;
+}
+
+/* Left spacer to counterbalance the right TOC and keep content centered */
+.debate-layout::before {
+  content: "";
+  flex-shrink: 0;
+  width: 180px;
 }
 
 .debate-sidebar {
@@ -248,11 +256,15 @@
 }
 
 /* ── Responsive: hide TOC on small screens ── */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .debate-layout {
     flex-direction: column;
     max-width: 800px;
     gap: 0;
+  }
+
+  .debate-layout::before {
+    display: none;
   }
 
   .debate-sidebar {

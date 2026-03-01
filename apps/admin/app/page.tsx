@@ -11,22 +11,38 @@ import {
   readRecentDebateSummaries,
 } from "../lib/audit";
 import type { CSSProperties, ReactNode } from "react";
+import Form from "next/form";
 
 function formatTime(iso: string): string {
-  return new Date(iso).toLocaleString("zh-CN");
+  if (!iso) return "-";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 export default async function AdminHome({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string; status?: string; q?: string }>;
+  searchParams: Promise<{
+    category?: string;
+    status?: string;
+    q?: string;
+    dq?: string;
+  }>;
 }) {
-  const { category = "all", status = "all", q = "" } = await searchParams;
+  const {
+    category = "all",
+    status = "all",
+    q = "",
+    dq = "",
+  } = await searchParams;
   const allRecords = await readRecentAuditRecords(500);
-  const debates = await readRecentDebateSummaries(80);
+  const allDebates = await readRecentDebateSummaries(80);
   const metrics = getAuditMetrics(allRecords);
   const dataDir = getDataDir();
   const keyword = q.trim().toLowerCase();
+  const debateKeyword = dq.trim().toLowerCase();
 
   const records = allRecords.filter((record) => {
     if (category !== "all" && record.category !== category) return false;
@@ -36,8 +52,17 @@ export default async function AdminHome({
     return haystack.includes(keyword);
   });
 
+  const debates = allDebates.filter((item) => {
+    if (!debateKeyword) return true;
+    const haystack =
+      `${item.filename} ${item.topic} ${item.souls.join(" ")}`.toLowerCase();
+    return haystack.includes(debateKeyword);
+  });
+
   return (
-    <main style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 56px" }}>
+    <main
+      style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 56px" }}
+    >
       <header
         style={{
           display: "flex",
@@ -48,7 +73,14 @@ export default async function AdminHome({
         }}
       >
         <div>
-          <p style={{ margin: 0, color: "var(--text-soft)", fontSize: 12, letterSpacing: 1 }}>
+          <p
+            style={{
+              margin: 0,
+              color: "var(--text-soft)",
+              fontSize: 12,
+              letterSpacing: 1,
+            }}
+          >
             OPENKESTREL CONSOLE
           </p>
           <h1 style={{ margin: "10px 0 0", fontSize: 30, fontWeight: 700 }}>
@@ -78,10 +110,19 @@ export default async function AdminHome({
         }}
       >
         <MetricCard title="今日总事件" value={String(metrics.todayTotal)} />
-        <MetricCard title="今日登录成功" value={String(metrics.todayAuthSignIn)} />
-        <MetricCard title="今日发帖成功" value={String(metrics.todayPostsSuccess)} />
-        <MetricCard title="今日发帖失败" value={String(metrics.todayPostsFailure)} />
-        <MetricCard title="历史讨论文件" value={String(debates.length)} />
+        <MetricCard
+          title="今日登录成功"
+          value={String(metrics.todayAuthSignIn)}
+        />
+        <MetricCard
+          title="今日发帖成功"
+          value={String(metrics.todayPostsSuccess)}
+        />
+        <MetricCard
+          title="今日发帖失败"
+          value={String(metrics.todayPostsFailure)}
+        />
+        <MetricCard title="历史讨论文件" value={String(allDebates.length)} />
       </section>
 
       <section
@@ -93,19 +134,57 @@ export default async function AdminHome({
           marginTop: 14,
         }}
       >
-        <div
+        <Form
+          action="/"
           style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 10,
             padding: "12px 14px",
             borderBottom: "1px solid var(--line)",
             background: "var(--panel-soft)",
-            fontSize: 13,
-            fontWeight: 600,
           }}
         >
-          最近已发讨论（来自 debate-*.json）
-        </div>
+          <div style={{ fontSize: 13, fontWeight: 600 }}>
+            最近已发讨论（来自 debate-*.json）
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input type="hidden" name="category" value={category} />
+            <input type="hidden" name="status" value={status} />
+            <input type="hidden" name="q" value={q} />
+            <input
+              name="dq"
+              defaultValue={dq}
+              placeholder="搜索话题 / 文件 / Soul"
+              style={{
+                ...filterInputStyle,
+                minWidth: 200,
+                padding: "4px 10px",
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                border: "1px solid var(--line)",
+                background: "var(--chip)",
+                color: "var(--text)",
+                borderRadius: 8,
+                padding: "4px 12px",
+                cursor: "pointer",
+                fontWeight: 600,
+                fontSize: 13,
+              }}
+            >
+              筛选
+            </button>
+          </div>
+        </Form>
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <table
+            style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
+          >
             <thead>
               <tr style={{ color: "var(--text-soft)", textAlign: "left" }}>
                 <Th>时间</Th>
@@ -117,13 +196,19 @@ export default async function AdminHome({
             <tbody>
               {debates.length === 0 ? (
                 <tr>
-                  <td colSpan={4} style={{ padding: "20px 16px", color: "var(--text-soft)" }}>
+                  <td
+                    colSpan={4}
+                    style={{ padding: "20px 16px", color: "var(--text-soft)" }}
+                  >
                     未发现讨论文件
                   </td>
                 </tr>
               ) : (
                 debates.slice(0, 50).map((item) => (
-                  <tr key={item.filename} style={{ borderTop: "1px solid var(--line)" }}>
+                  <tr
+                    key={item.filename}
+                    style={{ borderTop: "1px solid var(--line)" }}
+                  >
                     <Td>{item.timestamp ? formatTime(item.timestamp) : "-"}</Td>
                     <Td
                       style={{
@@ -154,7 +239,8 @@ export default async function AdminHome({
           marginTop: 14,
         }}
       >
-        <form
+        <Form
+          action="/"
           style={{
             display: "flex",
             flexWrap: "wrap",
@@ -164,7 +250,12 @@ export default async function AdminHome({
             background: "var(--panel-soft)",
           }}
         >
-          <select name="category" defaultValue={category} style={filterInputStyle}>
+          <input type="hidden" name="dq" value={dq} />
+          <select
+            name="category"
+            defaultValue={category}
+            style={filterInputStyle}
+          >
             <option value="all">全部分类</option>
             <option value="auth">认证事件</option>
             <option value="orchestrate">发帖事件</option>
@@ -188,16 +279,11 @@ export default async function AdminHome({
               color: "var(--text)",
               borderRadius: 8,
               padding: "8px 12px",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
-          >
-            筛选
-          </button>
-        </form>
 
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <table
+            style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}
+          >
             <thead>
               <tr style={{ color: "var(--text-soft)", textAlign: "left" }}>
                 <Th>时间</Th>
@@ -212,7 +298,10 @@ export default async function AdminHome({
             <tbody>
               {records.length === 0 ? (
                 <tr>
-                  <td colSpan={7} style={{ padding: "24px 16px", color: "var(--text-soft)" }}>
+                  <td
+                    colSpan={7}
+                    style={{ padding: "24px 16px", color: "var(--text-soft)" }}
+                  >
                     暂无匹配的审计记录
                   </td>
                 </tr>
@@ -234,7 +323,10 @@ export default async function AdminHome({
                             record.status === "success"
                               ? "rgba(58,199,139,0.16)"
                               : "rgba(255,109,109,0.16)",
-                          color: record.status === "success" ? "var(--ok)" : "var(--bad)",
+                          color:
+                            record.status === "success"
+                              ? "var(--ok)"
+                              : "var(--bad)",
                         }}
                       >
                         {record.status}
@@ -242,7 +334,14 @@ export default async function AdminHome({
                     </Td>
                     <Td>{record.actor?.email || record.actor?.name || "-"}</Td>
                     <Td>{record.request?.ip || "-"}</Td>
-                    <Td style={{ maxWidth: 360, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Td
+                      style={{
+                        maxWidth: 360,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {JSON.stringify(record.metadata ?? {})}
                     </Td>
                   </tr>
@@ -266,21 +365,38 @@ function MetricCard({ title, value }: { title: string; value: string }) {
         padding: "14px 16px",
       }}
     >
-      <p style={{ margin: 0, color: "var(--text-soft)", fontSize: 12 }}>{title}</p>
-      <p style={{ margin: "8px 0 0", fontSize: 28, fontWeight: 700 }}>{value}</p>
+      <p style={{ margin: 0, color: "var(--text-soft)", fontSize: 12 }}>
+        {title}
+      </p>
+      <p style={{ margin: "8px 0 0", fontSize: 28, fontWeight: 700 }}>
+        {value}
+      </p>
     </div>
   );
 }
 
 function Th({ children }: { children: ReactNode }) {
   return (
-    <th style={{ padding: "12px 16px", fontSize: 12, fontWeight: 600, borderBottom: "1px solid var(--line)" }}>
+    <th
+      style={{
+        padding: "12px 16px",
+        fontSize: 12,
+        fontWeight: 600,
+        borderBottom: "1px solid var(--line)",
+      }}
+    >
       {children}
     </th>
   );
 }
 
-function Td({ children, style }: { children: ReactNode; style?: CSSProperties }) {
+function Td({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+}) {
   return (
     <td style={{ padding: "10px 16px", color: "var(--text)", ...style }}>
       {children}

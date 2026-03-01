@@ -11,54 +11,51 @@ import { useEffect, useRef, useState } from "react";
 interface TocItem {
   id: string;
   label: string;
+  depth: number;
 }
 
 export function DebateToc({ items }: { items: TocItem[] }) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  // 用一个 ref 维护当前所有可见元素的 id
-  const visibleIdsRef = useRef(new Set<string>());
-
   useEffect(() => {
-    // ── IntersectionObserver: track visible articles ──
-    const elements = items
-      .map((item) => document.getElementById(item.id))
-      .filter(Boolean) as HTMLElement[];
+    const handleScroll = () => {
+      const headingElements = items
+        .map((item) => {
+          const el = document.getElementById(item.id);
+          return el ? { id: item.id, el } : null;
+        })
+        .filter(Boolean) as { id: string; el: HTMLElement }[];
 
-    if (elements.length === 0) return;
+      if (headingElements.length === 0) return;
 
-    // 每次 items 更新，重置一下可见元素集合
-    visibleIdsRef.current.clear();
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        let isChanged = false;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            visibleIdsRef.current.add(entry.target.id);
-            isChanged = true;
-          } else {
-            visibleIdsRef.current.delete(entry.target.id);
-            isChanged = true;
-          }
-        });
-
-        // 如果可见状态发生改变，从上到下找出第一个可见的元素 ID
-        if (isChanged && visibleIdsRef.current.size > 0) {
-          const firstVisibleItem = items.find((item) =>
-            visibleIdsRef.current.has(item.id),
-          );
-          if (firstVisibleItem) {
-            setActiveId(firstVisibleItem.id);
-          }
+      let currentActiveId = items[0].id;
+      for (const { id, el } of headingElements) {
+        const rect = el.getBoundingClientRect();
+        // 设置 150px 为触发阈值（视口顶端往下150px，通常跨过了sticky顶栏和标题一部分阅读区）
+        if (rect.top <= 150) {
+          currentActiveId = id;
+        } else {
+          // 因为元素在 DOM 中按顺序排列，一旦某个元素还未到达顶部以上，
+          // 说明它是下一个未读章节，它的上一个就是我们正在阅读的章节。
+          break;
         }
-      },
-      { rootMargin: "-80px 0px -60% 0px", threshold: 0.1 },
-    );
+      }
 
-    elements.forEach((el) => observerRef.current!.observe(el));
+      // 滑动到底部时自动高亮最后一个目录项
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 10
+      ) {
+        currentActiveId = items[items.length - 1].id;
+      }
 
-    return () => observerRef.current?.disconnect();
+      setActiveId(currentActiveId);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    // 首次载入也检查一次位置
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [items]);
 
   const handleClick = (id: string) => {
@@ -74,9 +71,12 @@ export function DebateToc({ items }: { items: TocItem[] }) {
       <p className="debate-toc-title">目录</p>
       <ul className="debate-toc-list">
         {items.map((item) => (
-          <li key={item.id}>
+          <li
+            key={item.id}
+            style={{ marginLeft: item.depth > 0 ? `${item.depth * 10}px` : 0 }}
+          >
             <button
-              className={`debate-toc-item${activeId === item.id ? " active" : ""}`}
+              className={`debate-toc-item${item.depth > 0 ? " sub-item" : ""}${activeId === item.id ? " active" : ""}`}
               onClick={() => handleClick(item.id)}
             >
               {item.label}

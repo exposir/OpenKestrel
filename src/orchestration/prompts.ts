@@ -3,7 +3,7 @@
 // [POS]: src/orchestration/ 的 Prompt 构建层，L3 级别
 // [PROTOCOL]: 修改 Step 1-5 结构须同步 docs/logic/orchestration.zh.md
 
-import type { Soul } from "./soul.ts";
+import type { Soul } from "./soul";
 
 export function buildSystemPrompt(soul: Soul): string {
   return `你现在是一个名为「${soul.name}」的思想代理。

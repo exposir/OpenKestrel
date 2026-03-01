@@ -5,7 +5,6 @@
     "moduleResolution": "bundler",
     "strict": true,
     "outDir": "dist",
-    "rootDir": "src",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": [
@@ -26,6 +25,8 @@
     ]
   },
   "include": [
+    "next-env.d.ts",
+    "app",
     "src",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"

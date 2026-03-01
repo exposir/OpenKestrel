@@ -35,6 +35,7 @@ NDJSON 消息类型（`/api/orchestrate` → 前端）：
 { type: "meta", soul: string, topic: string, timestamp: string }
 { type: "chunk", text: string }
 { type: "done", filename: string }
+{ type: "error", message: string }
 ```
 
 打字机光标实现：在 `content` 末尾追加 ` ▋`，`done` 后移除。

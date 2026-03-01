@@ -4,8 +4,8 @@
 // [PROTOCOL]: 仅用于本地验证，话题和背景硬编码在文件顶部，运行方式: npx tsx src/orchestration/index.ts
 
 import "dotenv/config";
-import { runOrchestration } from "./engine.ts";
-import { SOULS } from "./soul.ts";
+import { runOrchestration } from "./engine";
+import { SOULS } from "./soul";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 

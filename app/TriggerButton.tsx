@@ -1,5 +1,5 @@
-// [INPUT]: 依赖 /api/orchestrate 的流式 NDJSON 响应
-// [OUTPUT]: TriggerButton（触发按钮）+ StreamCard（流式渲染卡片），通过 window 事件总线解耦
+// [INPUT]: 依赖 /api/orchestrate 的流式 NDJSON 响应（meta/chunk/done/error）
+// [OUTPUT]: TriggerButton（触发按钮）+ StreamCard（流式渲染卡片），通过 window 事件总线解耦并处理异常消息
 // [POS]: app/ 的流式渲染层，L2 级别；唯一的 Client Component 聚合文件
 // [PROTOCOL]: 消息协议变更须同步 app/CLAUDE.md；新增流式事件类型须同步 api/orchestrate/route.ts
 
@@ -17,6 +17,12 @@ interface StreamCard {
   filename?: string;
   done: boolean;
 }
+
+type StreamMessage =
+  | { type: "meta"; soul: string; topic: string; timestamp: string }
+  | { type: "chunk"; text: string }
+  | { type: "done"; filename: string }
+  | { type: "error"; message: string };
 
 export function TriggerButton() {
   const [showModal, setShowModal] = useState(false);
@@ -36,28 +42,60 @@ export function TriggerButton() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic, context }),
       });
-      const reader = res.body!.getReader();
+      if (!res.ok) {
+        const message = await res.text();
+        throw new Error(message || `Request failed with status ${res.status}`);
+      }
+      if (!res.body) {
+        throw new Error("响应体为空，无法开始流式渲染");
+      }
+
+      const reader = res.body.getReader();
       const decoder = new TextDecoder();
+      let buffer = "";
+
+      const emit = (msg: StreamMessage) => {
+        window.dispatchEvent(new CustomEvent("stream:msg", { detail: msg }));
+        if (msg.type === "done" || msg.type === "error") {
+          setLoading(false);
+        }
+      };
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const lines = decoder.decode(value).split("\n").filter(Boolean);
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
         for (const line of lines) {
           try {
-            const msg = JSON.parse(line);
-            window.dispatchEvent(
-              new CustomEvent("stream:msg", { detail: msg }),
-            );
-            if (msg.type === "done") {
-              setLoading(false);
-            }
-          } catch {}
+            emit(JSON.parse(line) as StreamMessage);
+          } catch (error) {
+            console.warn("Invalid NDJSON line from /api/orchestrate:", error);
+          }
+        }
+      }
+
+      buffer += decoder.decode();
+      const tail = buffer.trim();
+      if (tail) {
+        try {
+          emit(JSON.parse(tail) as StreamMessage);
+        } catch (error) {
+          console.warn("Invalid NDJSON tail from /api/orchestrate:", error);
         }
       }
     } catch (err) {
       console.error("Failed to orchestrate:", err);
+      const message = err instanceof Error ? err.message : "编排失败";
+      window.dispatchEvent(
+        new CustomEvent("stream:msg", {
+          detail: { type: "error", message } satisfies StreamMessage,
+        }),
+      );
+    } finally {
       setLoading(false);
     }
   }
@@ -193,6 +231,22 @@ export function StreamCard() {
       } else if (msg.type === "done") {
         setCard((prev) =>
           prev ? { ...prev, done: true, filename: msg.filename } : prev,
+        );
+      } else if (msg.type === "error") {
+        setCard((prev) =>
+          prev
+            ? {
+                ...prev,
+                done: true,
+                content: prev.content || `生成失败：${msg.message}`,
+              }
+            : {
+                soul: "系统",
+                topic: "编排失败",
+                timestamp: new Date().toISOString(),
+                content: `生成失败：${msg.message}`,
+                done: true,
+              },
         );
       }
     };

@@ -3,8 +3,8 @@
 // [POS]: src/orchestration/ 的 LLM 调用层，L3 级别；唯一允许调用外部 API 的模块
 // [PROTOCOL]: 新增 LLM 调用函数只能在本文件内；callDeepSeekStream 用 deepseek-chat，runOrchestration 用 deepseek-reasoner
 
-import { buildSystemPrompt, buildUserPrompt } from "./prompts.ts";
-import type { Soul } from "./soul.ts";
+import { buildSystemPrompt, buildUserPrompt } from "./prompts";
+import type { Soul } from "./soul";
 
 const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
 
@@ -81,12 +81,16 @@ export async function callDeepSeekStream(
   const reader = res.body!.getReader();
   const decoder = new TextDecoder();
   let full = "";
+  let buffer = "";
 
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
 
-    const lines = decoder.decode(value).split("\n");
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+
     for (const line of lines) {
       if (!line.startsWith("data: ")) continue;
       const data = line.slice(6);
@@ -98,7 +102,27 @@ export async function callDeepSeekStream(
           full += chunk;
           onChunk(chunk);
         }
-      } catch {}
+      } catch (error) {
+        console.warn("DeepSeek stream chunk parse failed:", error);
+      }
+    }
+  }
+
+  buffer += decoder.decode();
+  const tail = buffer.trim();
+  if (tail.startsWith("data: ")) {
+    const data = tail.slice(6);
+    if (data !== "[DONE]") {
+      try {
+        const json = JSON.parse(data);
+        const chunk = json.choices?.[0]?.delta?.content ?? "";
+        if (chunk) {
+          full += chunk;
+          onChunk(chunk);
+        }
+      } catch (error) {
+        console.warn("DeepSeek stream tail parse failed:", error);
+      }
     }
   }
 
@@ -126,7 +150,8 @@ async function entropyCheck(
   try {
     const json = result.match(/\{.*\}/s)?.[0] ?? "{}";
     return JSON.parse(json);
-  } catch {
+  } catch (error) {
+    console.warn("Entropy check parse failed, fallback to pass:", error);
     return { pass: true, reason: "校验解析失败，默认通过" };
   }
 }

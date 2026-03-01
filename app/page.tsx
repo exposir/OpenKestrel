@@ -48,7 +48,8 @@ async function getDebates(): Promise<DebateFile[]> {
         }),
     );
     return debates.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-  } catch {
+  } catch (error) {
+    console.warn("Failed to read output directory:", error);
     return [];
   }
 }

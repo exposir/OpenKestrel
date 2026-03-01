@@ -5,14 +5,14 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 
 type Theme = "system" | "light" | "dark";
 
 const CYCLE: Theme[] = ["system", "light", "dark"];
 const TITLE: Record<Theme, string> = { system: "Follow system", light: "Light mode", dark: "Dark mode" };
 
-const ICONS: Record<Theme, JSX.Element> = {
+const ICONS: Record<Theme, ReactNode> = {
   system: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2" />

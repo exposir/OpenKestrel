@@ -23,7 +23,8 @@ export default async function DebatePage({
   try {
     const raw = await readFile(filepath, "utf-8");
     debate = JSON.parse(raw);
-  } catch {
+  } catch (error) {
+    console.warn(`Failed to load debate file: ${id}`, error);
     return (
       <main style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
         <p style={{ color: "var(--text-secondary)" }}>对战记录不存在</p>

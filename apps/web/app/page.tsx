@@ -177,6 +177,7 @@ export default async function HomePage({
                 <Link
                   key={d.filename}
                   href={`/debate/${d.filename}`}
+                  prefetch
                   style={{ textDecoration: "none" }}
                 >
                   <div

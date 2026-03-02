@@ -203,6 +203,7 @@ export function StreamCard() {
         >
           <Link
             href={`/debate/${card.filename}`}
+            prefetch
             style={{
               fontSize: 12,
               color: "var(--text-secondary)",

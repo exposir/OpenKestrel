@@ -8,6 +8,10 @@
 # application/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于application/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [searchDebates.ts](./searchDebates.ts): 讨论搜索用例。
 
 法则: 查询职责单一·分页/限制规则集中·实现可替换

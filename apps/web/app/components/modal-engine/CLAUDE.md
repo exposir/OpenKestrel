@@ -8,6 +8,10 @@
 # modal-engine/
 > L2 | 父级: [app/components/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于modal-engine/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [modal-types.ts](./modal-types.ts): 弹窗 ID/请求/状态类型定义（`compose`/`search`/`hotkey-help`）。
 成员清单 [modal-motion.ts](./modal-motion.ts): 弹窗切换时序常量（`MODAL_SWITCH_MS`）单源定义。
 成员清单 [ModalProvider.module.css](./ModalProvider.module.css): 弹窗宿主壳体/切换动画样式模块（overlay/shell/stage/panel）。

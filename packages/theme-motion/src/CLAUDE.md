@@ -8,6 +8,10 @@
 # src/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [index.ts](./index.ts): 包导出入口。
 成员清单 [core.ts](./core.ts): 主题与动画核心原语。
 成员清单 [react.ts](./react.ts): React 集成适配层。

@@ -8,6 +8,10 @@
 # viewer-app/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于viewer-app/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [app.js](./app.js): 依赖图浏览器前端主逻辑。
 成员清单 [renderer.js](./renderer.js): 图渲染基础设施（WebGL 优先 + SVG 回退 + 缩放拖拽）。
 成员清单 [style.css](./style.css): 浏览器样式。

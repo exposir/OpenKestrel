@@ -8,6 +8,10 @@
 # apps/admin/
 > L2 | Parent: [/CLAUDE.md](../../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于apps/admin/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [app/layout.tsx](./app/layout.tsx): 后台根布局与全局元信息。  
 成员清单 [app/page.tsx](./app/page.tsx): 仪表盘主页，展示审计统计与日志表。  
 成员清单 [app/audits/page.tsx](./app/audits/page.tsx): 审计专页，提供分类/状态/关键词筛选与明细表。  

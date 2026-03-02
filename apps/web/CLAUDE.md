@@ -8,6 +8,10 @@
 # apps/web/
 > L2 | Parent: [/CLAUDE.md](../../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于apps/web/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [app/CLAUDE.md](./app/CLAUDE.md): App Router 页面、组件与 API 路由协作规则。  
 成员清单 [src/CLAUDE.md](./src/CLAUDE.md): 认证、编排、审计、存储、环境加载与 DI 装配模块地图。  
 成员清单 [package.json](./package.json): 前台应用独立依赖与脚本（`dev/build/start/orchestrate`）。  

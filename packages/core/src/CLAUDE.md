@@ -8,6 +8,10 @@
 # src/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [index.ts](./index.ts): Core 对外统一导出入口。
 成员清单 [debate/CLAUDE.md](./debate/CLAUDE.md): Debate 子域模块地图。
 成员清单 [search/CLAUDE.md](./search/CLAUDE.md): Search 子域模块地图。

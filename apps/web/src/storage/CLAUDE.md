@@ -8,6 +8,10 @@
 # src/storage/
 > L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/storage/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [paths.ts](./paths.ts): 统一本地目录路径策略，优先 `OPENKESTREL_DATA_DIR`，否则按 `process.cwd()/output` → `../../output` 回退。
 成员清单 [adapter.ts](./adapter.ts): 存储适配器切换层，支持 `STORAGE_DRIVER=local|cf`（当前 `cf` 为接口占位，防误配显式报错）。
 

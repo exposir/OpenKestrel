@@ -8,6 +8,10 @@
 # trigger/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于trigger/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [TriggerButton.tsx](./TriggerButton.tsx): 发起讨论按钮与 StreamCard 流式结果卡片。
 成员清单 [TriggerButton.module.css](./TriggerButton.module.css): 发起讨论按钮样式模块。
 

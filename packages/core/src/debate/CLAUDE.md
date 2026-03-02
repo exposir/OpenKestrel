@@ -8,6 +8,10 @@
 # debate/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于debate/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [application/CLAUDE.md](./application/CLAUDE.md): Debate 应用层用例地图。
 成员清单 [domain/CLAUDE.md](./domain/CLAUDE.md): Debate 领域模型地图。
 成员清单 [infrastructure-ports/CLAUDE.md](./infrastructure-ports/CLAUDE.md): Debate 基础设施端口地图。

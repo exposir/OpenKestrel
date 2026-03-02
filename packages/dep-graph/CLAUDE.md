@@ -8,6 +8,10 @@
 # dep-graph/
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于dep-graph/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [package.json](./package.json): 包元数据、bin 命令与构建脚本定义。  
 成员清单 [README.md](./README.md): CLI/SDK 使用说明与快速上手。  
 成员清单 [README.zh.md](./README.zh.md): CLI/SDK 中文使用说明与快速上手。  

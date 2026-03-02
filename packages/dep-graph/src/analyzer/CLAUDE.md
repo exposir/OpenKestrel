@@ -8,6 +8,10 @@
 # analyzer/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于analyzer/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [index.ts](./index.ts): 分析器导出入口。
 成员清单 [scan.ts](./scan.ts): 依赖扫描主流程。
 成员清单 [path-utils.ts](./path-utils.ts): 路径解析与归一化工具。

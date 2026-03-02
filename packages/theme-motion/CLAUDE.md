@@ -8,6 +8,10 @@
 # theme-motion/
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于theme-motion/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [package.json](./package.json): 包元数据与 exports/build 脚本定义。  
 成员清单 [README.md](./README.md): 包用法说明与接入示例。  
 成员清单 [README.zh.md](./README.zh.md): 包中文用法说明与接入示例。  

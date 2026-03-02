@@ -8,6 +8,10 @@
 # logic/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于logic/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [architecture.zh.md](./architecture.zh.md): 系统总体架构设计。
 成员清单 [core-di-architecture.zh.md](./core-di-architecture.zh.md): Core 与 DI 组合架构。
 成员清单 [api-design.zh.md](./api-design.zh.md): API 协议与输入输出约束。

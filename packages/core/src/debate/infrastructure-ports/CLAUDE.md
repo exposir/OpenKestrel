@@ -8,6 +8,10 @@
 # infrastructure-ports/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于infrastructure-ports/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [llmGateway.ts](./llmGateway.ts): LLM 能力端口契约。
 成员清单 [debateRepository.ts](./debateRepository.ts): 讨论存储端口契约。
 

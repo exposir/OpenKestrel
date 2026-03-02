@@ -8,6 +8,10 @@
 # src/audit/
 > L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/audit/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [logger.ts](./logger.ts): 审计日志写入器，JSONL 落盘至 `OPENKESTREL_DATA_DIR/audit/YYYY-MM-DD.jsonl`，暴露 `logAuditEvent/getRequestContext`。
 
 法则: 事件结构统一·写入失败不阻断主流程·按日切分日志文件·默认脱敏最小化

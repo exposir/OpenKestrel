@@ -8,6 +8,10 @@
 # auth/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于auth/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [AuthButton.tsx](./AuthButton.tsx): 登录/退出入口，承载 OAuth/credentials 发起与状态展示。
 
 法则: 认证交互单点入口·Provider 探测失败可降级·未登录状态可解释

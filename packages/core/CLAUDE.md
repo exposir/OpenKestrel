@@ -8,6 +8,10 @@
 # packages/core/
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于packages/core/相关能力的组织与实现，并明确与相邻模块的职责边界。
 纯业务内核包：定义领域模型、应用用例、基础设施 ports（接口），不依赖 Next/React。
 
 成员清单 [package.json](./package.json): 包元数据与导出入口配置（`@openkestrel/core`）。  

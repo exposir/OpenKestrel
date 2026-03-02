@@ -8,6 +8,10 @@
 # app/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于app/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [layout.tsx](./layout.tsx): Admin 根布局与全局元信息。
 成员清单 [page.tsx](./page.tsx): Admin 首页总览入口。
 成员清单 [globals.css](./globals.css): Admin 全局视觉样式。

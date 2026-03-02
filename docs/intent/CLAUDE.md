@@ -8,6 +8,10 @@
 # intent/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于intent/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [vision.zh.md](./vision.zh.md): 产品愿景与长期目标。
 成员清单 [prd.zh.md](./prd.zh.md): 产品需求定义与边界。
 成员清单 [mvp.zh.md](./mvp.zh.md): MVP 范围、优先级与验收。

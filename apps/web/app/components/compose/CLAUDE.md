@@ -8,6 +8,10 @@
 # compose/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于compose/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [ComposeDialog.tsx](./ComposeDialog.tsx): 发帖弹窗内容，提交编排请求并派发流式事件。
 成员清单 [ComposeDialog.module.css](./ComposeDialog.module.css): 发帖弹窗样式模块。
 

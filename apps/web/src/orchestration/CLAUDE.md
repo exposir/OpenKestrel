@@ -1,13 +1,21 @@
 <!--
 - [INPUT]: 依赖 src/CLAUDE.md 的模块地图，及 docs/logic/orchestration.zh.md 的编排设计
 - [OUTPUT]: 提供 orchestration/ 各文件的接口约定与变更规则
-- [POS]: src/orchestration/ 的 L3 级别规范
+- [POS]: src/orchestration/ 的 L2 级别规范
 - [PROTOCOL]: 变更时更新此头部，然后检查 src/CLAUDE.md
 -->
 
 # src/orchestration/ - 意图编译引擎
 
-> L3 | Parent: [src/CLAUDE.md](../CLAUDE.md)
+> L2 | Parent: [src/CLAUDE.md](../CLAUDE.md)
+
+
+## 模块功能综述
+
+该目录主要用于意图编译引擎。负责收敛本目录内实现能力，并明确与相邻模块的职责边界。
+## 成员清单
+
+成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。
 
 ## 数据流
 

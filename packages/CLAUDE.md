@@ -8,6 +8,10 @@
 # packages/
 > L2 | Parent: [/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于packages/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [theme-motion/CLAUDE.md](./theme-motion/CLAUDE.md): 主题切换动画库（core + react + css），可被 web/admin 复用并独立发布。  
 成员清单 [dep-graph/CLAUDE.md](./dep-graph/CLAUDE.md): 高性能依赖分析与 WebGL 可视化工具包（CLI + SDK + Viewer）。
 成员清单 [core/CLAUDE.md](./core/CLAUDE.md): 纯业务内核包（DDD 模型 + ports + 用例），供应用层通过 DI 调用。

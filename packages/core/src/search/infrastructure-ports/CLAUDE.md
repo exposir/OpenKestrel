@@ -8,6 +8,10 @@
 # infrastructure-ports/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于infrastructure-ports/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [searchRepository.ts](./searchRepository.ts): 搜索仓储端口契约。
 
 法则: 查询端口稳定·依赖反转·实现外置

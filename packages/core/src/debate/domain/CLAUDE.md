@@ -8,6 +8,10 @@
 # domain/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于domain/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [valueObjects.ts](./valueObjects.ts): 讨论领域值对象定义与校验。
 成员清单 [entities.ts](./entities.ts): 讨论实体定义。
 成员清单 [aggregate.ts](./aggregate.ts): 讨论聚合根行为封装。

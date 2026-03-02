@@ -8,6 +8,10 @@
 # src/di/
 > L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/di/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [container.ts](./container.ts): DI composition root（`tsyringe`），集中注册 `@openkestrel/core` ports 的运行时实现（LLM 网关、Debate/Search 仓储）。
 
 法则: 仅此目录允许装配依赖·route 不直接 `new` 基础设施实现·token 来源统一为 `@openkestrel/core` 的 `TOKENS`

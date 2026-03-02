@@ -8,6 +8,10 @@
 # search/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于search/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [SearchLauncher.tsx](./SearchLauncher.tsx): 首页搜索触发器与查询 Tag 清理入口。
 成员清单 [SearchDialog.tsx](./SearchDialog.tsx): 全局搜索弹窗内容，调用 `/api/search` 并跳转帖子。
 成员清单 [SearchDialog.module.css](./SearchDialog.module.css): 搜索弹窗样式模块。

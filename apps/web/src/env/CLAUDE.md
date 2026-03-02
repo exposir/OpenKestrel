@@ -8,6 +8,10 @@
 # src/env/
 > L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于src/env/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [load.ts](./load.ts): 统一加载 `.env.local/.env`（优先 `apps/web`，再回退仓库根），导出 `ensureEnvLoaded`。
 
 法则: 兼容 monorepo cwd 差异·仅服务端调用·加载顺序稳定可预测

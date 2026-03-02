@@ -8,6 +8,10 @@
 # theme/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
+
+## 模块功能综述
+
+该目录主要用于theme/相关能力的组织与实现，并明确与相邻模块的职责边界。
 成员清单 [ThemeToggle.tsx](./ThemeToggle.tsx): 主题三态切换按钮（system/light/dark）与动画触发入口。
 
 法则: 主题状态单源化·交互反馈明确·动画与可读性平衡

@@ -14,11 +14,7 @@ export const metadata: Metadata = {
   description: "OpenKestrel 审计与运营后台",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const dataDir = getDataDir();
   return (
     <html lang="zh-CN">
@@ -50,9 +46,7 @@ export default function RootLayout({
               >
                 OPENKESTREL CONSOLE
               </p>
-              <h1 style={{ margin: "10px 0 0", fontSize: 30, fontWeight: 700 }}>
-                运营后台
-              </h1>
+              <h1 style={{ margin: "10px 0 0", fontSize: 30, fontWeight: 700 }}>运营后台</h1>
             </div>
             <span
               style={{

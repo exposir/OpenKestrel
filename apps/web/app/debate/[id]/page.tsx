@@ -43,11 +43,7 @@ interface DebateOutput {
   timestamp: string;
 }
 
-export default async function DebatePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function DebatePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   let debate: DebateOutput[] = [];
   try {

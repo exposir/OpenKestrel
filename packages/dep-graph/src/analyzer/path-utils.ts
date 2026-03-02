@@ -7,14 +7,7 @@
 
 import path from "node:path";
 
-export const SUPPORTED_EXTENSIONS = new Set([
-  ".ts",
-  ".tsx",
-  ".js",
-  ".jsx",
-  ".mjs",
-  ".cjs"
-]);
+export const SUPPORTED_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
 
 export function toPosixPath(input: string): string {
   return input.split(path.sep).join("/");

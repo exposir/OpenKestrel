@@ -38,20 +38,12 @@ export default async function AuditsPage({
     <div className="ok-admin-layout">
       <section className="ok-admin-panel">
         <Form action="/audits" className="ok-admin-toolbar">
-          <select
-            name="category"
-            defaultValue={category}
-            className="ok-admin-select"
-          >
+          <select name="category" defaultValue={category} className="ok-admin-select">
             <option value="all">全部分类</option>
             <option value="auth">认证事件</option>
             <option value="orchestrate">发帖事件</option>
           </select>
-          <select
-            name="status"
-            defaultValue={status}
-            className="ok-admin-select"
-          >
+          <select name="status" defaultValue={status} className="ok-admin-select">
             <option value="all">全部状态</option>
             <option value="success">成功</option>
             <option value="failure">失败</option>
@@ -90,17 +82,12 @@ export default async function AuditsPage({
                 </tr>
               ) : (
                 records.slice(0, 200).map((record, idx) => (
-                  <tr
-                    key={`${record.timestamp}-${idx}`}
-                    className="ok-admin-row"
-                  >
+                  <tr key={`${record.timestamp}-${idx}`} className="ok-admin-row">
                     <Td>{formatTime(record.timestamp)}</Td>
                     <Td>{record.category}</Td>
                     <Td>{record.action}</Td>
                     <Td>
-                      <span className={`ok-admin-status ${record.status}`}>
-                        {record.status}
-                      </span>
+                      <span className={`ok-admin-status ${record.status}`}>{record.status}</span>
                     </Td>
                     <Td>{record.actor?.email || record.actor?.name || "-"}</Td>
                     <Td>{record.request?.ip || "-"}</Td>
@@ -117,18 +104,9 @@ export default async function AuditsPage({
       <div className="ok-admin-sidebar-wrap">
         <aside className="ok-admin-sidebar">
           <MetricCard title="今日总事件" value={String(metrics.todayTotal)} />
-          <MetricCard
-            title="今日登录成功"
-            value={String(metrics.todayAuthSignIn)}
-          />
-          <MetricCard
-            title="今日发帖成功"
-            value={String(metrics.todayPostsSuccess)}
-          />
-          <MetricCard
-            title="今日发帖失败"
-            value={String(metrics.todayPostsFailure)}
-          />
+          <MetricCard title="今日登录成功" value={String(metrics.todayAuthSignIn)} />
+          <MetricCard title="今日发帖成功" value={String(metrics.todayPostsSuccess)} />
+          <MetricCard title="今日发帖失败" value={String(metrics.todayPostsFailure)} />
         </aside>
       </div>
     </div>
@@ -148,16 +126,6 @@ function Th({ children }: { children: ReactNode }) {
   return <th className="ok-admin-th">{children}</th>;
 }
 
-function Td({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>
-      {children}
-    </td>
-  );
+function Td({ children, className }: { children: ReactNode; className?: string }) {
+  return <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>{children}</td>;
 }

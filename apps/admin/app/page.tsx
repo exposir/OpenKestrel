@@ -27,8 +27,7 @@ export default async function AdminHome({
 
   const debates = allDebates.filter((item) => {
     if (!debateKeyword) return true;
-    const haystack =
-      `${item.filename} ${item.topic} ${item.souls.join(" ")}`.toLowerCase();
+    const haystack = `${item.filename} ${item.topic} ${item.souls.join(" ")}`.toLowerCase();
     return haystack.includes(debateKeyword);
   });
 
@@ -36,12 +35,7 @@ export default async function AdminHome({
     <div className="ok-admin-layout">
       <section className="ok-admin-panel">
         <Form action="/" className="ok-admin-toolbar">
-          <input
-            name="q"
-            defaultValue={dq}
-            placeholder="搜索话题"
-            className="ok-admin-input"
-          />
+          <input name="q" defaultValue={dq} placeholder="搜索话题" className="ok-admin-input" />
           <button type="submit" className="ok-admin-button">
             筛选
           </button>
@@ -82,10 +76,7 @@ export default async function AdminHome({
 
       <div className="ok-admin-sidebar-wrap">
         <aside className="ok-admin-sidebar">
-          <MetricCard
-            title="历史讨论文件总数"
-            value={String(allDebates.length)}
-          />
+          <MetricCard title="历史讨论文件总数" value={String(allDebates.length)} />
         </aside>
       </div>
     </div>
@@ -105,16 +96,6 @@ function Th({ children }: { children: ReactNode }) {
   return <th className="ok-admin-th">{children}</th>;
 }
 
-function Td({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>
-      {children}
-    </td>
-  );
+function Td({ children, className }: { children: ReactNode; className?: string }) {
+  return <td className={`ok-admin-td${className ? ` ${className}` : ""}`}>{children}</td>;
 }

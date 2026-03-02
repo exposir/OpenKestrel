@@ -38,7 +38,7 @@ export async function runCli(argv: string[]): Promise<void> {
         root: effectiveRoot,
         outFile: options.out,
         aggregateDepth: options.aggregateDepth,
-        meshPercentile: options.meshPercentile
+        meshPercentile: options.meshPercentile,
       });
 
       printSummary(report);
@@ -47,7 +47,7 @@ export async function runCli(argv: string[]): Promise<void> {
       if (options.open) {
         const handle = await startViewer(report, {
           port: options.port,
-          openBrowser: true
+          openBrowser: true,
         });
         console.log(`[okdep] viewer: ${handle.url}`);
       }
@@ -62,7 +62,7 @@ export async function runCli(argv: string[]): Promise<void> {
       const reportPath = path.resolve(options.report);
       const handle = await startViewer(reportPath, {
         port: options.port,
-        openBrowser: options.open
+        openBrowser: options.open,
       });
       console.log(`[okdep] viewer: ${handle.url}`);
     });
@@ -98,7 +98,7 @@ export async function runCli(argv: string[]): Promise<void> {
           continue;
         }
         console.log(
-          `${node.path} | score=${item.score.toFixed(4)} | in=${item.inDegree} | out=${item.outDegree}`
+          `${node.path} | score=${item.score.toFixed(4)} | in=${item.inDegree} | out=${item.outDegree}`,
         );
       }
     });

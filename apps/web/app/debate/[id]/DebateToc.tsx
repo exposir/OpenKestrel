@@ -46,10 +46,7 @@ export function DebateToc({ items }: { items: TocItem[] }) {
       }
 
       // 滑动到底部时自动高亮最后一个目录项
-      if (
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 10
-      ) {
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10) {
         currentActiveId = items[items.length - 1].id;
       }
 
@@ -84,10 +81,7 @@ export function DebateToc({ items }: { items: TocItem[] }) {
     <nav className={styles.toc} aria-label="目录导航">
       <ul className={styles.list}>
         {items.map((item) => (
-          <li
-            key={item.id}
-            style={{ marginLeft: item.depth > 0 ? `${item.depth * 10}px` : 0 }}
-          >
+          <li key={item.id} style={{ marginLeft: item.depth > 0 ? `${item.depth * 10}px` : 0 }}>
             <button
               className={`${styles.item} ${item.depth > 0 ? styles.subItem : ""} ${activeId === item.id ? styles.active : ""}`.trim()}
               onClick={() => handleClick(item.id)}

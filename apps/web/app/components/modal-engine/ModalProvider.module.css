@@ -12,13 +12,11 @@
 }
 
 .overlayOpen {
-  animation: overlayFadeIn var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: overlayFadeIn var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .overlayClose {
-  animation: overlayFadeOut var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: overlayFadeOut var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .overlayHidden {
@@ -63,13 +61,11 @@
 }
 
 .shellOpen {
-  animation: shellEnter var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: shellEnter var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .shellClosing {
-  animation: shellFadeOut var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: shellFadeOut var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .shellHidden {
@@ -98,14 +94,12 @@
 }
 
 .panelEnter {
-  animation: panelCrossfadeIn var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: panelCrossfadeIn var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .panelExit {
   pointer-events: none;
-  animation: panelCrossfadeOut var(--ok-modal-switch-ms, 280ms)
-    cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: panelCrossfadeOut var(--ok-modal-switch-ms, 280ms) cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes overlayFadeIn {

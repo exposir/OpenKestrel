@@ -11,10 +11,7 @@
 // [PROTOCOL]: NDJSON 消息结构变更须同步 app/components/trigger/TriggerButton.tsx 和 app/CLAUDE.md
 
 import { SOULS } from "../../../src/orchestration/soul";
-import {
-  buildSystemPrompt,
-  buildUserPrompt,
-} from "../../../src/orchestration/prompts";
+import { buildSystemPrompt, buildUserPrompt } from "../../../src/orchestration/prompts";
 import { auth } from "../../../src/auth/auth";
 import { getRequestContext, logAuditEvent } from "../../../src/audit/logger";
 import { getContainer } from "../../../src/di/container";
@@ -27,9 +24,7 @@ import {
 
 function normalizeStringList(input: unknown): string[] {
   if (!Array.isArray(input)) return [];
-  return input
-    .map((item) => (typeof item === "string" ? item.trim() : ""))
-    .filter(Boolean);
+  return input.map((item) => (typeof item === "string" ? item.trim() : "")).filter(Boolean);
 }
 
 export async function POST(req: Request) {
@@ -48,8 +43,7 @@ export async function POST(req: Request) {
     return new Response("Please sign in first", { status: 401 });
   }
 
-  const { topic, context, soul_id, references, must_cover, must_avoid } =
-    await req.json();
+  const { topic, context, soul_id, references, must_cover, must_avoid } = await req.json();
   const actor = {
     name: session.user?.name ?? null,
     email: session.user?.email ?? null,
@@ -69,14 +63,8 @@ export async function POST(req: Request) {
     return new Response("Topic is required", { status: 400 });
   }
 
-  const matchedSoul = SOULS.find(
-    (item) => item.id === soul_id || item.name === soul_id,
-  );
-  if (
-    typeof soul_id === "string" &&
-    soul_id.trim().length > 0 &&
-    !matchedSoul
-  ) {
+  const matchedSoul = SOULS.find((item) => item.id === soul_id || item.name === soul_id);
+  if (typeof soul_id === "string" && soul_id.trim().length > 0 && !matchedSoul) {
     await logAuditEvent({
       category: "orchestrate",
       action: "create_post",
@@ -117,8 +105,7 @@ export async function POST(req: Request) {
   const stream = new ReadableStream({
     async start(controller) {
       const encode = (s: string) => new TextEncoder().encode(s);
-      const push = (payload: unknown) =>
-        controller.enqueue(encode(JSON.stringify(payload) + "\n"));
+      const push = (payload: unknown) => controller.enqueue(encode(JSON.stringify(payload) + "\n"));
 
       try {
         const container = getContainer();
@@ -158,8 +145,7 @@ export async function POST(req: Request) {
           },
         });
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "编排过程发生未知错误";
+        const message = error instanceof Error ? error.message : "编排过程发生未知错误";
         push({ type: "error", message });
         await logAuditEvent({
           category: "orchestrate",

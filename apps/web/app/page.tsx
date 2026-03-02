@@ -34,35 +34,32 @@ async function getDebates(query?: string): Promise<DebateFile[]> {
     const normalizedQuery = query?.trim().toLowerCase() ?? "";
     const debates = await Promise.all(
       files.map(async (filename) => {
-          const data = await readDebateFile(filename.replace(".json", ""));
-          if (normalizedQuery) {
-            const searchable = [
-              data[0]?.topic ?? "",
-              ...data.map((d) => d.soul),
-              ...data.map((d) => d.response),
-            ]
-              .join("\n")
-              .toLowerCase();
-            if (!searchable.includes(normalizedQuery)) {
-              return null;
-            }
+        const data = await readDebateFile(filename.replace(".json", ""));
+        if (normalizedQuery) {
+          const searchable = [
+            data[0]?.topic ?? "",
+            ...data.map((d) => d.soul),
+            ...data.map((d) => d.response),
+          ]
+            .join("\n")
+            .toLowerCase();
+          if (!searchable.includes(normalizedQuery)) {
+            return null;
           }
+        }
 
-          const matchedEntry =
-            normalizedQuery
-              ? data.find((d) => d.response.toLowerCase().includes(normalizedQuery))
-              : data[0];
+        const matchedEntry = normalizedQuery
+          ? data.find((d) => d.response.toLowerCase().includes(normalizedQuery))
+          : data[0];
 
-          return {
-            filename: filename.replace(".json", ""),
-            topic: data[0]?.topic ?? "未知话题",
-            souls: data.map((d) => d.soul),
-            excerpt: matchedEntry?.response
-              ? matchedEntry.response.slice(0, 400) + "..."
-              : "",
-            timestamp: data[0]?.timestamp ?? "",
-          };
-        }),
+        return {
+          filename: filename.replace(".json", ""),
+          topic: data[0]?.topic ?? "未知话题",
+          souls: data.map((d) => d.soul),
+          excerpt: matchedEntry?.response ? matchedEntry.response.slice(0, 400) + "..." : "",
+          timestamp: data[0]?.timestamp ?? "",
+        };
+      }),
     );
     return debates
       .filter((item): item is DebateFile => item !== null)
@@ -116,10 +113,7 @@ export default async function HomePage({
           </p>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <AuthButton
-            isAuthenticated={isAuthenticated}
-            userName={session?.user?.name}
-          />
+          <AuthButton isAuthenticated={isAuthenticated} userName={session?.user?.name} />
           <ThemeToggle />
         </div>
       </header>

@@ -30,7 +30,10 @@ export function getRequestContext(req: Request): AuditRequestContext {
   const forwardedFor = req.headers.get("x-forwarded-for");
   const realIp = req.headers.get("x-real-ip");
   const ip =
-    forwardedFor?.split(",").map((s) => s.trim()).find(Boolean) ??
+    forwardedFor
+      ?.split(",")
+      .map((s) => s.trim())
+      .find(Boolean) ??
     realIp ??
     null;
   return {

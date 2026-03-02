@@ -9,7 +9,12 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import type { AnalysisReport, AnalyzeOptions, DependencyEdge, FileNode } from "../types.js";
-import { buildAggregates, computeClosureSizes, findCycles, findMeshNodes } from "../graph/algorithms.js";
+import {
+  buildAggregates,
+  computeClosureSizes,
+  findCycles,
+  findMeshNodes,
+} from "../graph/algorithms.js";
 import { normalizeAbsolutePath } from "./path-utils.js";
 import { scanProject } from "./scan.js";
 import { createTsContext } from "./tsconfig.js";
@@ -30,7 +35,7 @@ export async function analyzeProject(options: AnalyzeOptions = {}): Promise<Anal
     inDegree: 0,
     outDegree: 0,
     meshScore: 0,
-    externalRefsCount: scan.externalRefsByNode.get(node.id) ?? 0
+    externalRefsCount: scan.externalRefsByNode.get(node.id) ?? 0,
   }));
 
   const dedupEdges = deduplicateEdges(scan.edges);
@@ -62,7 +67,7 @@ export async function analyzeProject(options: AnalyzeOptions = {}): Promise<Anal
       durationMs: Date.now() - startedAt,
       fileCount: nodes.length,
       edgeCount: dedupEdges.length,
-      version: REPORT_VERSION
+      version: REPORT_VERSION,
     },
     nodes,
     edges: dedupEdges,
@@ -70,7 +75,7 @@ export async function analyzeProject(options: AnalyzeOptions = {}): Promise<Anal
     mesh,
     aggregates,
     closureSizeByNode,
-    warnings: scan.warnings
+    warnings: scan.warnings,
   };
 
   if (options.outFile) {
@@ -87,7 +92,7 @@ export async function writeReport(outFile: string, report: AnalysisReport): Prom
 }
 
 function deduplicateEdges(
-  edges: Array<{ from: number; to: number; kind: DependencyEdge["kind"]; external: boolean }>
+  edges: Array<{ from: number; to: number; kind: DependencyEdge["kind"]; external: boolean }>,
 ): DependencyEdge[] {
   const seen = new Set<string>();
   const deduped: DependencyEdge[] = [];
@@ -102,7 +107,7 @@ function deduplicateEdges(
       from: edge.from,
       to: edge.to,
       kind: edge.kind,
-      external: edge.external
+      external: edge.external,
     });
   }
 

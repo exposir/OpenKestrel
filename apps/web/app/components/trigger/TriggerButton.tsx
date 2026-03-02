@@ -56,9 +56,7 @@ export function TriggerButton({ isAuthenticated }: TriggerButtonProps) {
         whiteSpace: "nowrap",
       }}
     >
-      <span className={styles.label}>
-        {!isAuthenticated ? "登录后可发帖" : "+ 发起讨论"}
-      </span>
+      <span className={styles.label}>{!isAuthenticated ? "登录后可发帖" : "+ 发起讨论"}</span>
     </button>
   );
 }
@@ -89,13 +87,9 @@ export function StreamCard() {
           done: false,
         });
       } else if (msg.type === "chunk") {
-        setCard((prev) =>
-          prev ? { ...prev, content: prev.content + msg.text } : prev,
-        );
+        setCard((prev) => (prev ? { ...prev, content: prev.content + msg.text } : prev));
       } else if (msg.type === "done") {
-        setCard((prev) =>
-          prev ? { ...prev, done: true, filename: msg.filename } : prev,
-        );
+        setCard((prev) => (prev ? { ...prev, done: true, filename: msg.filename } : prev));
       } else if (msg.type === "error") {
         setCard((prev) =>
           prev
@@ -196,15 +190,11 @@ export function StreamCard() {
             // Disable pointer events for scrolling during generation
             pointerEvents: !card.done ? "none" : "auto",
             // Apply fade out mask when not done
-            maskImage:
-              "linear-gradient(to bottom, black 80%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 80%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
           }}
         >
-          <ReactMarkdown>
-            {card.content + (!card.done ? " ▋" : "")}
-          </ReactMarkdown>
+          <ReactMarkdown>{card.content + (!card.done ? " ▋" : "")}</ReactMarkdown>
         </div>
       </div>
 

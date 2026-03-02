@@ -20,7 +20,7 @@ const VIEWER_DIR = path.resolve(__dirname, "../viewer-app");
 
 export async function startViewer(
   reportOrPath: AnalysisReport | string,
-  options: ViewerOptions = {}
+  options: ViewerOptions = {},
 ): Promise<ViewerHandle> {
   const host = options.host ?? "127.0.0.1";
   const port = options.port ?? 4711;
@@ -84,7 +84,7 @@ export async function startViewer(
           resolve();
         });
       });
-    }
+    },
   };
 }
 

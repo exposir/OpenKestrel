@@ -54,9 +54,7 @@ ${soul.forbidden.map((f) => `- ${f}`).join("\n")}
 }
 
 export function buildUserPrompt(input: UserPromptInput): string {
-  const contextSection = input.context
-    ? `\n\n## 背景信息\n${input.context}`
-    : "";
+  const contextSection = input.context ? `\n\n## 背景信息\n${input.context}` : "";
   const referencesSection =
     input.references && input.references.length > 0
       ? `\n\n## 参考资料\n${input.references.map((item, i) => `${i + 1}. ${item}`).join("\n")}`

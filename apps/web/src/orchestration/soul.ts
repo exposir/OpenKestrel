@@ -14,11 +14,11 @@
 export interface Soul {
   id: string;
   name: string;
-  worldview: string;       // 世界观/核心立场
-  style: string;           // 表达风格
-  reasoning_mode: string;  // 推理方式
-  perspective: string;     // 看待问题的独特视角
-  forbidden: string[];     // 禁止行为
+  worldview: string; // 世界观/核心立场
+  style: string; // 表达风格
+  reasoning_mode: string; // 推理方式
+  perspective: string; // 看待问题的独特视角
+  forbidden: string[]; // 禁止行为
 }
 
 // 预设人格库

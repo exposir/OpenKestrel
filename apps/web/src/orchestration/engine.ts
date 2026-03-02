@@ -179,9 +179,7 @@ export async function runOrchestration(
   const raw = await callDeepSeek(messages);
   const step5Match = raw.match(/\*\*Step 5[^\n]*\n([\s\S]+)$/);
   const response = step5Match ? step5Match[1].trim() : raw.trim();
-  const reasoning = step5Match
-    ? raw.slice(0, raw.indexOf("**Step 5")).trim()
-    : "";
+  const reasoning = step5Match ? raw.slice(0, raw.indexOf("**Step 5")).trim() : "";
 
   const check = await entropyCheck(response, topic);
   if (!check.pass) return null;

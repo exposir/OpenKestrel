@@ -10,8 +10,5 @@ export type LlmMessage = {
 };
 
 export interface LlmGateway {
-  stream(
-    messages: LlmMessage[],
-    onChunk: (chunk: string) => void,
-  ): Promise<string>;
+  stream(messages: LlmMessage[], onChunk: (chunk: string) => void): Promise<string>;
 }

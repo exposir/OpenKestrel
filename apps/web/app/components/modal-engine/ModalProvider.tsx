@@ -191,7 +191,10 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
             </Dialog.Title>
             <div className={styles.stage}>
               {state.exiting ? (
-                <div className={`${styles.panel} ${styles.panelExit}`} data-modal-id={state.exiting}>
+                <div
+                  className={`${styles.panel} ${styles.panelExit}`}
+                  data-modal-id={state.exiting}
+                >
                   {renderPanel(state.exiting, false)}
                 </div>
               ) : null}

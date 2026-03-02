@@ -20,11 +20,7 @@ import {
   type SearchRepository,
 } from "@openkestrel/core";
 import { callDeepSeekStream } from "../orchestration/engine";
-import {
-  listDebateFiles,
-  readDebateFile,
-  writeDebateFile,
-} from "../storage/adapter";
+import { listDebateFiles, readDebateFile, writeDebateFile } from "../storage/adapter";
 import { Debate, DebateEntry, DebateId, SoulName, Topic } from "@openkestrel/core";
 
 let initialized = false;
@@ -65,9 +61,7 @@ function buildDebateRepository(): DebateRepository {
 
     async listIds() {
       const files = await listDebateFiles();
-      return files
-        .map((name) => name.replace(".json", ""))
-        .map((id) => DebateId.from(id));
+      return files.map((name) => name.replace(".json", "")).map((id) => DebateId.from(id));
     },
   };
 }
@@ -83,9 +77,7 @@ function buildSearchRepository(): SearchRepository {
           const topic = entries[0]?.topic ?? "未知话题";
           const souls = entries.map((item) => item.soul);
           const timestamp = entries[0]?.timestamp ?? "";
-          const fullText = [topic, ...souls, ...entries.map((item) => item.response)].join(
-            "\n",
-          );
+          const fullText = [topic, ...souls, ...entries.map((item) => item.response)].join("\n");
           if (!fullText.toLowerCase().includes(q)) return null;
 
           const buildExcerpt = (input: string) => {
@@ -97,15 +89,11 @@ function buildSearchRepository(): SearchRepository {
             const start = Math.max(0, idx - 36);
             const end = Math.min(text.length, idx + q.length + 84);
             return (
-              (start > 0 ? "..." : "") +
-              text.slice(start, end) +
-              (end < text.length ? "..." : "")
+              (start > 0 ? "..." : "") + text.slice(start, end) + (end < text.length ? "..." : "")
             );
           };
 
-          const matchedEntry = entries.find((item) =>
-            item.response.toLowerCase().includes(q),
-          );
+          const matchedEntry = entries.find((item) => item.response.toLowerCase().includes(q));
           const excerptSource = matchedEntry?.response ?? fullText;
           return {
             id,

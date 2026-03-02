@@ -24,14 +24,10 @@ export function GlobalHotkeys() {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       const isTypingTarget =
-        target?.tagName === "INPUT" ||
-        target?.tagName === "TEXTAREA" ||
-        target?.isContentEditable;
+        target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
 
-      const isSearchShortcut =
-        (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
-      const isThemeShortcut =
-        (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d";
+      const isSearchShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+      const isThemeShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d";
 
       if (isSearchShortcut) {
         event.preventDefault();

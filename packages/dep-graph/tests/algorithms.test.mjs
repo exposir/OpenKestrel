@@ -11,15 +11,42 @@ import assert from "node:assert/strict";
 import { computeClosureSizes, findCycles, findMeshNodes } from "../dist/index.js";
 
 const nodes = [
-  { id: 0, path: "a.ts", ext: ".ts", sizeBytes: 100, inDegree: 1, outDegree: 1, meshScore: 0, externalRefsCount: 0 },
-  { id: 1, path: "b.ts", ext: ".ts", sizeBytes: 200, inDegree: 1, outDegree: 2, meshScore: 0, externalRefsCount: 0 },
-  { id: 2, path: "c.ts", ext: ".ts", sizeBytes: 300, inDegree: 1, outDegree: 0, meshScore: 0, externalRefsCount: 0 }
+  {
+    id: 0,
+    path: "a.ts",
+    ext: ".ts",
+    sizeBytes: 100,
+    inDegree: 1,
+    outDegree: 1,
+    meshScore: 0,
+    externalRefsCount: 0,
+  },
+  {
+    id: 1,
+    path: "b.ts",
+    ext: ".ts",
+    sizeBytes: 200,
+    inDegree: 1,
+    outDegree: 2,
+    meshScore: 0,
+    externalRefsCount: 0,
+  },
+  {
+    id: 2,
+    path: "c.ts",
+    ext: ".ts",
+    sizeBytes: 300,
+    inDegree: 1,
+    outDegree: 0,
+    meshScore: 0,
+    externalRefsCount: 0,
+  },
 ];
 
 const edges = [
   { from: 0, to: 1, kind: "static", external: false },
   { from: 1, to: 0, kind: "static", external: false },
-  { from: 1, to: 2, kind: "static", external: false }
+  { from: 1, to: 2, kind: "static", external: false },
 ];
 
 test("findCycles detects SCC", () => {

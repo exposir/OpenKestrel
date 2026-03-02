@@ -50,10 +50,7 @@ function assertCloudflareNotImplemented(): never {
   );
 }
 
-export async function writeDebateFile(
-  filename: string,
-  content: DebateEntry[],
-): Promise<void> {
+export async function writeDebateFile(filename: string, content: DebateEntry[]): Promise<void> {
   if (getStorageDriver() === "cf") {
     assertCloudflareNotImplemented();
   }

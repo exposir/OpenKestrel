@@ -31,7 +31,7 @@ async function tryCreateWebglRenderer(container, graphData, handlers) {
   try {
     const [{ default: Graph }, { default: Sigma }] = await Promise.all([
       import("https://esm.sh/graphology@0.26.0"),
-      import("https://esm.sh/sigma@3.0.0-beta.6")
+      import("https://esm.sh/sigma@3.0.0-beta.6"),
     ]);
 
     const graph = new Graph();
@@ -41,7 +41,7 @@ async function tryCreateWebglRenderer(container, graphData, handlers) {
         x: node.x,
         y: node.y,
         size: node.size,
-        color: node.color
+        color: node.color,
       });
     }
 
@@ -49,7 +49,7 @@ async function tryCreateWebglRenderer(container, graphData, handlers) {
       if (graph.hasNode(edge.from) && graph.hasNode(edge.to)) {
         graph.addEdge(edge.id, edge.from, edge.to, {
           size: edge.width,
-          color: edge.color
+          color: edge.color,
         });
       }
     }
@@ -60,14 +60,14 @@ async function tryCreateWebglRenderer(container, graphData, handlers) {
       labelRenderedSizeThreshold: 2,
       zIndex: true,
       minCameraRatio: 0.08,
-      maxCameraRatio: 5
+      maxCameraRatio: 5,
     });
 
     sigma.on("clickNode", ({ node }) => handlers.onNodeClick(node));
     sigma.on("clickStage", () => handlers.onBlankClick());
 
     return {
-      kill: () => sigma.kill()
+      kill: () => sigma.kill(),
     };
   } catch {
     return null;
@@ -171,7 +171,7 @@ function renderSvgGraph(container, graphData, handlers) {
   return {
     kill: () => {
       container.innerHTML = "";
-    }
+    },
   };
 }
 
@@ -190,7 +190,7 @@ function projectNodes(nodes, width, height) {
   return nodes.map((node) => ({
     ...node,
     px: padding + ((node.x - minX) / rangeX) * (width - padding * 2),
-    py: padding + ((node.y - minY) / rangeY) * (height - padding * 2)
+    py: padding + ((node.y - minY) / rangeY) * (height - padding * 2),
   }));
 }
 
@@ -206,7 +206,7 @@ function adjustLineEndpoints(from, to) {
     x1: from.px + ux * fromPad,
     y1: from.py + uy * fromPad,
     x2: to.px - ux * toPad,
-    y2: to.py - uy * toPad
+    y2: to.py - uy * toPad,
   };
 }
 
@@ -225,7 +225,7 @@ function attachSvgPanZoom(svg, rootGroup, bgRect, onBlankClick) {
     startX: 0,
     startY: 0,
     baseTx: 0,
-    baseTy: 0
+    baseTy: 0,
   };
 
   const applyTransform = () => {

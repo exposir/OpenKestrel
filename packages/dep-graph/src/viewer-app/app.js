@@ -15,7 +15,7 @@ let currentView = null;
 const viewStack = [];
 const clickMemory = {
   key: "",
-  at: 0
+  at: 0,
 };
 const DOUBLE_CLICK_MS = 280;
 
@@ -45,8 +45,8 @@ const uiState = {
     depth: 1,
     edgeLimitEnabled: true,
     edgeLimit: 1200,
-    cycleOnly: false
-  }
+    cycleOnly: false,
+  },
 };
 
 void bootstrap();
@@ -135,7 +135,7 @@ function initSidePanels() {
           selectedNodeId = item.nodeId;
           goToView({ type: "file", centerNodeId: item.nodeId });
           writeNodeDetails(item.nodeId);
-        }
+        },
       );
       meshList.appendChild(el);
     }
@@ -155,7 +155,7 @@ function initSidePanels() {
             selectedNodeId = node.id;
             goToView({ type: "file", centerNodeId: node.id });
             writeNodeDetails(node.id);
-          }
+          },
         );
         meshList.appendChild(el);
       }
@@ -185,7 +185,9 @@ function initSidePanels() {
 function initSearch() {
   renderSearchResults("");
   search.addEventListener("input", () => {
-    const keyword = String(search.value || "").trim().toLowerCase();
+    const keyword = String(search.value || "")
+      .trim()
+      .toLowerCase();
     renderSearchResults(keyword);
   });
 }
@@ -210,7 +212,7 @@ function renderSearchResults(keyword) {
 function renderAggregateGraph() {
   const graphData = {
     nodes: [],
-    edges: []
+    edges: [],
   };
 
   const nodes = report.aggregates.nodes;
@@ -225,7 +227,7 @@ function renderAggregateGraph() {
       x: Math.cos(angle) * 10,
       y: Math.sin(angle) * 10,
       size: Math.max(4, Math.min(18, 4 + Math.log10(node.fileCount + 1) * 5)),
-      color: "#0a7cff"
+      color: "#0a7cff",
     });
   });
 
@@ -235,7 +237,7 @@ function renderAggregateGraph() {
       from: edge.from,
       to: edge.to,
       color: "#a5b4d6",
-      width: Math.max(0.3, Math.min(3, edge.weight / 3))
+      width: Math.max(0.3, Math.min(3, edge.weight / 3)),
     });
   });
 
@@ -243,17 +245,17 @@ function renderAggregateGraph() {
     nodes: graphData.nodes,
     edges: graphData.edges,
     rawEdgeCount: graphData.edges.length,
-    hiddenEdgeCount: 0
+    hiddenEdgeCount: 0,
   });
   renderGraphTextPanel({
     graphData,
     centerNodeId: null,
-    title: "当前视图文本摘要"
+    title: "当前视图文本摘要",
   });
 
   void mountRenderer(graphData, {
     onNodeClick: (nodeKey) => handleNodeInteraction(nodeKey),
-    onBlankClick: () => goBackView()
+    onBlankClick: () => goBackView(),
   });
 
   details.textContent = `当前视图: 聚合图 (depth=${report.aggregates.depth})`;
@@ -263,19 +265,19 @@ function renderFocusedFileGraph(centerNodeId, prefix) {
   const graphData = buildFileGraphData({
     centerNodeId,
     prefix,
-    filters: uiState.filters
+    filters: uiState.filters,
   });
 
   updateFilterSummary(graphData);
   renderGraphTextPanel({
     graphData,
     centerNodeId,
-    title: "当前视图文本摘要"
+    title: "当前视图文本摘要",
   });
 
   void mountRenderer(graphData, {
     onNodeClick: (nodeKey) => handleNodeInteraction(nodeKey),
-    onBlankClick: () => goBackView()
+    onBlankClick: () => goBackView(),
   });
 
   details.textContent = `当前视图: 文件子图 | 节点 ${graphData.nodes.length} | 边 ${graphData.edges.length}`;
@@ -309,7 +311,9 @@ function buildFileGraphData({ centerNodeId, prefix, filters }) {
   let candidateIds = [];
   if (prefix) {
     candidateIds = report.nodes
-      .filter((node) => node.path.startsWith(prefix) && (!filters.cycleOnly || cycleNodeSet.has(node.id)))
+      .filter(
+        (node) => node.path.startsWith(prefix) && (!filters.cycleOnly || cycleNodeSet.has(node.id)),
+      )
       .map((node) => node.id);
   } else {
     candidateIds = collectNeighborSubgraph(
@@ -318,7 +322,7 @@ function buildFileGraphData({ centerNodeId, prefix, filters }) {
       adjacencyIn,
       filters.depth,
       1200,
-      filters.direction
+      filters.direction,
     );
   }
 
@@ -327,7 +331,7 @@ function buildFileGraphData({ centerNodeId, prefix, filters }) {
     nodes: [],
     edges: [],
     rawEdgeCount: 0,
-    hiddenEdgeCount: 0
+    hiddenEdgeCount: 0,
   };
 
   const angleStep = (Math.PI * 2) / Math.max(1, candidateIds.length);
@@ -341,7 +345,7 @@ function buildFileGraphData({ centerNodeId, prefix, filters }) {
       x: Math.cos(angle) * (8 + index / 30),
       y: Math.sin(angle) * (8 + index / 30),
       size: Math.max(2, Math.min(14, 2 + Math.log10(node.sizeBytes + 10))),
-      color: (node.meshScore || 0) > 0.4 ? "#ff5c5c" : "#2b7fff"
+      color: (node.meshScore || 0) > 0.4 ? "#ff5c5c" : "#2b7fff",
     });
   });
 
@@ -363,7 +367,7 @@ function buildFileGraphData({ centerNodeId, prefix, filters }) {
       from: String(edge.from),
       to: String(edge.to),
       color: "#9eb0d8",
-      width: 0.7
+      width: 0.7,
     });
     edgeCount += 1;
   }
@@ -386,7 +390,8 @@ function updateFilterSummary(graphData) {
 
   if (!uiState.filters.edgeLimitEnabled && graphData.rawEdgeCount > 2000) {
     performanceWarning.hidden = false;
-    performanceWarning.textContent = "当前为全量边显示，图可能变得拥挤且性能下降。建议开启边限流或缩小方向/深度。";
+    performanceWarning.textContent =
+      "当前为全量边显示，图可能变得拥挤且性能下降。建议开启边限流或缩小方向/深度。";
     return;
   }
 
@@ -411,10 +416,12 @@ function renderGraphTextPanel({ graphData, centerNodeId, title }) {
   }
   graphTextPanel.innerHTML = "";
 
-  const nodeIds = graphData.nodes.map((node) => Number(node.id)).filter((id) => Number.isFinite(id));
+  const nodeIds = graphData.nodes
+    .map((node) => Number(node.id))
+    .filter((id) => Number.isFinite(id));
   const nodeIdSet = new Set(nodeIds);
   const edges = report.edges.filter(
-    (edge) => !edge.external && edge.to >= 0 && nodeIdSet.has(edge.from) && nodeIdSet.has(edge.to)
+    (edge) => !edge.external && edge.to >= 0 && nodeIdSet.has(edge.from) && nodeIdSet.has(edge.to),
   );
 
   const inMap = new Map();
@@ -432,8 +439,8 @@ function renderGraphTextPanel({ graphData, centerNodeId, title }) {
   summary.appendChild(
     makePanelLine(
       `${title} | 节点 ${graphData.nodes.length} | 边 ${graphData.edges.length}/${graphData.rawEdgeCount}` +
-      (uiState.filters.edgeLimitEnabled ? ` (限流 ${uiState.filters.edgeLimit})` : "")
-    )
+        (uiState.filters.edgeLimitEnabled ? ` (限流 ${uiState.filters.edgeLimit})` : ""),
+    ),
   );
   graphTextPanel.appendChild(summary);
 
@@ -442,7 +449,9 @@ function renderGraphTextPanel({ graphData, centerNodeId, title }) {
     const centerBlock = makePanelBlock("中心节点");
     centerBlock.appendChild(makePanelLine(formatNodeName(center)));
     centerBlock.appendChild(
-      makePanelLine(`in/out: ${center.inDegree}/${center.outDegree} | closure: ${formatSize(report.closureSizeByNode[centerNodeId] || 0)}`)
+      makePanelLine(
+        `in/out: ${center.inDegree}/${center.outDegree} | closure: ${formatSize(report.closureSizeByNode[centerNodeId] || 0)}`,
+      ),
     );
     graphTextPanel.appendChild(centerBlock);
 
@@ -466,18 +475,10 @@ function renderGraphTextPanel({ graphData, centerNodeId, title }) {
     .slice(0, 8);
 
   graphTextPanel.appendChild(
-    makeNodeListBlock(
-      "图内出度 Top",
-      topOut,
-      (id) => `out=${outMap.get(id) || 0}`
-    )
+    makeNodeListBlock("图内出度 Top", topOut, (id) => `out=${outMap.get(id) || 0}`),
   );
   graphTextPanel.appendChild(
-    makeNodeListBlock(
-      "图内入度 Top",
-      topIn,
-      (id) => `in=${inMap.get(id) || 0}`
-    )
+    makeNodeListBlock("图内入度 Top", topIn, (id) => `in=${inMap.get(id) || 0}`),
   );
 }
 
@@ -530,7 +531,7 @@ async function mountRenderer(graphData, handlers) {
     container,
     graphData,
     handlers,
-    previousRenderer: renderer
+    previousRenderer: renderer,
   });
 }
 
@@ -572,7 +573,7 @@ function writeNodeDetails(nodeId) {
     "",
     `reverse dependencies (${inbound.length}):`,
     ...inbound.slice(0, 40).map((item) => `- ${item}`),
-    inbound.length > 40 ? `... +${inbound.length - 40}` : ""
+    inbound.length > 40 ? `... +${inbound.length - 40}` : "",
   ].join("\n");
 }
 

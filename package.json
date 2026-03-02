@@ -8,6 +8,10 @@
     "dev": "concurrently -n web,admin -c cyan,magenta \"pnpm dev:web\" \"pnpm dev:admin\"",
     "dev:web": "dotenv -e .env -- pnpm --filter @openkestrel/web dev",
     "dev:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin dev",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome check . && pnpm -r --if-present lint:framework",
+    "lint:biome": "biome check .",
     "build": "pnpm -r build",
     "build:web": "dotenv -e .env -- pnpm --filter @openkestrel/web build",
     "build:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin build",
@@ -22,7 +26,11 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@biomejs/biome": "^2.4.5",
+    "@eslint/eslintrc": "^3.3.4",
     "concurrently": "^9.1.2",
-    "dotenv-cli": "^10.0.0"
+    "dotenv-cli": "^10.0.0",
+    "eslint": "^9.39.3",
+    "eslint-config-next": "^16.1.6"
   }
 }

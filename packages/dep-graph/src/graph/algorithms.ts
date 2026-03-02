@@ -11,7 +11,7 @@ import type {
   CycleGroup,
   DependencyEdge,
   FileNode,
-  MeshNode
+  MeshNode,
 } from "../types.js";
 import { aggregateKey } from "../analyzer/path-utils.js";
 
@@ -70,7 +70,7 @@ export function findCycles(nodes: FileNode[], edges: DependencyEdge[]): CycleGro
         result.push({
           id: result.length,
           nodeIds: component.sort((a, b) => a - b),
-          size: component.length
+          size: component.length,
         });
       }
     }
@@ -86,10 +86,7 @@ export function findCycles(nodes: FileNode[], edges: DependencyEdge[]): CycleGro
   return result;
 }
 
-export function findMeshNodes(
-  nodes: FileNode[],
-  meshPercentile: number
-): MeshNode[] {
+export function findMeshNodes(nodes: FileNode[], meshPercentile: number): MeshNode[] {
   const inValues = nodes.map((node) => node.inDegree).sort((a, b) => a - b);
   const outValues = nodes.map((node) => node.outDegree).sort((a, b) => a - b);
 
@@ -110,7 +107,7 @@ export function findMeshNodes(
         outDegree: node.outDegree,
         score,
         percentileIn,
-        percentileOut
+        percentileOut,
       };
     })
     .sort((a, b) => b.score - a.score);
@@ -120,7 +117,7 @@ export function findMeshNodes(
 
 export function computeClosureSizes(
   nodes: FileNode[],
-  edges: DependencyEdge[]
+  edges: DependencyEdge[],
 ): Record<number, number> {
   const adjacency = buildAdjacency(nodes, edges);
   const closure: Record<number, number> = {};
@@ -153,7 +150,7 @@ export function computeClosureSizes(
 export function buildAggregates(
   nodes: FileNode[],
   edges: DependencyEdge[],
-  depth: number
+  depth: number,
 ): { nodes: AggregateNode[]; edges: AggregateEdge[]; depth: number } {
   const aggregateNodeMap = new Map<string, AggregateNode>();
   const edgeWeight = new Map<string, number>();
@@ -172,7 +169,7 @@ export function buildAggregates(
       id: key,
       label: key,
       fileCount: 1,
-      sizeBytes: node.sizeBytes
+      sizeBytes: node.sizeBytes,
     });
   }
 
@@ -200,14 +197,14 @@ export function buildAggregates(
     aggregateEdges.push({
       from: from ?? "",
       to: to ?? "",
-      weight
+      weight,
     });
   }
 
   return {
     nodes: Array.from(aggregateNodeMap.values()).sort((a, b) => a.id.localeCompare(b.id)),
     edges: aggregateEdges.sort((a, b) => b.weight - a.weight),
-    depth
+    depth,
   };
 }
 

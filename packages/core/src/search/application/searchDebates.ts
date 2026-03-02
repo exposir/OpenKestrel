@@ -18,9 +18,7 @@ export class SearchDebatesUseCase {
   async execute(query: SearchDebatesQuery): Promise<SearchItem[]> {
     const q = query.q.trim().toLowerCase();
     if (!q) throw new ValidationError("q is required");
-    const limit = Number.isFinite(query.limit)
-      ? Math.max(1, Math.min(20, query.limit))
-      : 12;
+    const limit = Number.isFinite(query.limit) ? Math.max(1, Math.min(20, query.limit)) : 12;
     return this.repo.search(q, limit);
   }
 }

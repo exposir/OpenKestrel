@@ -105,9 +105,7 @@ export interface DebateSummary {
   timestamp: string;
 }
 
-export async function readRecentDebateSummaries(
-  limit = 50,
-): Promise<DebateSummary[]> {
+export async function readRecentDebateSummaries(limit = 50): Promise<DebateSummary[]> {
   assertStorageReady();
   const dir = getDebateDir();
   let files: string[] = [];

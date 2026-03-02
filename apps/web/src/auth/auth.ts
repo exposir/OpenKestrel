@@ -19,10 +19,7 @@ function hasValue(value: string | undefined): boolean {
 
 const providers = [];
 
-if (
-  hasValue(process.env.AUTH_GITHUB_ID) &&
-  hasValue(process.env.AUTH_GITHUB_SECRET)
-) {
+if (hasValue(process.env.AUTH_GITHUB_ID) && hasValue(process.env.AUTH_GITHUB_SECRET)) {
   providers.push(
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID ?? "",
@@ -31,10 +28,7 @@ if (
   );
 }
 
-if (
-  hasValue(process.env.AUTH_GOOGLE_ID) &&
-  hasValue(process.env.AUTH_GOOGLE_SECRET)
-) {
+if (hasValue(process.env.AUTH_GOOGLE_ID) && hasValue(process.env.AUTH_GOOGLE_SECRET)) {
   providers.push(
     Google({
       clientId: process.env.AUTH_GOOGLE_ID ?? "",
@@ -44,8 +38,7 @@ if (
 }
 
 const enableDevLogin =
-  process.env.AUTH_DEV_LOGIN_ENABLED === "true" ||
-  process.env.NODE_ENV !== "production";
+  process.env.AUTH_DEV_LOGIN_ENABLED === "true" || process.env.NODE_ENV !== "production";
 
 if (enableDevLogin) {
   const devUser = process.env.AUTH_DEV_USER?.trim() || "admin";
@@ -59,10 +52,8 @@ if (enableDevLogin) {
         password: { label: "密码", type: "password" },
       },
       async authorize(credentials) {
-        const username =
-          typeof credentials?.username === "string" ? credentials.username : "";
-        const password =
-          typeof credentials?.password === "string" ? credentials.password : "";
+        const username = typeof credentials?.username === "string" ? credentials.username : "";
+        const password = typeof credentials?.password === "string" ? credentials.password : "";
         if (username !== devUser || password !== devPass) {
           return null;
         }
@@ -95,8 +86,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       });
     },
     async signOut(message) {
-      const sessionUserId =
-        "session" in message ? (message.session?.userId ?? null) : null;
+      const sessionUserId = "session" in message ? (message.session?.userId ?? null) : null;
       const token = "token" in message ? message.token : undefined;
       await logAuditEvent({
         category: "auth",

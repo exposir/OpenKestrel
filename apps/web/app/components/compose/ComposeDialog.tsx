@@ -163,11 +163,7 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
         />
 
         <label className={styles.label}>人格视角</label>
-        <select
-          className={styles.input}
-          value={soulId}
-          onChange={(e) => setSoulId(e.target.value)}
-        >
+        <select className={styles.input} value={soulId} onChange={(e) => setSoulId(e.target.value)}>
           {SOULS.map((option) => (
             <option key={option.id} value={option.id}>
               {option.name}

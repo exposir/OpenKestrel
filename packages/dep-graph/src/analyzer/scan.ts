@@ -62,13 +62,13 @@ const DEFAULT_IGNORE = [
   "**/.next/**",
   "**/dist/**",
   "**/build/**",
-  "**/coverage/**"
+  "**/coverage/**",
 ];
 
 export async function scanProject(
   root: string,
   tsContext: TsContext,
-  options: AnalyzeOptions
+  options: AnalyzeOptions,
 ): Promise<ScanResult> {
   await init;
 
@@ -80,7 +80,7 @@ export async function scanProject(
     absolute: true,
     onlyFiles: true,
     dot: false,
-    ignore: ignorePatterns
+    ignore: ignorePatterns,
   });
 
   const supported = entries
@@ -96,7 +96,7 @@ export async function scanProject(
   const cache = await loadCache(cacheFilePath);
   const nextCache: ScanCacheFile = {
     version: "1",
-    files: {}
+    files: {},
   };
 
   for (const absPath of supported) {
@@ -110,19 +110,19 @@ export async function scanProject(
         absPath,
         relPath,
         ext: path.extname(absPath).toLowerCase(),
-        sizeBytes: stat.size
+        sizeBytes: stat.size,
       });
 
       nextCache.files[absPath] = {
         mtimeMs: stat.mtimeMs,
         size: stat.size,
-        imports: []
+        imports: [],
       };
     } catch (error) {
       warnings.push({
         type: "skip",
         filePath: toRelativePath(root, absPath),
-        detail: `stat failed: ${String(error)}`
+        detail: `stat failed: ${String(error)}`,
       });
     }
   }
@@ -135,7 +135,12 @@ export async function scanProject(
     const previous = cache?.files[node.absPath];
     let parsedImports: CacheImportItem[] = [];
 
-    if (previous && nodeCache && previous.mtimeMs === nodeCache.mtimeMs && previous.size === nodeCache.size) {
+    if (
+      previous &&
+      nodeCache &&
+      previous.mtimeMs === nodeCache.mtimeMs &&
+      previous.size === nodeCache.size
+    ) {
       parsedImports = previous.imports;
     } else {
       let sourceText: string;
@@ -145,7 +150,7 @@ export async function scanProject(
         warnings.push({
           type: "skip",
           filePath: node.relPath,
-          detail: `read failed: ${String(error)}`
+          detail: `read failed: ${String(error)}`,
         });
         continue;
       }
@@ -157,7 +162,7 @@ export async function scanProject(
         warnings.push({
           type: "fallback",
           filePath: node.relPath,
-          detail: `es-module-lexer failed: ${String(error)}`
+          detail: `es-module-lexer failed: ${String(error)}`,
         });
         continue;
       }
@@ -188,7 +193,7 @@ export async function scanProject(
           to: -1,
           kind: item.kind,
           external: true,
-          targetExternalName: item.importPath
+          targetExternalName: item.importPath,
         });
         externalRefsByNode.set(node.id, (externalRefsByNode.get(node.id) ?? 0) + 1);
         continue;
@@ -199,7 +204,7 @@ export async function scanProject(
         warnings.push({
           type: "unresolved",
           filePath: node.relPath,
-          detail: item.importPath
+          detail: item.importPath,
         });
         continue;
       }
@@ -208,7 +213,7 @@ export async function scanProject(
         from: node.id,
         to: resolved,
         kind: item.kind,
-        external: false
+        external: false,
       });
     }
   }
@@ -219,7 +224,7 @@ export async function scanProject(
     nodes,
     edges,
     warnings,
-    externalRefsByNode
+    externalRefsByNode,
   };
 }
 
@@ -227,7 +232,7 @@ function resolveInternalImport(
   importPath: string,
   containingFile: string,
   pathToId: Map<string, number>,
-  tsContext: TsContext
+  tsContext: TsContext,
 ): number | null {
   const basedir = path.dirname(containingFile);
 
@@ -240,7 +245,12 @@ function resolveInternalImport(
     }
   }
 
-  const tsResolved = ts.resolveModuleName(importPath, containingFile, tsContext.options, tsContext.host);
+  const tsResolved = ts.resolveModuleName(
+    importPath,
+    containingFile,
+    tsContext.options,
+    tsContext.host,
+  );
   const resolvedFile = tsResolved.resolvedModule?.resolvedFileName;
   if (!resolvedFile) {
     return null;

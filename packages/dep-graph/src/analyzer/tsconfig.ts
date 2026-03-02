@@ -23,7 +23,7 @@ export function createTsContext(root: string): TsContext {
     directoryExists: ts.sys.directoryExists,
     realpath: ts.sys.realpath,
     getCurrentDirectory: () => root,
-    getDirectories: ts.sys.getDirectories
+    getDirectories: ts.sys.getDirectories,
   };
 
   if (!configPath) {
@@ -33,9 +33,9 @@ export function createTsContext(root: string): TsContext {
         moduleResolution: ts.ModuleResolutionKind.Bundler,
         module: ts.ModuleKind.ESNext,
         target: ts.ScriptTarget.ES2022,
-        jsx: ts.JsxEmit.ReactJSX
+        jsx: ts.JsxEmit.ReactJSX,
       },
-      host
+      host,
     };
   }
 
@@ -44,15 +44,15 @@ export function createTsContext(root: string): TsContext {
   const parsed = ts.parseJsonConfigFileContent(
     parsedConfigFile.config,
     ts.sys,
-    path.dirname(configPath)
+    path.dirname(configPath),
   );
 
   return {
     configPath,
     options: {
       allowJs: true,
-      ...parsed.options
+      ...parsed.options,
     },
-    host
+    host,
   };
 }

@@ -18,5 +18,5 @@ export type {
   CycleGroup,
   MeshNode,
   ViewerHandle,
-  ViewerOptions
+  ViewerOptions,
 } from "./types.js";

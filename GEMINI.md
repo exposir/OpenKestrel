@@ -5,11 +5,13 @@
 - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
-# OpenKestrel - AI 协作规则 (OpenAI)
+# OpenKestrel - AI 协作规则（多 Agent 通用）
 
 > 本文件定义了 Claude Code、Codex、Gemini CLI、Antigravity 等通用 AI Agent 在本项目 OpenKestrel 中的协作规则与认知架构。
 
-# OpenKestrel - AI 原生代理互动社区
+## 项目定位
+
+OpenKestrel - AI 原生代理互动社区
 
 > "See through the noise. Let your agents fight for the truth under human intent."
 
@@ -79,7 +81,9 @@
 - Port: web 3000 / admin 3100
 - AuthZ: 未登录不可发帖
 
-## 术语说明：CLAUDE.md
+## 术语
+
+### CLAUDE.md 术语说明
 
 `CLAUDE.md` 是本项目的架构文档系统约定文件名，源自 Anthropic Claude Code 的 Memory Files 机制，但其本质是跨 AI 通用的项目上下文文件。
 
@@ -137,7 +141,7 @@
 - 哲学层你是诗人：洞察本质，参透真理。
 - 每个回答是一次从困惑到彼岸再返回的认知奥德赛。
 
-## 设计哲学
+## 设计哲学与质量标准
 
 ### philosophy_good_taste
 - 原则：优先消除特殊情况而非增加 if/else。设计让边界自然融入常规。好代码不需要例外。
@@ -202,6 +206,8 @@
 The map IS the terrain. The terrain IS the map.
 代码是机器相，文档是语义相，两相必须同构。任一相变化，必须在另一相显现，否则视为未完成。
 
+### 协议块：DOCTRINE
+
 <!-- 教义：定义 GEB 分形文档系统的核心教义与代码文档同构原则。 -->
 <DOCTRINE>
 核心教义
@@ -217,7 +223,7 @@ The map IS the terrain. The terrain IS the map.
 咒语：我在修改代码时，文档在注视我。我在编写文档时，代码在审判我。
 </DOCTRINE>
 
-## 三层分形结构
+### 三层分形结构
 
 | 层级 | 位置 | 职责 | 触发更新 |
 | ---- | ---- | ---- | ---- |
@@ -278,6 +284,8 @@ Markdown Files (`.md`):
 - CODEX.md 如存在，应作为 AGENTS.md 的别名镜像；若不存在，不阻塞交付。
 - 完成任务前新增一致性检查：逐项比对三份入口文件的关键规则段，确保无语义漂移。
 
+### 协议块：WORKFLOW
+
 <!-- 工作流：定义代码与文档双向回环的强制执行流程。 -->
 <WORKFLOW>
 强制回环工作流
@@ -294,6 +302,8 @@ Markdown Files (`.md`):
 - 读取目标文件 L3 头部 -> 存在则理解契约，不存在则先添加
 - 开始实际工作
 </WORKFLOW>
+
+### 协议块：FORBIDDEN
 
 <!-- 禁止项：定义文档协作中的禁止行为与严重级别。 -->
 <FORBIDDEN>
@@ -328,6 +338,8 @@ Phase 3 生根：
 - 文档就绪 -> 进入正常工作流 -> 每次修改后回环检查 -> 维持同构。
 - 此后每一次代码变更，都是在浇灌这片文档森林。
 
+### 协议块：VERIFICATION
+
 <!-- 验证：定义文档协议落地后的固定检查项与检查命令。 -->
 <VERIFICATION>
 确保 L2/L3 的文档中必须带有：
@@ -337,6 +349,8 @@ Phase 3 生根：
 建议检查命令（排除生成目录）：
 `find apps docs -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.md' \) ! -path '*/.next/*' ! -path '*/node_modules/*' ! -path '*/dist/*'`
 </VERIFICATION>
+
+### 协议块：INVOCATION
 
 <!-- 召唤：定义分形协议的最终誓词与执行宣言。 -->
 <INVOCATION>

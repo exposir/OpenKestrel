@@ -8,8 +8,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { SOULS } from "../../src/orchestration/soul";
-import { MODAL_SWITCH_MS } from "./modal-engine/modal-motion";
+import { SOULS } from "../../../src/orchestration/soul";
+import { MODAL_SWITCH_MS } from "../modal-engine/modal-motion";
 import styles from "./ComposeDialog.module.css";
 
 type StreamMessage =

@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import { useModalEngine } from "./modal-engine/useModalEngine";
+import { useModalEngine } from "../modal-engine/useModalEngine";
 import styles from "./TriggerButton.module.css";
 
 interface StreamCard {

@@ -10,9 +10,9 @@ import { createContext, useCallback, useEffect, useMemo, useRef, useState } from
 import type { CSSProperties } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { ModalId, ModalSource, ModalState } from "./modal-types";
-import { ComposeDialog } from "../ComposeDialog";
-import { SearchDialog } from "../SearchDialog";
-import { HotkeyHelpDialog } from "../HotkeyHelpDialog";
+import { ComposeDialog } from "../compose/ComposeDialog";
+import { SearchDialog } from "../search/SearchDialog";
+import { HotkeyHelpDialog } from "../hotkeys/HotkeyHelpDialog";
 import { MODAL_SWITCH_MS } from "./modal-motion";
 import styles from "./ModalProvider.module.css";
 

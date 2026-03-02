@@ -1,0 +1,14 @@
+<!--
+- [INPUT]: 依赖 ../CLAUDE.md 的模块定位与边界约束
+- [OUTPUT]: 本文档提供本目录成员清单与职责边界
+- [POS]: search/ 的 L2 模块地图
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+-->
+
+# search/
+> L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
+
+成员清单 [route.ts](./route.ts): 全局搜索 API，提供帖子候选列表。
+
+法则: 查询接口输入可校验·搜索能力可替换·返回结构稳定
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md

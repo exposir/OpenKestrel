@@ -8,7 +8,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useModalEngine } from "./modal-engine/useModalEngine";
+import { useModalEngine } from "../modal-engine/useModalEngine";
 
 interface SearchLauncherProps {
   initialQuery?: string;

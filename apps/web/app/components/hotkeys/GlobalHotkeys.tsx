@@ -8,7 +8,7 @@
 
 import { useEffect } from "react";
 import { toggleLightDarkWithMotion } from "@openkestrel/theme-motion/core";
-import { useModalEngine } from "./modal-engine/useModalEngine";
+import { useModalEngine } from "../modal-engine/useModalEngine";
 
 export function GlobalHotkeys() {
   const { open, close } = useModalEngine();

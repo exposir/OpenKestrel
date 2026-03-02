@@ -1,15 +1,15 @@
 /**
- * - [INPUT]: 依赖 `next/link` (路由), `react-markdown` (内容渲染), `app/components/SearchLauncher` (搜索触发器), `app/components/TriggerButton` (发帖触发器), `src/storage/adapter` (存储适配器), `auth.ts` (登录态)
+ * - [INPUT]: 依赖 `next/link` (路由), `react-markdown` (内容渲染), `app/components/search/SearchLauncher` (搜索触发器), `app/components/trigger/TriggerButton` (发帖触发器), `src/storage/adapter` (存储适配器), `auth.ts` (登录态)
  * - [OUTPUT]: 对外提供 `HomePage` 异步组件
  * - [POS]: 业务主页入口，负责展示讨论列表与触发新讨论
  * - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
-import { TriggerButton, StreamCard } from "./components/TriggerButton";
-import { ThemeToggle } from "./components/ThemeToggle";
-import { AuthButton } from "./components/AuthButton";
-import { SearchLauncher } from "./components/SearchLauncher";
+import { TriggerButton, StreamCard } from "./components/trigger/TriggerButton";
+import { ThemeToggle } from "./components/theme/ThemeToggle";
+import { AuthButton } from "./components/auth/AuthButton";
+import { SearchLauncher } from "./components/search/SearchLauncher";
 import { auth } from "../src/auth/auth";
 import { listDebateFiles, readDebateFile } from "../src/storage/adapter";
 

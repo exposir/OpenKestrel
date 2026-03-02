@@ -7,7 +7,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "@openkestrel/theme-motion/style.css";
-import { GlobalHotkeys } from "./components/GlobalHotkeys";
+import { GlobalHotkeys } from "./components/hotkeys/GlobalHotkeys";
 import { ModalProvider } from "./components/modal-engine/ModalProvider";
 
 export const metadata: Metadata = {

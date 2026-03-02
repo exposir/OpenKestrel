@@ -1,14 +1,9 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 engine.ts 的核心实现能力
-- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-// [INPUT]: 依赖 prompts.ts 的 Prompt 构建器、soul.ts 的 Soul 类型、DEEPSEEK_API_KEY 环境变量
-// [OUTPUT]: 导出 callDeepSeekStream（流式）和 runOrchestration（批量+熵校验）
-// [POS]: src/orchestration/ 的 LLM 调用层，L3 级别；唯一允许调用外部 API 的模块
-// [PROTOCOL]: 新增 LLM 调用函数只能在本文件内；callDeepSeekStream 用 deepseek-chat，runOrchestration 用 deepseek-reasoner
+ * - [INPUT]: 依赖 prompts.ts（提示词构建）、soul.ts（人格类型）与 DEEPSEEK_API_KEY 环境变量
+ * - [OUTPUT]: 导出 callDeepSeek/callDeepSeekStream/runOrchestration，提供同步与流式模型调用能力
+ * - [POS]: src/orchestration 的模型调用层；本项目唯一允许直接访问外部 LLM API 的模块
+ * - [PROTOCOL]: 调整模型名、请求协议或响应结构时，同步 app/api/orchestrate/route.ts 与 docs/logic/orchestration.zh.md
+ */
 
 import { buildSystemPrompt, buildUserPrompt } from "./prompts";
 import type { Soul } from "./soul";

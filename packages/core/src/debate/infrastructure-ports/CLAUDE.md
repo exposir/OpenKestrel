@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「infrastructure-ports/」负责 业务逻辑实现与依赖协作，当前由 `debateRepository.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
-- 核心文件：`debateRepository.ts`（逻辑实现）、`llmGateway.ts`（逻辑实现）
-- 实现原理：由 `debateRepository.ts` 负责入口编排，`llmGateway.ts` 负责核心处理与结果产出；异常路径在当前目录内兜底并向上抛出可诊断信息。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `debateRepository.ts`、`llmGateway.ts`。
-- 调用链路：`debateRepository.ts` -> `llmGateway.ts` -> 输出
+- 主要功能：目录「infrastructure-ports/」接收上游模块调用并围绕 `debateRepository.ts` 组织业务处理链路，输出可复用的函数、类型或端口能力；输入是业务参数、依赖注入对象或环境上下文，输出是确定性处理结果；本目录不负责页面展示层。
+- 核心文件：`debateRepository.ts`（业务逻辑实现）、`llmGateway.ts`（业务逻辑实现）
+- 实现原理：由 `debateRepository.ts` 作为导入入口，按同级依赖完成处理并向上层返回结果；失败路径通过显式异常或错误对象上抛给调用方统一处置。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `debateRepository.ts`、`llmGateway.ts`。
+- 调用链路：`debateRepository.ts` -> `../domain/aggregate.ts` -> `../domain/entities.ts` -> 输出
 
 ## 成员清单
 

@@ -2,7 +2,7 @@
 - [INPUT]: 依赖 ../CLAUDE.md 的包级协作规则与导出约束
 - [OUTPUT]: 提供 dep-graph 包成员清单与能力边界
 - [POS]: packages/dep-graph/ 的 L2 模块地图
-- [PROTOCOL]: 变更时更新此头部，然后检查 ../CLAUDE.md
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
 # dep-graph/
@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「dep-graph/」负责 模块能力组织与对外暴露，当前由 `package.json` 等文件对外提供能力，典型使用场景是模块协作与复用时。
-- 核心文件：`package.json`（配置）、`README.md`（规则文档）、`README.zh.md`（规则文档）、`tsconfig.build.json`（配置）
-- 实现原理：由 `package.json` 接收入口，再通过 `README.md` 和 `README.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `docs/`、`package.json`、`README.md`、`README.zh.md`。
-- 调用链路：`package.json` -> `README.md` -> `README.zh.md` -> 输出
+- 主要功能：目录「packages/dep-graph/」接收依赖图分析工具的构建输入，组织 `src/` 代码与 `docs/` 规范并输出可执行 CLI 与可视化能力；输入是包配置、构建脚本与源码/文档目录，输出是 dep-graph 包产物；本目录不承担上层业务编排。
+- 核心文件：`package.json`（包定义与脚本约束）、`tsconfig.build.json`（TypeScript 编译配置）、`docs/`（子模块边界）、`src/`（子模块边界）
+- 实现原理：由包脚本驱动构建，将 `src/` 中的 analyzer/graph/viewer 能力编译为可执行入口，并用 `docs/` 维护规范；失败路径在构建与依赖解析阶段直接暴露。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `package.json`、`tsconfig.build.json`、`docs/`。
+- 调用链路：`包构建脚本` -> `src/ 能力编译 + docs/ 规范约束` -> 输出
 
 ## 成员清单
 

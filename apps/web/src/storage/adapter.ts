@@ -1,14 +1,9 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 adapter.ts 的核心实现能力
-- [POS]: apps/web/src/storage/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-// [INPUT]: 依赖 storage/paths.ts 的本地路径策略与 fs/promises，读取 STORAGE_DRIVER 配置
-// [OUTPUT]: 导出统一存储适配器接口（local 可用，cf 占位），供页面/API/审计层复用
-// [POS]: src/storage/ 的驱动切换层，隔离调用方与底层存储实现
-// [PROTOCOL]: 新增驱动时必须保持接口兼容，并同步更新 src/storage/CLAUDE.md
+ * - [INPUT]: 依赖 STORAGE_DRIVER、storage/paths.ts 与 fs/promises，执行本地文件读写与审计落盘
+ * - [OUTPUT]: 导出 Debate/Audit 的统一存储接口（local 可用、cf fail-fast 占位）
+ * - [POS]: src/storage 的驱动切换层，隔离调用方与具体存储实现
+ * - [PROTOCOL]: 新增或修改存储驱动时保持接口兼容，并同步更新 src/storage/CLAUDE.md
+ */
 
 import { mkdir, readdir, readFile, writeFile, appendFile } from "fs/promises";
 import { join } from "path";

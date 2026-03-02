@@ -1,14 +1,9 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 load.ts 的核心实现能力
-- [POS]: apps/web/src/env/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-// [INPUT]: 依赖 dotenv、fs/path 与进程 cwd，读取 apps/web 与仓库根目录环境文件
-// [OUTPUT]: 导出 ensureEnvLoaded，保证服务端运行时可解析 AUTH_/DEEPSEEK/OPENKESTREL 环境变量
-// [POS]: src/env/ 的环境加载器，供 auth 与 orchestration 服务端模块复用
-// [PROTOCOL]: 变更环境加载优先级时需同步更新 src/CLAUDE.md 与 README 环境变量说明
+ * - [INPUT]: 依赖 dotenv + fs/path + process.cwd()，按候选路径读取 .env/.env.local
+ * - [OUTPUT]: 导出 ensureEnvLoaded()，在服务端调用前完成一次性环境变量注入
+ * - [POS]: src/env 的运行时环境加载层，供 auth/orchestration/storage 等服务端模块复用
+ * - [PROTOCOL]: 调整加载顺序或候选路径时，同步更新 src/CLAUDE.md 与 README 环境变量文档
+ */
 
 import { existsSync } from "fs";
 import { resolve } from "path";

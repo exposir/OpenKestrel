@@ -2,7 +2,7 @@
 - [INPUT]: 依赖 src/CLAUDE.md 的模块地图，及 docs/logic/orchestration.zh.md 的编排设计
 - [OUTPUT]: 提供 orchestration/ 各文件的接口约定与变更规则
 - [POS]: src/orchestration/ 的 L2 级别规范
-- [PROTOCOL]: 变更时更新此头部，然后检查 src/CLAUDE.md
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
 # src/orchestration/ - 意图编译引擎
@@ -11,10 +11,10 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「src/orchestration/ - 意图编译引擎」负责 业务逻辑实现与依赖协作，当前由 `index.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
-- 核心文件：`index.ts`（逻辑实现）、`engine.ts`（核心引擎）、`prompts.ts`（提示词构建）、`soul.ts`（人格模型）
-- 实现原理：由 `index.ts` 接收入口，再通过 `engine.ts` 和 `prompts.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `engine.ts`、`index.ts`、`prompts.ts`、`soul.ts`。
+- 主要功能：目录「orchestration/」接收上游模块调用并围绕 `index.ts` 组织业务处理链路，输出可复用的函数、类型或端口能力；输入是业务参数、依赖注入对象或环境上下文，输出是确定性处理结果；本目录不负责页面展示层。
+- 核心文件：`index.ts`（导出聚合入口）、`engine.ts`（业务逻辑实现）、`prompts.ts`（业务逻辑实现）、`soul.ts`（业务逻辑实现）
+- 实现原理：由 `index.ts` 作为导入入口，按同级依赖完成处理并向上层返回结果；失败路径通过显式异常或错误对象上抛给调用方统一处置。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `index.ts`、`engine.ts`、`prompts.ts`。
 - 调用链路：`index.ts` -> `engine.ts` -> `prompts.ts` -> 输出
 
 ## 成员清单

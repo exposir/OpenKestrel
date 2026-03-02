@@ -2,7 +2,7 @@
 - [INPUT]: 依赖 src/CLAUDE.md 的模块索引与 OPENKESTREL_DATA_DIR 环境变量
 - [OUTPUT]: 提供 src/storage/ 的路径约定与共享目录策略
 - [POS]: src/storage/ 的 L2 模块地图
-- [PROTOCOL]: 变更时更新此头部，然后检查 src/CLAUDE.md
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
 # src/storage/
@@ -11,10 +11,10 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「src/storage/」负责 业务逻辑实现与依赖协作，当前由 `adapter.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
-- 核心文件：`adapter.ts`（驱动适配）、`paths.ts`（路径解析）
-- 实现原理：由 `adapter.ts` 负责入口编排，`paths.ts` 负责核心处理与结果产出；异常路径在当前目录内兜底并向上抛出可诊断信息。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `adapter.ts`、`paths.ts`。
+- 主要功能：目录「storage/」接收上游模块调用并围绕 `adapter.ts` 组织业务处理链路，输出可复用的函数、类型或端口能力；输入是业务参数、依赖注入对象或环境上下文，输出是确定性处理结果；本目录不负责页面展示层。
+- 核心文件：`adapter.ts`（业务逻辑实现）、`paths.ts`（业务逻辑实现）
+- 实现原理：由 `adapter.ts` 作为导入入口，按同级依赖完成处理并向上层返回结果；失败路径通过显式异常或错误对象上抛给调用方统一处置。
+- 相关文件：上游规范 [src/CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `adapter.ts`、`paths.ts`。
 - 调用链路：`adapter.ts` -> `paths.ts` -> 输出
 
 ## 成员清单

@@ -2,7 +2,7 @@
 - [INPUT]: 依赖 /CLAUDE.md 的分形文档协议与 packages/ 约定
 - [OUTPUT]: 提供 @openkestrel/core 的模块地图、边界与公开接口
 - [POS]: packages/core 的 L2 模块地图（纯业务内核）
-- [PROTOCOL]: 变更时更新此头部，然后检查 /CLAUDE.md
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
 # packages/core/
@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「packages/core/」负责 模块能力组织与对外暴露，当前由 `package.json` 等文件对外提供能力，典型使用场景是模块协作与复用时。
-- 核心文件：`package.json`（配置）、`README.md`（规则文档）、`README.zh.md`（规则文档）、`tsconfig.build.json`（配置）
-- 实现原理：由 `package.json` 接收入口，再通过 `README.md` 和 `README.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `package.json`、`README.md`、`README.zh.md`、`src/`。
-- 调用链路：`package.json` -> `README.md` -> `README.zh.md` -> 输出
+- 主要功能：目录「packages/core/」接收领域内核的构建与发布输入，组织 `src/` 对外导出稳定业务能力；输入是包配置、构建脚本与源码目录，输出是可被 web/admin 复用的 core 库；本目录不负责 UI 与路由渲染。
+- 核心文件：`package.json`（包定义与脚本约束）、`tsconfig.build.json`（TypeScript 编译配置）、`src/`（子模块边界）、`tsconfig.build.tsbuildinfo`（TypeScript 编译配置）
+- 实现原理：由包脚本驱动 TypeScript 构建流程，`src/` 汇总 debate/search/shared/di 的对外导出并产出发布文件；失败路径在类型检查或构建阶段被直接阻断。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `package.json`、`tsconfig.build.json`、`src/`。
+- 调用链路：`包构建脚本` -> `src/ 导出聚合` -> 输出
 
 ## 成员清单
 

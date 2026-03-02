@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「search/」负责 业务逻辑实现与依赖协作，当前由 `application/` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
-- 核心文件：`application/`（子模块）、`domain/`（子模块）、`infrastructure-ports/`（子模块）
-- 实现原理：由 `application/` 接收入口，再通过 `domain/` 和 `infrastructure-ports/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `application/`、`domain/`、`infrastructure-ports/`。
-- 调用链路：`application/` -> `domain/` -> `infrastructure-ports/` -> 输出
+- 主要功能：目录「search/」接收上游模块调用并围绕 `application/` 组织业务处理链路，输出可复用的函数、类型或端口能力；输入是业务参数、依赖注入对象或环境上下文，输出是确定性处理结果；本目录不负责页面展示层。
+- 核心文件：`application/`（子模块边界）、`domain/`（子模块边界）、`infrastructure-ports/`（子模块边界）
+- 实现原理：由 `application/` 作为导入入口，按同级依赖完成处理并向上层返回结果；失败路径通过显式异常或错误对象上抛给调用方统一处置。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `application/`、`domain/`、`infrastructure-ports/`。
+- 调用链路：`目录入口` -> 输出
 
 ## 成员清单
 

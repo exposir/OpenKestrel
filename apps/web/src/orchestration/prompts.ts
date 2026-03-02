@@ -1,14 +1,9 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 prompts.ts 的核心实现能力
-- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-// [INPUT]: 依赖 Soul 接口（soul.ts），以及 topic/context/soul约束 等结构化输入
-// [OUTPUT]: 导出 buildSystemPrompt / buildUserPrompt，生成注入 LLM 的 Prompt 字符串
-// [POS]: src/orchestration/ 的 Prompt 构建层，L3 级别
-// [PROTOCOL]: 修改 Step 1-5 结构须同步 docs/logic/orchestration.zh.md
+ * - [INPUT]: 依赖 Soul（soul.ts）与 topic/context/references/mustCover/mustAvoid 等结构化输入
+ * - [OUTPUT]: 导出 buildSystemPrompt/buildUserPrompt，生成发送给模型的 system/user prompt
+ * - [POS]: src/orchestration 的提示词构建层，隔离“人格与任务描述”与“模型调用层”
+ * - [PROTOCOL]: 修改提示词步骤结构或关键约束时，同步更新 docs/logic/orchestration.zh.md
+ */
 
 import type { Soul } from "./soul";
 

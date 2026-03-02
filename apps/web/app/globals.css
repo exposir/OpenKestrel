@@ -3,9 +3,6 @@
  * - [OUTPUT]: 提供全局基础样式（token/reset/utility），不承载业务组件样式
  * - [POS]: apps/web/app 的基础样式层（最薄全局层）
  * - [PROTOCOL]: 变更时更新此头部，然后检查 app/CLAUDE.md
- */
-
-/**
  * 维护规范（必须遵守）：
  * 1) 允许放入本文件：设计 token、reset、html/body 基础样式、少量通用 utility。
  * 2) 禁止放入本文件：弹窗/页面/业务组件样式（统一放入对应 *.module.css）。

@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「viewer-app/」负责 业务逻辑实现与依赖协作，当前由 `app.js` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
-- 核心文件：`app.js`（模块实现）、`index.html`（模块实现）、`renderer.js`（模块实现）、`style.css`（模块实现）
-- 实现原理：由 `app.js` 接收入口，再通过 `index.html` 和 `renderer.js` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `app.js`、`index.html`、`renderer.js`、`style.css`。
-- 调用链路：`app.js` -> `index.html` -> `renderer.js` -> 输出
+- 主要功能：目录「viewer-app/」接收上游模块调用并围绕 `app.js` 组织业务处理链路，输出可复用的函数、类型或端口能力；输入是业务参数、依赖注入对象或环境上下文，输出是确定性处理结果；本目录不负责页面展示层。
+- 核心文件：`app.js`（运行时脚本实现）、`renderer.js`（运行时脚本实现）、`index.html`（核心实现文件）、`style.css`（样式依赖定义）
+- 实现原理：由 `app.js` 作为导入入口，按同级依赖完成处理并向上层返回结果；失败路径通过显式异常或错误对象上抛给调用方统一处置。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `app.js`、`renderer.js`、`index.html`。
+- 调用链路：`app.js` -> `renderer.js` -> 输出
 
 ## 成员清单
 

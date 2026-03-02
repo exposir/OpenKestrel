@@ -1,11 +1,4 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 container.ts 的核心实现能力
-- [POS]: apps/web/src/di/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-/**
  * - [INPUT]: 依赖 @openkestrel/core 的 ports/usecases 与 tsyringe 容器
  * - [OUTPUT]: 导出 getContainer()，提供 apps/web 的 composition root（单实例 DI 装配）
  * - [POS]: src/di 的装配入口，API 路由与服务端逻辑从此解析用例

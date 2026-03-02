@@ -2,7 +2,7 @@
 - [INPUT]: 依赖 ../CLAUDE.md 的包级协作规则与导出约束
 - [OUTPUT]: 提供 theme-motion 包的成员清单与发布边界
 - [POS]: packages/theme-motion/ 的 L2 模块地图
-- [PROTOCOL]: 变更时更新此头部，然后检查 ../CLAUDE.md
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 
 # theme-motion/
@@ -11,11 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：目录「theme-motion/」负责 模块能力组织与对外暴露，当前由 `package.json` 等文件对外提供能力，典型使用场景是模块协作与复用时。
-- 核心文件：`package.json`（配置）、`README.md`（规则文档）、`README.zh.md`（规则文档）、`tsconfig.build.json`（配置）
-- 实现原理：由 `package.json` 接收入口，再通过 `README.md` 和 `README.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `package.json`、`README.md`、`README.zh.md`、`src/`。
-- 调用链路：`package.json` -> `README.md` -> `README.zh.md` -> 输出
+- 主要功能：目录「packages/theme-motion/」接收主题动效库的构建与发布输入，组织 `src/` 导出与文档说明并输出可复用动效能力；输入是包配置、构建脚本与源码目录，输出是 theme-motion 包产物；本目录不负责应用业务状态管理。
+- 核心文件：`package.json`（包定义与脚本约束）、`tsconfig.build.json`（TypeScript 编译配置）、`src/`（子模块边界）、`tsconfig.build.tsbuildinfo`（TypeScript 编译配置）
+- 实现原理：由包脚本执行构建并从 `src/` 汇总 core/react/style 能力对外发布，文档文件用于约束消费方式；失败路径在构建与类型检查阶段直接报错。
+- 相关文件：上游规范 [../CLAUDE.md](../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖包括 `package.json`、`tsconfig.build.json`、`src/`。
+- 调用链路：`包构建脚本` -> `src/ 导出与发布` -> 输出
 
 ## 成员清单
 

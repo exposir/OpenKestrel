@@ -1,14 +1,9 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 index.ts 的核心实现能力
-- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-// [INPUT]: 依赖 engine.ts 的 runOrchestration、soul.ts 的 SOULS、storage/paths.ts 的共享目录策略、.env 的 DEEPSEEK_API_KEY
-// [OUTPUT]: CLI 批量运行所有 Soul 对指定话题的编排，结果写入共享数据目录并打印终端
-// [POS]: src/orchestration/ 的离线验证入口，L3 级别；不参与 Web 请求链路
-// [PROTOCOL]: 仅用于本地验证，话题和背景硬编码在文件顶部，运行方式: pnpm --filter @openkestrel/web orchestrate
+ * - [INPUT]: 依赖 runOrchestration（engine.ts）、SOULS（soul.ts）、getDebateDir（storage/paths.ts）与 ensureEnvLoaded（env/load.ts）
+ * - [OUTPUT]: 离线批量运行所有人格编排并把结果写入 output/debates/*.json，同时输出终端日志
+ * - [POS]: src/orchestration 的 CLI 验证入口，仅用于本地离线验证，不参与 Web 请求链路
+ * - [PROTOCOL]: 变更话题/上下文结构或输出文件格式时，同步更新 src/orchestration/CLAUDE.md 与 docs/logic/orchestration.zh.md
+ */
 
 import { runOrchestration } from "./engine";
 import { SOULS } from "./soul";

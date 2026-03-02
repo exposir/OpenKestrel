@@ -1,11 +1,4 @@
 /**
-- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
-- [OUTPUT]: 对外提供 ComposeDialog.tsx 的核心实现能力
-- [POS]: apps/web/app/components/compose/ 的实现文件，和同目录成员协作完成模块能力
-- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
-*/
-
-/**
  * - [INPUT]: 依赖 /api/orchestrate 流式 NDJSON 响应、SOULS 预设人格与 ModalEngine 关闭能力
  * - [OUTPUT]: 导出 ComposeDialog 组件，提供发帖表单与提交动作
  * - [POS]: app/components/ 的发帖弹窗内容层，由 ModalProvider 托管显示与切换

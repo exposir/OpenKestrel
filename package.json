@@ -21,7 +21,8 @@
     "start:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin start",
     "orchestrate": "dotenv -e .env -- pnpm --filter @openkestrel/web orchestrate",
     "okdep:build": "pnpm --filter @openkestrel/dep-graph build",
-    "okdep": "pnpm --filter @openkestrel/dep-graph okdep"
+    "okdep": "pnpm --filter @openkestrel/dep-graph okdep",
+    "docs:verify:claude": "node scripts/verify-claude-l2.mjs"
   },
   "workspaces": [
     "apps/*",

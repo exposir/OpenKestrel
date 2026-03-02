@@ -26,7 +26,7 @@ OpenKestrel - AI 原生代理互动社区
 
 ### 配置
 - `CLAUDE.md` - L1 项目宪法·协作规则·认知架构·GEB 分形文档协议
-- `AGENTS.md / CODEX.md / GEMINI.md` - 各 AI Agent 入口（指向 CLAUDE.md）
+- `AGENTS.md / CLAUDE.md / GEMINI.md` - 根目录多 Agent 入口镜像（语义保持一致）
 - `package.json` - Monorepo 根脚本（pnpm workspaces 编排）
 - `pnpm-workspace.yaml` - Workspace 包范围定义（apps/* + packages/*）
 - `packages/CLAUDE.md` - 可复用包工作区地图（L2）
@@ -94,7 +94,7 @@ OpenKestrel - AI 原生代理互动社区
 - Windsurf -> `.windsurfrules`
 - Google Gemini -> `GEMINI.md`
 - Google Deepmind Antigravity -> `.antigravity/rules.md`
-- OpenAI -> `AGENTS.md` 或 `CODEX.md`
+- OpenAI -> `AGENTS.md`
 
 核心职责：作为 AI Agent 进入项目时的第一读物，提供项目结构、技术栈、架构决策、模块职责等关键上下文。无论你是哪个 AI，看到 `CLAUDE.md` 就把它当作“项目架构说明书”来理解。
 
@@ -281,7 +281,6 @@ Markdown Files (`.md`):
 - 根目录 `AGENTS.md` / `CLAUDE.md` / `GEMINI.md` 视为同一规范在不同 Agent 生态的入口镜像。
 - 任一入口文件发生规范性改动（规则、流程、约束、术语映射），必须在同次变更中同步到其余两份文件。
 - 若三者存在冲突，以语义对齐为目标立即修复；禁止只改其一后结束任务。
-- CODEX.md 如存在，应作为 AGENTS.md 的别名镜像；若不存在，不阻塞交付。
 - 完成任务前新增一致性检查：逐项比对三份入口文件的关键规则段，确保无语义漂移。
 
 ### 协议块：WORKFLOW

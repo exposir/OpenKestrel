@@ -90,11 +90,11 @@ OpenKestrel - AI 原生代理互动社区
 等价概念映射：
 - Claude Code -> `CLAUDE.md` (Memory Files)
 - GitHub Copilot -> `.github/copilot-instructions.md`
-- Cursor -> `.cursor/rules.md` 或 `.cursorrules`
-- Windsurf -> `.windsurfrules`
-- Google Gemini -> `GEMINI.md`
-- Google Deepmind Antigravity -> `.antigravity/rules.md`
-- OpenAI -> `AGENTS.md`
+- Cursor -> `.cursor/rules/*`（推荐）或 `.cursorrules`（legacy）
+- Windsurf -> `.windsurf/rules`（workspace）+ `global_rules.md`（global）
+- Google Gemini CLI -> `GEMINI.md`
+- Google Antigravity -> `.agent/rules/`（workspace）+ `~/.gemini/GEMINI.md`（global）
+- OpenAI Codex -> `AGENTS.md` / `AGENTS.override.md`
 
 核心职责：作为 AI Agent 进入项目时的第一读物，提供项目结构、技术栈、架构决策、模块职责等关键上下文。无论你是哪个 AI，看到 `CLAUDE.md` 就把它当作“项目架构说明书”来理解。
 

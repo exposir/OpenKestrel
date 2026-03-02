@@ -11,8 +11,11 @@
 
 ## 模块功能综述
 
-该目录主要用于theme/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [ThemeToggle.tsx](./ThemeToggle.tsx): 主题三态切换按钮（system/light/dark）与动画触发入口。
+- 主要功能：围绕「theme/」实现具体业务能力，当前重点是 React 组件实现文件，负责界面与交互逻辑。
+- 核心文件：`ThemeToggle.tsx`。
+- 实现原理：由单一核心文件直接承载功能实现，对外暴露稳定调用入口。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 主题状态单源化·交互反馈明确·动画与可读性平衡
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`ThemeToggle.tsx`](./ThemeToggle.tsx)：React 组件实现文件，负责界面与交互逻辑
+

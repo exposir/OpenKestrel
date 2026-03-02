@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 route.ts 的核心实现能力
+- [POS]: apps/web/app/api/orchestrate/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 依赖 auth.ts 登录态、src/orchestration/soul.ts 的 SOULS、engine.ts 的 callDeepSeekStream、prompts.ts 的 Prompt 构建器、src/storage/adapter.ts 存储适配器
 // [OUTPUT]: POST /api/orchestrate，返回 ReadableStream（NDJSON：meta → chunk[] → done/error）
 // [POS]: app/api/ 的流式编排路由，L2 级别；连接前端流式渲染层与后端引擎层的桥梁

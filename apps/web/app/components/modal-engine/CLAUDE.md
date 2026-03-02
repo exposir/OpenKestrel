@@ -11,12 +11,15 @@
 
 ## 模块功能综述
 
-该目录主要用于modal-engine/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [modal-types.ts](./modal-types.ts): 弹窗 ID/请求/状态类型定义（`compose`/`search`/`hotkey-help`）。
-成员清单 [modal-motion.ts](./modal-motion.ts): 弹窗切换时序常量（`MODAL_SWITCH_MS`）单源定义。
-成员清单 [ModalProvider.module.css](./ModalProvider.module.css): 弹窗宿主壳体/切换动画样式模块（overlay/shell/stage/panel）。
-成员清单 [ModalProvider.tsx](./ModalProvider.tsx): 单实例弹窗状态机与统一渲染宿主（交叉淡入淡出切换）。
-成员清单 [useModalEngine.ts](./useModalEngine.ts): 业务组件调用入口，统一 `open/close/isOpen/activeModal`。
+- 主要功能：围绕「modal-engine/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`modal-motion.ts`、`modal-types.ts`、`ModalProvider.module.css`、`ModalProvider.tsx`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 只允许一个 active 弹窗·切换状态机单源化·组件不得私有维护 open 状态
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`modal-motion.ts`](./modal-motion.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`modal-types.ts`](./modal-types.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`ModalProvider.module.css`](./ModalProvider.module.css)：本目录成员文件，承载对应子能力实现
+- [`ModalProvider.tsx`](./ModalProvider.tsx)：React 组件实现文件，负责界面与交互逻辑
+- [`useModalEngine.ts`](./useModalEngine.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

@@ -11,9 +11,12 @@
 
 ## 模块功能综述
 
-该目录主要用于src/storage/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [paths.ts](./paths.ts): 统一本地目录路径策略，优先 `OPENKESTREL_DATA_DIR`，否则按 `process.cwd()/output` → `../../output` 回退。
-成员清单 [adapter.ts](./adapter.ts): 存储适配器切换层，支持 `STORAGE_DRIVER=local|cf`（当前 `cf` 为接口占位，防误配显式报错）。
+- 主要功能：围绕「src/storage/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`adapter.ts`、`paths.ts`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 绝对路径优先·默认值可运行·单一真相源管理读写目录
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`adapter.ts`](./adapter.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`paths.ts`](./paths.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

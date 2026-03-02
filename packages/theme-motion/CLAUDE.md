@@ -11,14 +11,18 @@
 
 ## 模块功能综述
 
-该目录主要用于theme-motion/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [package.json](./package.json): 包元数据与 exports/build 脚本定义。  
-成员清单 [README.md](./README.md): 包用法说明与接入示例。  
-成员清单 [README.zh.md](./README.zh.md): 包中文用法说明与接入示例。  
-成员清单 [tsconfig.build.json](./tsconfig.build.json): 库构建 TS 配置（输出 ESM + d.ts 到 dist）。  
-成员清单 [src/index.ts](./src/index.ts): 默认入口（re-export core API）。  
-成员清单 [src/core.ts](./src/core.ts): 无框架主题切换内核（即时切换 + View Transition 动画）。  
-成员清单 [src/react.ts](./src/react.ts): React Hook 与 DOM 起点坐标工具封装。  
-成员清单 [src/style.css](./src/style.css): 主题扩散动画样式与 VT 指针穿透规则。
+- 主要功能：围绕「theme-motion/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：`package.json`、`README.md`、`README.zh.md`、`tsconfig.build.json`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `dist/`、`node_modules/`、`src/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: core 无框架依赖·react 仅做薄封装·css 可选按需引入
+- [`dist/`](./dist)：子模块目录，承载该子域实现
+- [`node_modules/`](./node_modules)：子模块目录，承载该子域实现
+- [`package.json`](./package.json)：配置文件，声明运行或构建参数
+- [`README.md`](./README.md)：文档文件，记录该模块规范与说明
+- [`README.zh.md`](./README.zh.md)：文档文件，记录该模块规范与说明
+- [`src/`](./src)：子模块目录，承载该子域实现
+- [`tsconfig.build.json`](./tsconfig.build.json)：配置文件，声明运行或构建参数
+- [`tsconfig.build.tsbuildinfo`](./tsconfig.build.tsbuildinfo)：本目录成员文件，承载对应子能力实现
+

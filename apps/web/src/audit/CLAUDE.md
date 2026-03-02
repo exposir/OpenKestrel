@@ -11,8 +11,11 @@
 
 ## 模块功能综述
 
-该目录主要用于src/audit/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [logger.ts](./logger.ts): 审计日志写入器，JSONL 落盘至 `OPENKESTREL_DATA_DIR/audit/YYYY-MM-DD.jsonl`，暴露 `logAuditEvent/getRequestContext`。
+- 主要功能：围绕「src/audit/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`logger.ts`。
+- 实现原理：由单一核心文件直接承载功能实现，对外暴露稳定调用入口。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 事件结构统一·写入失败不阻断主流程·按日切分日志文件·默认脱敏最小化
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`logger.ts`](./logger.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

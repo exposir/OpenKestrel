@@ -11,12 +11,15 @@
 
 ## 模块功能综述
 
-该目录主要用于src/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [index.ts](./index.ts): Core 对外统一导出入口。
-成员清单 [debate/CLAUDE.md](./debate/CLAUDE.md): Debate 子域模块地图。
-成员清单 [search/CLAUDE.md](./search/CLAUDE.md): Search 子域模块地图。
-成员清单 [di/CLAUDE.md](./di/CLAUDE.md): DI 协议模块地图。
-成员清单 [shared/CLAUDE.md](./shared/CLAUDE.md): 共享类型与错误模块地图。
+- 主要功能：围绕「src/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：`index.ts`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `debate/`、`di/`、`search/`、`shared/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 按 DDD/ports 分层·导出面集中·禁止框架耦合
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`debate/`](./debate)：子模块目录，承载该子域实现
+- [`di/`](./di)：子模块目录，承载该子域实现
+- [`index.ts`](./index.ts)：模块导出或入口文件，聚合对外能力
+- [`search/`](./search)：子模块目录，承载该子域实现
+- [`shared/`](./shared)：子模块目录，承载该子域实现
+

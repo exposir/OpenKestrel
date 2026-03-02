@@ -1,4 +1,11 @@
 /**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 HotkeyHelpDialog.tsx 的核心实现能力
+- [POS]: apps/web/app/components/hotkeys/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
+/**
  * - [INPUT]: 依赖全局热键约定（Cmd/Ctrl + K、Cmd/Ctrl + D、?）
  * - [OUTPUT]: 导出 HotkeyHelpDialog 组件，展示快捷键说明
  * - [POS]: app/components/ 的快捷键帮助弹窗内容层，由 ModalProvider 统一调度

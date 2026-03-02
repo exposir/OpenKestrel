@@ -1,4 +1,11 @@
 /**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 GlobalHotkeys.tsx 的核心实现能力
+- [POS]: apps/web/app/components/hotkeys/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
+/**
  * - [INPUT]: 依赖 ModalEngine、浏览器键盘事件与 `@openkestrel/theme-motion/core`
  * - [OUTPUT]: 导出 GlobalHotkeys 组件，提供全局快捷键分发（Cmd/Ctrl+K、Cmd/Ctrl+D、?、Esc）
  * - [POS]: app/components/ 的全局热键中枢，挂载于 layout 覆盖全部页面

@@ -11,9 +11,13 @@
 
 ## 模块功能综述
 
-该目录主要用于packages/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [theme-motion/CLAUDE.md](./theme-motion/CLAUDE.md): 主题切换动画库（core + react + css），可被 web/admin 复用并独立发布。  
-成员清单 [dep-graph/CLAUDE.md](./dep-graph/CLAUDE.md): 高性能依赖分析与 WebGL 可视化工具包（CLI + SDK + Viewer）。
-成员清单 [core/CLAUDE.md](./core/CLAUDE.md): 纯业务内核包（DDD 模型 + ports + 用例），供应用层通过 DI 调用。
+- 主要功能：围绕「packages/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：以成员清单中的入口与实现文件为核心。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `core/`、`dep-graph/`、`theme-motion/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 包职责单一·导出面稳定·应用仅依赖公开入口
+- [`core/`](./core)：子模块目录，承载该子域实现
+- [`dep-graph/`](./dep-graph)：子模块目录，承载该子域实现
+- [`theme-motion/`](./theme-motion)：子模块目录，承载该子域实现
+

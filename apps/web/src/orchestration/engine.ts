@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 engine.ts 的核心实现能力
+- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 依赖 prompts.ts 的 Prompt 构建器、soul.ts 的 Soul 类型、DEEPSEEK_API_KEY 环境变量
 // [OUTPUT]: 导出 callDeepSeekStream（流式）和 runOrchestration（批量+熵校验）
 // [POS]: src/orchestration/ 的 LLM 调用层，L3 级别；唯一允许调用外部 API 的模块

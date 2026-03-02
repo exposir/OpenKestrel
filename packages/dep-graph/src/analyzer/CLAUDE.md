@@ -11,11 +11,14 @@
 
 ## 模块功能综述
 
-该目录主要用于analyzer/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [index.ts](./index.ts): 分析器导出入口。
-成员清单 [scan.ts](./scan.ts): 依赖扫描主流程。
-成员清单 [path-utils.ts](./path-utils.ts): 路径解析与归一化工具。
-成员清单 [tsconfig.ts](./tsconfig.ts): tsconfig 读取与路径映射解析。
+- 主要功能：围绕「analyzer/」实现具体业务能力，当前重点是 模块导出或入口文件，聚合对外能力。
+- 核心文件：`index.ts`、`path-utils.ts`、`scan.ts`、`tsconfig.ts`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 扫描与路径解析分离·tsconfig 解析独立·输出规范化
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`index.ts`](./index.ts)：模块导出或入口文件，聚合对外能力
+- [`path-utils.ts`](./path-utils.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`scan.ts`](./scan.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`tsconfig.ts`](./tsconfig.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

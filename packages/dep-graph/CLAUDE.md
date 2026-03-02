@@ -11,24 +11,20 @@
 
 ## 模块功能综述
 
-该目录主要用于dep-graph/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [package.json](./package.json): 包元数据、bin 命令与构建脚本定义。  
-成员清单 [README.md](./README.md): CLI/SDK 使用说明与快速上手。  
-成员清单 [README.zh.md](./README.zh.md): CLI/SDK 中文使用说明与快速上手。  
-成员清单 [tsconfig.build.json](./tsconfig.build.json): 库构建 TS 配置（输出 ESM + d.ts 到 dist）。  
-成员清单 [src/index.ts](./src/index.ts): SDK 默认入口（分析/算法/viewer API 导出）。  
-成员清单 [src/cli.ts](./src/cli.ts): `okdep` 命令入口（analyze/web/print-cycles/print-mesh）。  
-成员清单 [src/types.ts](./src/types.ts): 报告协议与公共类型定义。  
-成员清单 [src/analyzer/index.ts](./src/analyzer/index.ts): 分析编排入口（scan -> graph -> report）。  
-成员清单 [src/analyzer/scan.ts](./src/analyzer/scan.ts): 代码扫描与依赖抽取（es-module-lexer + ts resolve）。  
-成员清单 [src/analyzer/tsconfig.ts](./src/analyzer/tsconfig.ts): tsconfig 读取与 resolver 上下文。  
-成员清单 [src/analyzer/path-utils.ts](./src/analyzer/path-utils.ts): 路径标准化与聚合键工具。  
-成员清单 [src/graph/algorithms.ts](./src/graph/algorithms.ts): SCC/网状识别/闭包大小/聚合图算法。  
-成员清单 [src/viewer-server/index.ts](./src/viewer-server/index.ts): 本地 HTTP viewer 服务与 `/api/report`。  
-成员清单 [src/viewer-app/index.html](./src/viewer-app/index.html): 可视化页面骨架。  
-成员清单 [src/viewer-app/app.js](./src/viewer-app/app.js): WebGL 图渲染、搜索与详情交互。  
-成员清单 [src/viewer-app/style.css](./src/viewer-app/style.css): viewer 页面布局与样式。
-成员清单 [docs/viewer-spec.md](./docs/viewer-spec.md): viewer 筛选与交互规范、验收基线定义。
-成员清单 [tests/algorithms.test.mjs](./tests/algorithms.test.mjs): 图算法回归测试（SCC/闭包/网状识别）。
+- 主要功能：围绕「dep-graph/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：`package.json`、`README.md`、`README.zh.md`、`tsconfig.build.json`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `dist/`、`docs/`、`node_modules/`、`src/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 分析链路线性复杂度优先·默认聚合视图后按需展开·CLI 与 SDK 同源数据协议
+- [`dist/`](./dist)：子模块目录，承载该子域实现
+- [`docs/`](./docs)：子模块目录，承载该子域实现
+- [`node_modules/`](./node_modules)：子模块目录，承载该子域实现
+- [`package.json`](./package.json)：配置文件，声明运行或构建参数
+- [`README.md`](./README.md)：文档文件，记录该模块规范与说明
+- [`README.zh.md`](./README.zh.md)：文档文件，记录该模块规范与说明
+- [`src/`](./src)：子模块目录，承载该子域实现
+- [`tests/`](./tests)：子模块目录，承载该子域实现
+- [`tsconfig.build.json`](./tsconfig.build.json)：配置文件，声明运行或构建参数
+- [`tsconfig.build.tsbuildinfo`](./tsconfig.build.tsbuildinfo)：本目录成员文件，承载对应子能力实现
+

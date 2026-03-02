@@ -11,13 +11,18 @@
 
 ## 模块功能综述
 
-该目录主要用于apps/web/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [app/CLAUDE.md](./app/CLAUDE.md): App Router 页面、组件与 API 路由协作规则。  
-成员清单 [src/CLAUDE.md](./src/CLAUDE.md): 认证、编排、审计、存储、环境加载与 DI 装配模块地图。  
-成员清单 [package.json](./package.json): 前台应用独立依赖与脚本（`dev/build/start/orchestrate`）。  
-成员清单 [tsconfig.json](./tsconfig.json): 前台 TS 配置（继承根基线 + `@/app`、`@/src` 别名）。  
-成员清单 [next.config.ts](./next.config.ts): 前台 Next.js 配置入口。  
-成员清单 [next-env.d.ts](./next-env.d.ts): Next.js 类型注入入口。
+- 主要功能：围绕「apps/web/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：`next-env.d.ts`、`next.config.ts`、`package.json`、`tsconfig.json`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 `app/`、`node_modules/`、`src/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 前台应用自包含·业务用例优先经 `@openkestrel/core` 复用·共享目录单源化（`OPENKESTREL_DATA_DIR`）
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`app/`](./app)：子模块目录，承载该子域实现
+- [`next-env.d.ts`](./next-env.d.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`next.config.ts`](./next.config.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`node_modules/`](./node_modules)：子模块目录，承载该子域实现
+- [`package.json`](./package.json)：配置文件，声明运行或构建参数
+- [`src/`](./src)：子模块目录，承载该子域实现
+- [`tsconfig.json`](./tsconfig.json)：配置文件，声明运行或构建参数
+- [`tsconfig.tsbuildinfo`](./tsconfig.tsbuildinfo)：本目录成员文件，承载对应子能力实现
+

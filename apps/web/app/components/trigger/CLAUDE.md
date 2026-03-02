@@ -11,9 +11,12 @@
 
 ## 模块功能综述
 
-该目录主要用于trigger/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [TriggerButton.tsx](./TriggerButton.tsx): 发起讨论按钮与 StreamCard 流式结果卡片。
-成员清单 [TriggerButton.module.css](./TriggerButton.module.css): 发起讨论按钮样式模块。
+- 主要功能：围绕「trigger/」实现具体业务能力，当前重点是 本目录成员文件，承载对应子能力实现。
+- 核心文件：`TriggerButton.module.css`、`TriggerButton.tsx`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 流式消息解析集中·按钮状态可解释·UI 与事件总线解耦
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`TriggerButton.module.css`](./TriggerButton.module.css)：本目录成员文件，承载对应子能力实现
+- [`TriggerButton.tsx`](./TriggerButton.tsx)：React 组件实现文件，负责界面与交互逻辑
+

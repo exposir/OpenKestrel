@@ -11,11 +11,14 @@
 
 ## 模块功能综述
 
-该目录主要用于src/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [index.ts](./index.ts): 包导出入口。
-成员清单 [core.ts](./core.ts): 主题与动画核心原语。
-成员清单 [react.ts](./react.ts): React 集成适配层。
-成员清单 [style.css](./style.css): 主题动画样式变量与基础样式。
+- 主要功能：围绕「src/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`core.ts`、`index.ts`、`react.ts`、`style.css`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 核心动画原语稳定·React 适配层薄·样式变量单源
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`core.ts`](./core.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`index.ts`](./index.ts)：模块导出或入口文件，聚合对外能力
+- [`react.ts`](./react.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`style.css`](./style.css)：本目录成员文件，承载对应子能力实现
+

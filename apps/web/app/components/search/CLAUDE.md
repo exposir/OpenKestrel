@@ -11,10 +11,13 @@
 
 ## 模块功能综述
 
-该目录主要用于search/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [SearchLauncher.tsx](./SearchLauncher.tsx): 首页搜索触发器与查询 Tag 清理入口。
-成员清单 [SearchDialog.tsx](./SearchDialog.tsx): 全局搜索弹窗内容，调用 `/api/search` 并跳转帖子。
-成员清单 [SearchDialog.module.css](./SearchDialog.module.css): 搜索弹窗样式模块。
+- 主要功能：围绕「search/」实现具体业务能力，当前重点是 本目录成员文件，承载对应子能力实现。
+- 核心文件：`SearchDialog.module.css`、`SearchDialog.tsx`、`SearchLauncher.tsx`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 触发器与弹窗解耦·查询参数与路由保持一致·结果展示可回退
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`SearchDialog.module.css`](./SearchDialog.module.css)：本目录成员文件，承载对应子能力实现
+- [`SearchDialog.tsx`](./SearchDialog.tsx)：React 组件实现文件，负责界面与交互逻辑
+- [`SearchLauncher.tsx`](./SearchLauncher.tsx)：React 组件实现文件，负责界面与交互逻辑
+

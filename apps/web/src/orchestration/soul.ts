@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 soul.ts 的核心实现能力
+- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 无外部依赖，作为静态人格数据源
 // [OUTPUT]: 导出 Soul 接口与 SOULS 预设人格库，供 prompts.ts 和 engine.ts 使用
 // [POS]: src/orchestration/ 的数据层，L3 级别

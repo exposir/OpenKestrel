@@ -11,10 +11,13 @@
 
 ## 模块功能综述
 
-该目录主要用于hotkeys/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [GlobalHotkeys.tsx](./GlobalHotkeys.tsx): 全局快捷键分发器（Cmd/Ctrl + K、Cmd/Ctrl + D、?、Esc）。
-成员清单 [HotkeyHelpDialog.tsx](./HotkeyHelpDialog.tsx): 快捷键帮助弹窗内容。
-成员清单 [HotkeyHelpDialog.module.css](./HotkeyHelpDialog.module.css): 快捷键帮助弹窗样式模块。
+- 主要功能：围绕「hotkeys/」实现具体业务能力，当前重点是 React 组件实现文件，负责界面与交互逻辑。
+- 核心文件：`GlobalHotkeys.tsx`、`HotkeyHelpDialog.module.css`、`HotkeyHelpDialog.tsx`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 快捷键映射单源化·弹窗行为统一路由到 ModalEngine·帮助文案与映射同步
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`GlobalHotkeys.tsx`](./GlobalHotkeys.tsx)：React 组件实现文件，负责界面与交互逻辑
+- [`HotkeyHelpDialog.module.css`](./HotkeyHelpDialog.module.css)：本目录成员文件，承载对应子能力实现
+- [`HotkeyHelpDialog.tsx`](./HotkeyHelpDialog.tsx)：React 组件实现文件，负责界面与交互逻辑
+

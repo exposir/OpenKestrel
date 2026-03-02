@@ -11,10 +11,13 @@
 
 ## 模块功能综述
 
-该目录主要用于domain/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [valueObjects.ts](./valueObjects.ts): 讨论领域值对象定义与校验。
-成员清单 [entities.ts](./entities.ts): 讨论实体定义。
-成员清单 [aggregate.ts](./aggregate.ts): 讨论聚合根行为封装。
+- 主要功能：围绕「domain/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`aggregate.ts`、`entities.ts`、`valueObjects.ts`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 领域层只表达业务真相·值对象先校验·聚合根守护不变量
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`aggregate.ts`](./aggregate.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`entities.ts`](./entities.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`valueObjects.ts`](./valueObjects.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 TriggerButton.tsx 的核心实现能力
+- [POS]: apps/web/app/components/trigger/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 依赖 ModalEngine 的 open("compose") 与 /api/orchestrate 的流式 NDJSON 响应（meta/chunk/done/error）
 // [OUTPUT]: TriggerButton（触发按钮）+ StreamCard（流式渲染卡片），通过 window 事件总线解耦并处理异常消息
 // [POS]: app/ 的流式渲染层，L2 级别；唯一的 Client Component 聚合文件

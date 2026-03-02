@@ -11,10 +11,13 @@
 
 ## 模块功能综述
 
-该目录主要用于debate/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [application/CLAUDE.md](./application/CLAUDE.md): Debate 应用层用例地图。
-成员清单 [domain/CLAUDE.md](./domain/CLAUDE.md): Debate 领域模型地图。
-成员清单 [infrastructure-ports/CLAUDE.md](./infrastructure-ports/CLAUDE.md): Debate 基础设施端口地图。
+- 主要功能：围绕「debate/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：以成员清单中的入口与实现文件为核心。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `application/`、`domain/`、`infrastructure-ports/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 领域对象与用例分层·端口隔离外部依赖·不变量优先
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`application/`](./application)：子模块目录，承载该子域实现
+- [`domain/`](./domain)：子模块目录，承载该子域实现
+- [`infrastructure-ports/`](./infrastructure-ports)：子模块目录，承载该子域实现
+

@@ -11,14 +11,17 @@
 
 ## 模块功能综述
 
-该目录主要用于src/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [index.ts](./index.ts): 包级导出入口。
-成员清单 [types.ts](./types.ts): 依赖图核心类型定义。
-成员清单 [cli.ts](./cli.ts): 命令行入口与参数处理。
-成员清单 [analyzer/CLAUDE.md](./analyzer/CLAUDE.md): 分析器子模块地图。
-成员清单 [graph/CLAUDE.md](./graph/CLAUDE.md): 图算法子模块地图。
-成员清单 [viewer-server/CLAUDE.md](./viewer-server/CLAUDE.md): 可视化服务端子模块地图。
-成员清单 [viewer-app/CLAUDE.md](./viewer-app/CLAUDE.md): 可视化前端子模块地图。
+- 主要功能：围绕「src/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
+- 核心文件：`cli.ts`、`index.ts`、`types.ts`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `analyzer/`、`graph/`、`viewer-app/`、`viewer-server/`；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: CLI/分析/图算法/可视化解耦·入口稳定·类型先行
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`analyzer/`](./analyzer)：子模块目录，承载该子域实现
+- [`cli.ts`](./cli.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`graph/`](./graph)：子模块目录，承载该子域实现
+- [`index.ts`](./index.ts)：模块导出或入口文件，聚合对外能力
+- [`types.ts`](./types.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`viewer-app/`](./viewer-app)：子模块目录，承载该子域实现
+- [`viewer-server/`](./viewer-server)：子模块目录，承载该子域实现
+

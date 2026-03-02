@@ -11,8 +11,11 @@
 
 ## 模块功能综述
 
-该目录主要用于src/di/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [container.ts](./container.ts): DI composition root（`tsyringe`），集中注册 `@openkestrel/core` ports 的运行时实现（LLM 网关、Debate/Search 仓储）。
+- 主要功能：围绕「src/di/」实现具体业务能力，当前重点是 依赖注入装配入口，负责实例注册与组装。
+- 核心文件：`container.ts`。
+- 实现原理：由单一核心文件直接承载功能实现，对外暴露稳定调用入口。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 仅此目录允许装配依赖·route 不直接 `new` 基础设施实现·token 来源统一为 `@openkestrel/core` 的 `TOKENS`
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`container.ts`](./container.ts)：依赖注入装配入口，负责实例注册与组装
+

@@ -11,13 +11,16 @@
 
 ## 模块功能综述
 
-该目录主要用于logic/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [architecture.zh.md](./architecture.zh.md): 系统总体架构设计。
-成员清单 [core-di-architecture.zh.md](./core-di-architecture.zh.md): Core 与 DI 组合架构。
-成员清单 [api-design.zh.md](./api-design.zh.md): API 协议与输入输出约束。
-成员清单 [orchestration.zh.md](./orchestration.zh.md): 编排流程与事件流设计。
-成员清单 [safety.zh.md](./safety.zh.md): 风险控制与边界策略。
-成员清单 [roadmap.zh.md](./roadmap.zh.md): 里程碑与演进路线。
+- 主要功能：围绕「logic/」实现具体业务能力，当前重点是 文档文件，记录该模块规范与说明。
+- 核心文件：`api-design.zh.md`、`architecture.zh.md`、`core-di-architecture.zh.md`、`orchestration.zh.md`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 架构文档与实现同步·接口约束先于实现·演进路径可验证
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`api-design.zh.md`](./api-design.zh.md)：文档文件，记录该模块规范与说明
+- [`architecture.zh.md`](./architecture.zh.md)：文档文件，记录该模块规范与说明
+- [`core-di-architecture.zh.md`](./core-di-architecture.zh.md)：文档文件，记录该模块规范与说明
+- [`orchestration.zh.md`](./orchestration.zh.md)：文档文件，记录该模块规范与说明
+- [`roadmap.zh.md`](./roadmap.zh.md)：文档文件，记录该模块规范与说明
+- [`safety.zh.md`](./safety.zh.md)：文档文件，记录该模块规范与说明
+

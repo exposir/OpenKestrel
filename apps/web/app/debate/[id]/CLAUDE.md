@@ -11,11 +11,14 @@
 
 ## 模块功能综述
 
-该目录主要用于debate/[id]/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [page.tsx](./page.tsx): 讨论详情页 Server Component。
-成员清单 [DebateToc.tsx](./DebateToc.tsx): 讨论目录导航组件。
-成员清单 [debate-page.module.css](./debate-page.module.css): 详情页样式模块。
-成员清单 [DebateToc.module.css](./DebateToc.module.css): 目录组件样式模块。
+- 主要功能：围绕「debate/[id]/」实现具体业务能力，当前重点是 本目录成员文件，承载对应子能力实现。
+- 核心文件：`debate-page.module.css`、`DebateToc.module.css`、`DebateToc.tsx`、`page.tsx`。
+- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 详情页与目录组件分离·样式模块化·路由参数单源
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`debate-page.module.css`](./debate-page.module.css)：本目录成员文件，承载对应子能力实现
+- [`DebateToc.module.css`](./DebateToc.module.css)：本目录成员文件，承载对应子能力实现
+- [`DebateToc.tsx`](./DebateToc.tsx)：React 组件实现文件，负责界面与交互逻辑
+- [`page.tsx`](./page.tsx)：页面入口，负责该路由的渲染与交互
+

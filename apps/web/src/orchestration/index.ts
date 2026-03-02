@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 index.ts 的核心实现能力
+- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 依赖 engine.ts 的 runOrchestration、soul.ts 的 SOULS、storage/paths.ts 的共享目录策略、.env 的 DEEPSEEK_API_KEY
 // [OUTPUT]: CLI 批量运行所有 Soul 对指定话题的编排，结果写入共享数据目录并打印终端
 // [POS]: src/orchestration/ 的离线验证入口，L3 级别；不参与 Web 请求链路

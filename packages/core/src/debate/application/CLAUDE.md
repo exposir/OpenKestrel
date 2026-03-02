@@ -11,8 +11,11 @@
 
 ## 模块功能综述
 
-该目录主要用于application/相关能力的组织与实现，并明确与相邻模块的职责边界。
-成员清单 [streamDebate.ts](./streamDebate.ts): 讨论流式编排用例。
+- 主要功能：围绕「application/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
+- 核心文件：`streamDebate.ts`。
+- 实现原理：由单一核心文件直接承载功能实现，对外暴露稳定调用入口。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+## 成员清单
 
-法则: 用例编排只依赖端口·输入输出显式·副作用可测试
-[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+- [`streamDebate.ts`](./streamDebate.ts)：TypeScript 实现文件，承载本模块核心逻辑
+

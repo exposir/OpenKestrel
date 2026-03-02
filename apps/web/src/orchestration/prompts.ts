@@ -1,3 +1,10 @@
+/**
+- [INPUT]: 依赖上层模块传入的参数、上下文与基础能力
+- [OUTPUT]: 对外提供 prompts.ts 的核心实现能力
+- [POS]: apps/web/src/orchestration/ 的实现文件，和同目录成员协作完成模块能力
+- [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+*/
+
 // [INPUT]: 依赖 Soul 接口（soul.ts），以及 topic/context/soul约束 等结构化输入
 // [OUTPUT]: 导出 buildSystemPrompt / buildUserPrompt，生成注入 LLM 的 Prompt 字符串
 // [POS]: src/orchestration/ 的 Prompt 构建层，L3 级别

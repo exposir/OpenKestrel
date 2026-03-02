@@ -8,13 +8,12 @@
 # trigger/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「trigger/」实现具体业务能力，当前重点是 本目录成员文件，承载对应子能力实现。
-- 核心文件：`TriggerButton.module.css`、`TriggerButton.tsx`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「trigger/」。
+- 核心文件：`TriggerButton.module.css`（交互触发器）、`TriggerButton.tsx`（交互触发器）。
+- 实现原理：采用双文件协作：`TriggerButton.module.css` 负责入口与编排，`TriggerButton.tsx` 负责核心处理并输出结果。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`TriggerButton.module.css`](./TriggerButton.module.css)：本目录成员文件，承载对应子能力实现

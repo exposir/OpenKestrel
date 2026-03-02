@@ -8,19 +8,16 @@
 # apps/admin/
 > L2 | Parent: [/CLAUDE.md](../../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「apps/admin/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
-- 核心文件：`next-env.d.ts`、`package.json`、`proxy.ts`、`README.md`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 `app/`、`lib/`、`node_modules/`；相关实现见本文件“成员清单”。
+- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「apps/admin/」。
+- 核心文件：`package.json`（项目配置）、`proxy.ts`（TypeScript 业务实现）、`README.md`（模块文档与规范）、`tsconfig.json`（项目配置）。
+- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `package.json` 接入调用，再由 `proxy.ts` 与 `README.md` 完成主要处理，最后对上层暴露稳定结果。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 `app/`、`lib/`；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`app/`](./app)：子模块目录，承载该子域实现
 - [`lib/`](./lib)：子模块目录，承载该子域实现
-- [`next-env.d.ts`](./next-env.d.ts)：TypeScript 实现文件，承载本模块核心逻辑
-- [`node_modules/`](./node_modules)：子模块目录，承载该子域实现
 - [`package.json`](./package.json)：配置文件，声明运行或构建参数
 - [`proxy.ts`](./proxy.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`README.md`](./README.md)：文档文件，记录该模块规范与说明

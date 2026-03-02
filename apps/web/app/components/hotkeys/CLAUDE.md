@@ -8,13 +8,12 @@
 # hotkeys/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「hotkeys/」实现具体业务能力，当前重点是 React 组件实现文件，负责界面与交互逻辑。
-- 核心文件：`GlobalHotkeys.tsx`、`HotkeyHelpDialog.module.css`、`HotkeyHelpDialog.tsx`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「hotkeys/」。
+- 核心文件：`GlobalHotkeys.tsx`（React 组件实现）、`HotkeyHelpDialog.module.css`（交互弹窗实现）、`HotkeyHelpDialog.tsx`（交互弹窗实现）。
+- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `GlobalHotkeys.tsx` 接入调用，再由 `HotkeyHelpDialog.module.css` 与 `HotkeyHelpDialog.tsx` 完成主要处理，最后对上层暴露稳定结果。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`GlobalHotkeys.tsx`](./GlobalHotkeys.tsx)：React 组件实现文件，负责界面与交互逻辑

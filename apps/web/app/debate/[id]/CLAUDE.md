@@ -8,13 +8,12 @@
 # debate/[id]/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「debate/[id]/」实现具体业务能力，当前重点是 本目录成员文件，承载对应子能力实现。
-- 核心文件：`debate-page.module.css`、`DebateToc.module.css`、`DebateToc.tsx`、`page.tsx`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「debate/[id]/」。
+- 核心文件：`page.tsx`（页面入口）、`debate-page.module.css`（模块实现）、`DebateToc.module.css`（模块实现）、`DebateToc.tsx`（React 组件实现）。
+- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `page.tsx` 接入调用，再由 `debate-page.module.css` 与 `DebateToc.module.css` 完成主要处理，最后对上层暴露稳定结果。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`debate-page.module.css`](./debate-page.module.css)：本目录成员文件，承载对应子能力实现

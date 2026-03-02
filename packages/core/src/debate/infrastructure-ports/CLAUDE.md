@@ -8,13 +8,12 @@
 # infrastructure-ports/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「infrastructure-ports/」实现具体业务能力，当前重点是 TypeScript 实现文件，承载本模块核心逻辑。
-- 核心文件：`debateRepository.ts`、`llmGateway.ts`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；相关实现见本文件“成员清单”。
+- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「infrastructure-ports/」。
+- 核心文件：`debateRepository.ts`（TypeScript 业务实现）、`llmGateway.ts`（TypeScript 业务实现）。
+- 实现原理：采用双文件协作：`debateRepository.ts` 负责入口与编排，`llmGateway.ts` 负责核心处理并输出结果。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`debateRepository.ts`](./debateRepository.ts)：TypeScript 实现文件，承载本模块核心逻辑

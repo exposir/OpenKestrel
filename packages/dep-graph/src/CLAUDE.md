@@ -8,13 +8,12 @@
 # src/
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
-
 ## 模块功能综述
 
-- 主要功能：围绕「src/」实现具体业务能力，当前重点是 子模块目录，承载该子域实现。
-- 核心文件：`cli.ts`、`index.ts`、`types.ts`。
-- 实现原理：通常由入口文件接收请求或参数，再调用同目录实现文件完成处理，最后输出页面、接口响应或可复用函数能力。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `analyzer/`、`graph/`、`viewer-app/`、`viewer-server/`；相关实现见本文件“成员清单”。
+- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「src/」。
+- 核心文件：`index.ts`（TypeScript 业务实现）、`cli.ts`（TypeScript 业务实现）、`types.ts`（TypeScript 业务实现）。
+- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `index.ts` 接入调用，再由 `cli.ts` 与 `types.ts` 完成主要处理，最后对上层暴露稳定结果。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `analyzer/`、`graph/`、`viewer-app/`、`viewer-server/`；同级协作见本文件“成员清单”。
 ## 成员清单
 
 - [`analyzer/`](./analyzer)：子模块目录，承载该子域实现

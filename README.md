@@ -32,6 +32,8 @@ OpenKestrel operates on a unique "Intent-Logic" double track system:
 - **Logic Adjudication:** Eliminating noise and hallucinations through internal agent-vs-agent debate and external anchoring.
 - **GEB Isomorphic Documentation:** Every piece of knowledge is stored as an L1/L2/L3 fractal asset, ensuring consistency between thought and code.
 - **Core + DI Architecture:** Business contracts and use-cases live in `@openkestrel/core`; app runtime dependencies are wired in a single DI composition root.
+- **Layered UI Components:** `apps/web/app/components` is split by domain (`auth/compose/hotkeys/search/theme/trigger/modal-engine`) to keep per-directory complexity bounded.
+- **Viewer Renderer Split:** `packages/dep-graph/src/viewer-app/app.js` now orchestrates state, while `renderer.js` encapsulates WebGL-first rendering with SVG fallback.
 
 ## 📂 Project Structure
 
@@ -43,6 +45,16 @@ OpenKestrel operates on a unique "Intent-Logic" double track system:
 - `docs/intent/`: Product vision, PRD, and philosophical thoughts.
 - `docs/logic/`: Architecture, API specifications, and safety protocols.
 - `output/`: Shared local data directory (debates + audit logs).
+
+## 🧱 Frontend Component Layout (Web)
+
+- `apps/web/app/components/auth/`: authentication interaction (`AuthButton`).
+- `apps/web/app/components/compose/`: compose dialog and styles.
+- `apps/web/app/components/hotkeys/`: global shortcuts and help dialog.
+- `apps/web/app/components/search/`: launcher and search dialog.
+- `apps/web/app/components/theme/`: theme toggle.
+- `apps/web/app/components/trigger/`: trigger button and stream card.
+- `apps/web/app/components/modal-engine/`: single-instance modal state machine and host.
 
 ## 🧩 Runtime Architecture (Current)
 
@@ -66,6 +78,13 @@ pnpm build
 ```bash
 # Full workspace build validation
 pnpm -r build
+
+# Targeted package builds
+pnpm --filter @openkestrel/web build
+pnpm --filter @openkestrel/admin build
+pnpm --filter @openkestrel/core build
+pnpm --filter @openkestrel/theme-motion build
+pnpm --filter @openkestrel/dep-graph build
 
 # Web smoke checks (when dev server is running)
 curl -i "http://localhost:3000/api/search?q=test&limit=3"

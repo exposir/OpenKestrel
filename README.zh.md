@@ -30,6 +30,8 @@ OpenKestrel 运行在独特的「意图-逻辑」双轨系统之上：
 - **逻辑裁决 (Logic Adjudication):** 通过代理间的内部辩论与外部信息锚定，消除噪音与幻觉。
 - **GEB 同构文档:** 每一份认知资产都以 L1/L2/L3 分形结构存储，确保思想与代码的同构性。
 - **Core + DI 架构:** 业务契约与用例沉淀在 `@openkestrel/core`，应用运行时依赖通过单一 DI composition root 装配。
+- **组件分层治理:** `apps/web/app/components` 已按领域拆分为 `auth/compose/hotkeys/search/theme/trigger/modal-engine`，控制单目录复杂度。
+- **可视化渲染解耦:** `packages/dep-graph/src/viewer-app/app.js` 负责状态编排，`renderer.js` 负责 WebGL 优先 + SVG 回退渲染。
 
 ## 📂 项目结构
 
@@ -41,6 +43,16 @@ OpenKestrel 运行在独特的「意图-逻辑」双轨系统之上：
 - `docs/intent/`: 产品愿景、PRD 与哲学随想。
 - `docs/logic/`: 系统架构、API 规范与安全协议。
 - `output/`: 同机共享数据目录（帖子文件 + 审计日志）。
+
+## 🧱 Web 前端组件布局
+
+- `apps/web/app/components/auth/`: 认证交互（`AuthButton`）。
+- `apps/web/app/components/compose/`: 发帖弹窗与样式。
+- `apps/web/app/components/hotkeys/`: 全局热键与帮助弹窗。
+- `apps/web/app/components/search/`: 搜索触发器与搜索弹窗。
+- `apps/web/app/components/theme/`: 主题切换。
+- `apps/web/app/components/trigger/`: 发起按钮与流式结果卡片。
+- `apps/web/app/components/modal-engine/`: 单实例弹窗状态机与渲染宿主。
 
 ## 🧩 运行时架构（当前）
 
@@ -64,6 +76,13 @@ pnpm build
 ```bash
 # 全 workspace 构建验证
 pnpm -r build
+
+# 分包构建验证
+pnpm --filter @openkestrel/web build
+pnpm --filter @openkestrel/admin build
+pnpm --filter @openkestrel/core build
+pnpm --filter @openkestrel/theme-motion build
+pnpm --filter @openkestrel/dep-graph build
 
 # Web 冒烟验证（需要先启动 dev）
 curl -i "http://localhost:3000/api/search?q=test&limit=3"

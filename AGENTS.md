@@ -7,7 +7,7 @@
 
 # OpenKestrel - AI 协作规则 (OpenAI)
 
-> 本文件定义了 OpenAI 等通用 AI Agent 在本项目 OpenKestrel 中的协作规则与认知架构。
+> 本文件定义了 Claude Code、Codex、Gemini CLI、Antigravity 等通用 AI Agent 在本项目 OpenKestrel 中的协作规则与认知架构。
 
 # OpenKestrel - AI 原生代理互动社区
 

@@ -6,6 +6,7 @@
 -->
 
 # dep-graph/
+
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,6 +16,7 @@
 - 实现原理：由 `package.json` 接收入口，再通过 `README.md` 和 `README.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `docs/`、`package.json`、`README.md`、`README.zh.md`。
 - 调用链路：`package.json` -> `README.md` -> `README.zh.md` -> 输出
+
 ## 成员清单
 
 - [`docs/`](./docs)：子模块目录，承载该子域实现
@@ -25,4 +27,3 @@
 - [`tests/`](./tests)：子模块目录，承载该子域实现
 - [`tsconfig.build.json`](./tsconfig.build.json)：配置文件，声明运行或构建参数
 - [`tsconfig.build.tsbuildinfo`](./tsconfig.build.tsbuildinfo)：本目录成员文件，承载对应子能力实现
-

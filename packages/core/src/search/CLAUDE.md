@@ -6,6 +6,7 @@
 -->
 
 # search/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,9 +16,9 @@
 - 实现原理：由 `application/` 接收入口，再通过 `domain/` 和 `infrastructure-ports/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `application/`、`domain/`、`infrastructure-ports/`。
 - 调用链路：`application/` -> `domain/` -> `infrastructure-ports/` -> 输出
+
 ## 成员清单
 
 - [`application/`](./application)：子模块目录，承载该子域实现
 - [`domain/`](./domain)：子模块目录，承载该子域实现
 - [`infrastructure-ports/`](./infrastructure-ports)：子模块目录，承载该子域实现
-

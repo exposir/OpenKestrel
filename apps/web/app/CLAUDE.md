@@ -16,6 +16,7 @@
 - 实现原理：由 `page.tsx` 接收入口，再通过 `layout.tsx` 和 `globals.css` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `api/`、`components/`、`debate/`、`globals.css`。
 - 调用链路：`page.tsx` -> `layout.tsx` -> `globals.css` -> 输出
+
 ## 成员清单
 
 成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。
@@ -74,10 +75,10 @@ app/
 
 `TriggerButton` 与 `StreamCard` 通过 `window` 事件总线解耦：
 
-| 事件 | 触发方 | 消费方 | 含义 |
-|------|--------|--------|------|
-| `stream:start` | TriggerButton | StreamCard | 清空卡片，准备接收 |
-| `stream:msg` | TriggerButton | StreamCard | 推送一条 NDJSON 消息 |
+| 事件           | 触发方        | 消费方     | 含义                 |
+| -------------- | ------------- | ---------- | -------------------- |
+| `stream:start` | TriggerButton | StreamCard | 清空卡片，准备接收   |
+| `stream:msg`   | TriggerButton | StreamCard | 推送一条 NDJSON 消息 |
 
 NDJSON 消息类型（`/api/orchestrate` → 前端）：
 

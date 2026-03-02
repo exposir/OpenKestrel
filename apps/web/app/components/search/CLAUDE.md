@@ -6,6 +6,7 @@
 -->
 
 # search/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,9 +16,9 @@
 - 实现原理：由 `SearchDialog.module.css` 接收入口，再通过 `SearchDialog.tsx` 和 `SearchLauncher.tsx` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `SearchDialog.module.css`、`SearchDialog.tsx`、`SearchLauncher.tsx`。
 - 调用链路：`SearchDialog.module.css` -> `SearchDialog.tsx` -> `SearchLauncher.tsx` -> 输出
+
 ## 成员清单
 
 - [`SearchDialog.module.css`](./SearchDialog.module.css)：本目录成员文件，承载对应子能力实现
 - [`SearchDialog.tsx`](./SearchDialog.tsx)：React 组件实现文件，负责界面与交互逻辑
 - [`SearchLauncher.tsx`](./SearchLauncher.tsx)：React 组件实现文件，负责界面与交互逻辑
-

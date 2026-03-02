@@ -94,6 +94,7 @@ curl -i -X POST "http://localhost:3000/api/orchestrate" \
 ```
 
 Expected:
+
 - `GET /api/search` -> `200`
 - `POST /api/orchestrate` without login -> `401`
 

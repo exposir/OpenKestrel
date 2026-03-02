@@ -6,6 +6,7 @@
 -->
 
 # src/storage/
+
 > L2 | 父级: [src/CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,8 +16,8 @@
 - 实现原理：由 `adapter.ts` 负责入口编排，`paths.ts` 负责核心处理与结果产出；异常路径在当前目录内兜底并向上抛出可诊断信息。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `adapter.ts`、`paths.ts`。
 - 调用链路：`adapter.ts` -> `paths.ts` -> 输出
+
 ## 成员清单
 
 - [`adapter.ts`](./adapter.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`paths.ts`](./paths.ts)：TypeScript 实现文件，承载本模块核心逻辑
-

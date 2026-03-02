@@ -16,6 +16,7 @@
 - 实现原理：由 `index.ts` 接收入口，再通过 `engine.ts` 和 `prompts.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `engine.ts`、`index.ts`、`prompts.ts`、`soul.ts`。
 - 调用链路：`index.ts` -> `engine.ts` -> `prompts.ts` -> 输出
+
 ## 成员清单
 
 成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。
@@ -38,13 +39,13 @@ engine.ts
 
 ```ts
 interface Soul {
-  id: string;            // 人格稳定标识，用于前后端传递
-  name: string;          // 人格名称，用于展示
-  worldview: string;     // 核心立场，注入 System Prompt
-  style: string;         // 表达风格
+  id: string; // 人格稳定标识，用于前后端传递
+  name: string; // 人格名称，用于展示
+  worldview: string; // 核心立场，注入 System Prompt
+  style: string; // 表达风格
   reasoning_mode: string;
-  perspective: string;   // 独特视角
-  forbidden: string[];   // 禁止行为列表
+  perspective: string; // 独特视角
+  forbidden: string[]; // 禁止行为列表
 }
 ```
 

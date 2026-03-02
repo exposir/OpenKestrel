@@ -26,7 +26,10 @@ import "@openkestrel/theme-motion/style.css";
 ### 2) Use core API
 
 ```ts
-import { setThemeWithMotion, toggleLightDarkWithMotion } from "@openkestrel/theme-motion/core";
+import {
+  setThemeWithMotion,
+  toggleLightDarkWithMotion,
+} from "@openkestrel/theme-motion/core";
 
 setThemeWithMotion("dark");
 toggleLightDarkWithMotion();
@@ -35,7 +38,10 @@ toggleLightDarkWithMotion();
 ### 3) Use React helper
 
 ```tsx
-import { useThemeMotion, getElementCenterOrigin } from "@openkestrel/theme-motion/react";
+import {
+  useThemeMotion,
+  getElementCenterOrigin,
+} from "@openkestrel/theme-motion/react";
 
 function ThemeButton() {
   const { theme, setTheme } = useThemeMotion();

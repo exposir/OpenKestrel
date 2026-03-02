@@ -6,6 +6,7 @@
 -->
 
 # theme/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,7 +16,7 @@
 - 实现原理：由 `ThemeToggle.tsx` 单点承载入口与处理流程，对外保持稳定输出；边界条件在文件内显式校验并快速失败。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `ThemeToggle.tsx`。
 - 调用链路：`ThemeToggle.tsx` -> 输出
+
 ## 成员清单
 
 - [`ThemeToggle.tsx`](./ThemeToggle.tsx)：React 组件实现文件，负责界面与交互逻辑
-

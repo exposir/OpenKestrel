@@ -6,6 +6,7 @@
 -->
 
 # src/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,10 +16,10 @@
 - 实现原理：由 `index.ts` 接收入口，再通过 `core.ts` 和 `react.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `core.ts`、`index.ts`、`react.ts`、`style.css`。
 - 调用链路：`index.ts` -> `core.ts` -> `react.ts` -> 输出
+
 ## 成员清单
 
 - [`core.ts`](./core.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`index.ts`](./index.ts)：模块导出或入口文件，聚合对外能力
 - [`react.ts`](./react.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`style.css`](./style.css)：本目录成员文件，承载对应子能力实现
-

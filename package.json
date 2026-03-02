@@ -8,8 +8,10 @@
     "dev": "concurrently -n web,admin -c cyan,magenta \"pnpm dev:web\" \"pnpm dev:admin\"",
     "dev:web": "dotenv -e .env -- pnpm --filter @openkestrel/web dev",
     "dev:admin": "dotenv -e .env -- pnpm --filter @openkestrel/admin dev",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
+    "format": "biome format --write . && pnpm format:md",
+    "format:check": "biome format . && pnpm format:md:check",
+    "format:md": "prettier --write \"**/*.md\"",
+    "format:md:check": "prettier --check \"**/*.md\"",
     "lint": "biome check . && pnpm -r --if-present lint:framework",
     "lint:biome": "biome check .",
     "build": "pnpm -r build",
@@ -31,6 +33,7 @@
     "concurrently": "^9.1.2",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.39.3",
-    "eslint-config-next": "^16.1.6"
+    "eslint-config-next": "^16.1.6",
+    "prettier": "^3.6.2"
   }
 }

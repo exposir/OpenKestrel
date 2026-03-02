@@ -6,6 +6,7 @@
 -->
 
 # domain/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,9 +16,9 @@
 - 实现原理：由 `aggregate.ts` 接收入口，再通过 `entities.ts` 和 `valueObjects.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `aggregate.ts`、`entities.ts`、`valueObjects.ts`。
 - 调用链路：`aggregate.ts` -> `entities.ts` -> `valueObjects.ts` -> 输出
+
 ## 成员清单
 
 - [`aggregate.ts`](./aggregate.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`entities.ts`](./entities.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`valueObjects.ts`](./valueObjects.ts)：TypeScript 实现文件，承载本模块核心逻辑
-

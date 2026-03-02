@@ -6,6 +6,7 @@
 -->
 
 # packages/
+
 > L2 | Parent: [/CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,9 +16,9 @@
 - 实现原理：由 `core/` 接收入口，再通过 `dep-graph/` 和 `theme-motion/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `core/`、`dep-graph/`、`theme-motion/`。
 - 调用链路：`core/` -> `dep-graph/` -> `theme-motion/` -> 输出
+
 ## 成员清单
 
 - [`core/`](./core)：子模块目录，承载该子域实现
 - [`dep-graph/`](./dep-graph)：子模块目录，承载该子域实现
 - [`theme-motion/`](./theme-motion)：子模块目录，承载该子域实现
-

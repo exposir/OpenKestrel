@@ -6,6 +6,7 @@
 -->
 
 # src/
+
 > L2 | 父级: [../CLAUDE.md](../CLAUDE.md)
 
 ## 模块功能综述
@@ -15,6 +16,7 @@
 - 实现原理：由 `index.ts` 接收入口，再通过 `cli.ts` 和 `types.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `analyzer/`、`cli.ts`、`graph/`、`index.ts`。
 - 调用链路：`index.ts` -> `cli.ts` -> `types.ts` -> 输出
+
 ## 成员清单
 
 - [`analyzer/`](./analyzer)：子模块目录，承载该子域实现
@@ -24,4 +26,3 @@
 - [`types.ts`](./types.ts)：TypeScript 实现文件，承载本模块核心逻辑
 - [`viewer-app/`](./viewer-app)：子模块目录，承载该子域实现
 - [`viewer-server/`](./viewer-server)：子模块目录，承载该子域实现
-

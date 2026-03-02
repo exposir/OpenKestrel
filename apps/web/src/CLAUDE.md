@@ -16,6 +16,7 @@
 - 实现原理：由 `audit/` 接收入口，再通过 `auth/` 和 `di/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
 - 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `audit/`、`auth/`、`di/`、`env/`。
 - 调用链路：`audit/` -> `auth/` -> `di/` -> 输出
+
 ## 成员清单
 
 成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。
@@ -44,18 +45,18 @@ src/
 
 ## 模块职责边界
 
-| 模块               | 职责                                                | 不负责               |
-| ------------------ | --------------------------------------------------- | -------------------- |
-| `auth/auth.ts`     | Auth.js 配置、OAuth/Credentials 登录、审计事件埋点  | 权限逻辑 / 页面路由  |
-| `soul.ts`          | 定义 Soul 接口与静态人格库                          | 动态创建/持久化 Soul |
-| `prompts.ts`       | 从 Soul 结构生成 Prompt 字符串                      | 调用 API             |
-| `engine.ts`        | 所有 LLM 调用、流式推送、熵校验                     | UI / 文件路由        |
-| `index.ts`         | 离线 CLI 批量运行验证                               | Web 请求处理         |
-| `audit/logger.ts`  | 审计事件统一写入与请求上下文提取                    | 权限判定 / 业务逻辑  |
-| `di/container.ts`  | ports 实现注册与用例装配入口（服务端）              | 业务逻辑本身         |
-| `env/load.ts`      | 统一加载环境变量，兼容 monorepo 下不同 cwd          | 业务逻辑 / 鉴权规则  |
-| `storage/paths.ts` | 数据目录路径统一管理（支持 `OPENKESTREL_DATA_DIR`） | 业务审计内容本身     |
-| `storage/adapter.ts` | 统一读写接口与驱动切换（`STORAGE_DRIVER`）         | LLM 调用与鉴权规则   |
+| 模块                 | 职责                                                | 不负责               |
+| -------------------- | --------------------------------------------------- | -------------------- |
+| `auth/auth.ts`       | Auth.js 配置、OAuth/Credentials 登录、审计事件埋点  | 权限逻辑 / 页面路由  |
+| `soul.ts`            | 定义 Soul 接口与静态人格库                          | 动态创建/持久化 Soul |
+| `prompts.ts`         | 从 Soul 结构生成 Prompt 字符串                      | 调用 API             |
+| `engine.ts`          | 所有 LLM 调用、流式推送、熵校验                     | UI / 文件路由        |
+| `index.ts`           | 离线 CLI 批量运行验证                               | Web 请求处理         |
+| `audit/logger.ts`    | 审计事件统一写入与请求上下文提取                    | 权限判定 / 业务逻辑  |
+| `di/container.ts`    | ports 实现注册与用例装配入口（服务端）              | 业务逻辑本身         |
+| `env/load.ts`        | 统一加载环境变量，兼容 monorepo 下不同 cwd          | 业务逻辑 / 鉴权规则  |
+| `storage/paths.ts`   | 数据目录路径统一管理（支持 `OPENKESTREL_DATA_DIR`） | 业务审计内容本身     |
+| `storage/adapter.ts` | 统一读写接口与驱动切换（`STORAGE_DRIVER`）          | LLM 调用与鉴权规则   |
 
 ## 规则
 

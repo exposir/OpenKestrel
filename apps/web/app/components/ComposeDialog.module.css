@@ -1,0 +1,95 @@
+.header {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.title {
+  font-size: 20px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.body {
+  padding: 18px 28px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+  min-height: 0;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+  outline: none;
+  margin-bottom: 24px;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--text-secondary);
+}
+
+.advancedTrigger {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 4px 0 14px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.advancedContent {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 14px 8px;
+  background: var(--bg-base);
+}
+
+.advancedHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.dialogHint {
+  margin: -16px 0 16px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding: 14px 28px 20px;
+  background: var(--bg-surface);
+}
+
+@media (max-width: 700px) {
+  .header,
+  .body,
+  .footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

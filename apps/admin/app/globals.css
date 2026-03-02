@@ -1,3 +1,15 @@
+/**
+ * - [INPUT]: 依赖 app/layout.tsx 全局引入；被 admin 全部路由共享
+ * - [OUTPUT]: 提供 admin 的全局基础样式与 app 级共享样式（ok-admin-*）
+ * - [POS]: apps/admin/app 的全局样式层
+ * - [PROTOCOL]: 变更时更新此头部，然后检查 apps/admin/CLAUDE.md
+ *
+ * 维护规范（建议）：
+ * 1) 优先保留 token/reset 与 admin 全局共享样式在本文件。
+ * 2) 复杂或强业务耦合样式优先迁移到对应组件/页面的 *.module.css。
+ * 3) 新增样式时优先复用既有 ok-admin-* 语义，避免无前缀散落选择器。
+ */
+
 :root {
   --bg: #0b1220;
   --panel: #101a2d;

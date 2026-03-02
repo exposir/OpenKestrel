@@ -10,3 +10,4 @@ coverage/
 .next/
 **/.next/
 output/
+**/tsconfig.build.tsbuildinfo

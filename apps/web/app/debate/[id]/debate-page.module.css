@@ -1,0 +1,41 @@
+.layout {
+  display: flex;
+  justify-content: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  gap: 40px;
+}
+
+.layout::before {
+  content: "";
+  flex-shrink: 0;
+  width: 180px;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: 180px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  max-width: 800px;
+}
+
+@media (max-width: 1100px) {
+  .layout {
+    flex-direction: column;
+    max-width: 800px;
+    gap: 0;
+  }
+
+  .layout::before {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}

@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { SOULS } from "../../src/orchestration/soul";
 import { MODAL_SWITCH_MS } from "./modal-engine/modal-motion";
+import styles from "./ComposeDialog.module.css";
 
 type StreamMessage =
   | { type: "meta"; soul: string; topic: string; timestamp: string }
@@ -139,24 +140,24 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
 
   return (
     <>
-      <div className="ok-dialog-header">
-        <h2 style={{ fontSize: 20, margin: 0, fontWeight: 600 }}>发起新的思想博弈</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>发起新的思想博弈</h2>
       </div>
 
-      <div className="ok-dialog-body">
-        <label className="modal-label">讨论话题</label>
+      <div className={styles.body}>
+        <label className={styles.label}>讨论话题</label>
         <input
           ref={topicInputRef}
-          className="modal-input"
+          className={styles.input}
           placeholder="例如：AI 时代的数字遗产归属..."
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleStart()}
         />
 
-        <label className="modal-label">人格视角</label>
+        <label className={styles.label}>人格视角</label>
         <select
-          className="modal-input"
+          className={styles.input}
           value={soulId}
           onChange={(e) => setSoulId(e.target.value)}
         >
@@ -167,9 +168,9 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
           ))}
         </select>
 
-        <label className="modal-label">上下文背景 (可选)</label>
+        <label className={styles.label}>上下文背景 (可选)</label>
         <textarea
-          className="modal-input"
+          className={styles.input}
           style={{ minHeight: 90, resize: "vertical" }}
           placeholder="提供一些背景信息，让讨论更具针对性..."
           value={context}
@@ -178,13 +179,13 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
 
         <Collapsible.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
           <Collapsible.Trigger asChild>
-            <button type="button" className="ok-advanced-trigger">
+            <button type="button" className={styles.advancedTrigger}>
               {showAdvanced ? "▾ 收起高级输入" : "▸ 展开高级输入"}
             </button>
           </Collapsible.Trigger>
 
-          <Collapsible.Content className="ok-advanced-content">
-            <div className="ok-advanced-head">
+          <Collapsible.Content className={styles.advancedContent}>
+            <div className={styles.advancedHead}>
               <p style={{ margin: 0, fontSize: 12, color: "var(--text-secondary)" }}>
                 高级输入用于约束生成结果，留空则按默认策略运行
               </p>
@@ -208,28 +209,28 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
               </button>
             </div>
 
-            <label className="modal-label">参考资料 (每行一条，可填链接或文本)</label>
+            <label className={styles.label}>参考资料 (每行一条，可填链接或文本)</label>
             <textarea
-              className="modal-input"
+              className={styles.input}
               style={{ minHeight: 92, resize: "vertical" }}
               placeholder={"https://example.com/article\n关键数据：2025 年渗透率为 37%"}
               value={referencesText}
               onChange={(e) => setReferencesText(e.target.value)}
             />
-            <p className="ok-dialog-hint">支持直接粘贴带 `\\n` 的文本，系统会自动分行。</p>
+            <p className={styles.dialogHint}>支持直接粘贴带 `\\n` 的文本，系统会自动分行。</p>
 
-            <label className="modal-label">必须覆盖点 (每行一条)</label>
+            <label className={styles.label}>必须覆盖点 (每行一条)</label>
             <textarea
-              className="modal-input"
+              className={styles.input}
               style={{ minHeight: 92, resize: "vertical" }}
               placeholder={"商业激励机制\n技术伦理边界"}
               value={mustCoverText}
               onChange={(e) => setMustCoverText(e.target.value)}
             />
 
-            <label className="modal-label">禁止触碰点 (每行一条)</label>
+            <label className={styles.label}>禁止触碰点 (每行一条)</label>
             <textarea
-              className="modal-input"
+              className={styles.input}
               style={{ minHeight: 92, resize: "vertical" }}
               placeholder={"避免人身攻击\n不输出无证据断言"}
               value={mustAvoidText}
@@ -239,7 +240,7 @@ export function ComposeDialog({ active, onClose }: ComposeDialogProps) {
         </Collapsible.Root>
       </div>
 
-      <div className="ok-dialog-footer">
+      <div className={styles.footer}>
         <button
           onClick={onClose}
           style={{

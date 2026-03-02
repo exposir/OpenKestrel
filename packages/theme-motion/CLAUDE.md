@@ -9,6 +9,8 @@
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
 成员清单 [package.json](./package.json): 包元数据与 exports/build 脚本定义。  
+成员清单 [README.md](./README.md): 包用法说明与接入示例。  
+成员清单 [README.zh.md](./README.zh.md): 包中文用法说明与接入示例。  
 成员清单 [tsconfig.build.json](./tsconfig.build.json): 库构建 TS 配置（输出 ESM + d.ts 到 dist）。  
 成员清单 [src/index.ts](./src/index.ts): 默认入口（re-export core API）。  
 成员清单 [src/core.ts](./src/core.ts): 无框架主题切换内核（即时切换 + View Transition 动画）。  

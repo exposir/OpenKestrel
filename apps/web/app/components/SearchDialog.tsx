@@ -8,6 +8,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import styles from "./SearchDialog.module.css";
 
 interface SearchResult {
   id: string;
@@ -74,11 +75,11 @@ export function SearchDialog({ active, onClose }: SearchDialogProps) {
   }
 
   return (
-    <div className="ok-search-sheet">
-      <div className="ok-search-input-wrap">
+    <div className={styles.sheet}>
+      <div className={styles.inputWrap}>
         <input
           ref={inputRef}
-          className="modal-input"
+          className={styles.input}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={(event) => {
@@ -88,12 +89,11 @@ export function SearchDialog({ active, onClose }: SearchDialogProps) {
             }
           }}
           placeholder="搜索话题、人格、正文片段..."
-          style={{ marginBottom: 0, padding: "10px 4px", fontSize: 14 }}
         />
       </div>
 
       {hasQuery || loading ? (
-        <div className="ok-search-result-wrap">
+        <div className={styles.resultWrap}>
           {loading ? (
             <SearchHint text="搜索中..." />
           ) : results.length === 0 ? (
@@ -104,11 +104,11 @@ export function SearchDialog({ active, onClose }: SearchDialogProps) {
                 key={item.id}
                 type="button"
                 onClick={() => openDebate(item.id)}
-                className="ok-search-item"
+                className={styles.item}
               >
-                <p className="ok-search-item-title">{item.topic}</p>
-                <p className="ok-search-item-excerpt">{item.excerpt}</p>
-                <p className="ok-search-item-time">
+                <p className={styles.itemTitle}>{item.topic}</p>
+                <p className={styles.itemExcerpt}>{item.excerpt}</p>
+                <p className={styles.itemTime}>
                   {new Date(item.timestamp).toLocaleString("zh-CN")}
                 </p>
               </button>
@@ -121,5 +121,5 @@ export function SearchDialog({ active, onClose }: SearchDialogProps) {
 }
 
 function SearchHint({ text }: { text: string }) {
-  return <div className="ok-search-hint">{text}</div>;
+  return <div className={styles.hint}>{text}</div>;
 }

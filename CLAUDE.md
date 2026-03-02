@@ -44,7 +44,7 @@ apps/admin/package.json - 管理后台独立依赖与脚本
 
 <runtime_snapshot date="2026-03-02">
 monorepo_status:
-- pnpm workspaces（workspace: apps/*）
+- pnpm workspaces（workspace: apps/* + packages/*）
 - apps/web 默认端口 3000；apps/admin 默认端口 3100
 - 共享数据目录默认 output/（仓库根）
 
@@ -228,7 +228,7 @@ Markdown Files (.md):
 
 <L3_SCOPE>
 L3 适用范围与豁免
-- 适用: 业务源码与项目文档（`apps/**`、`docs/**`、根目录关键文档）。
+- 适用: 业务源码与项目文档（`apps/**`、`packages/**`、`docs/**`、根目录关键文档）。
 - 豁免: 构建产物与第三方目录（`.next/**`、`node_modules/**`、`dist/**`），以及框架自动生成且声明不可编辑的文件（如 `next-env.d.ts`）。
 - 原则: 自动生成文件不强行补头；如需规范约束，应在其上层 L2 文档声明职责与边界。
 </L3_SCOPE>

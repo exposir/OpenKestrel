@@ -1,0 +1,183 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.56);
+  backdrop-filter: blur(8px);
+  will-change: opacity;
+}
+
+:global([data-theme="dark"]) .overlay {
+  background: rgba(0, 0, 0, 0.74);
+}
+
+.overlayOpen {
+  animation: overlayFadeIn var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.overlayClose {
+  animation: overlayFadeOut var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.overlayHidden {
+  opacity: 0;
+  animation: none;
+  pointer-events: none;
+}
+
+.shell {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1101;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 28px));
+  max-height: min(88vh, 860px);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  will-change: opacity, transform;
+}
+
+.shellCompose {
+  width: min(760px, calc(100vw - 28px));
+}
+
+.shellSearch {
+  width: min(680px, calc(100vw - 20px));
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  max-height: none;
+}
+
+.shellHelp {
+  width: min(520px, calc(100vw - 20px));
+}
+
+.shellOpen {
+  animation: shellEnter var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.shellClosing {
+  animation: shellFadeOut var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.shellHidden {
+  opacity: 0;
+  animation: none;
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  flex: 1;
+  min-height: 0;
+}
+
+.panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.panelActive {
+  opacity: 1;
+}
+
+.panelEnter {
+  animation: panelCrossfadeIn var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.panelExit {
+  pointer-events: none;
+  animation: panelCrossfadeOut var(--ok-modal-switch-ms, 280ms)
+    cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes panelCrossfadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes panelCrossfadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.996);
+  }
+}
+
+@keyframes shellEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes shellFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -49%) scale(0.99);
+  }
+}
+
+@media (max-width: 700px) {
+  .shellCompose {
+    width: min(760px, calc(100vw - 16px));
+    max-height: 92vh;
+  }
+
+  .shellSearch,
+  .shellHelp {
+    width: min(760px, calc(100vw - 16px));
+  }
+}

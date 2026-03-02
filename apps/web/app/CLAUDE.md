@@ -14,22 +14,30 @@
 ```
 app/
 ├── layout.tsx                  全局根布局：挂载主题样式/ModalProvider/GlobalHotkeys（Server Component）
+├── globals.css                 基础全局层：token/reset/utility（不承载业务样式）
 ├── page.tsx                    首页：讨论列表 + 登录态展示 + 触发入口（Server Component）
 ├── components/
 │   ├── AuthButton.tsx          登录/退出按钮（Client Component）
+│   ├── ComposeDialog.module.css 发帖弹窗样式模块（CSS Modules）
 │   ├── GlobalHotkeys.tsx       全局快捷键分发（Cmd/Ctrl+K、?、Esc、Cmd/Ctrl+D）
+│   ├── HotkeyHelpDialog.module.css 快捷键弹窗样式模块（CSS Modules）
 │   ├── SearchLauncher.tsx      首页搜索触发器（伪输入框，触发 ModalEngine）
+│   ├── SearchDialog.module.css 搜索弹窗样式模块（CSS Modules）
 │   ├── ComposeDialog.tsx       发帖弹窗内容（话题/人格/高级输入）
 │   ├── SearchDialog.tsx        搜索弹窗内容（调用 /api/search）
 │   ├── HotkeyHelpDialog.tsx    快捷键帮助弹窗内容
+│   ├── TriggerButton.module.css 发起讨论按钮样式模块（CSS Modules）
 │   ├── TriggerButton.tsx       发起讨论按钮 + 流式渲染卡片（Client Component）
 │   ├── ThemeToggle.tsx         明暗主题切换（Client Component）
 │   └── modal-engine/
+│       ├── ModalProvider.module.css 弹窗引擎壳/动画样式模块（CSS Modules）
 │       ├── ModalProvider.tsx   单实例弹窗状态机与渲染宿主
 │       ├── useModalEngine.ts   弹窗控制 Hook
 │       ├── modal-types.ts      弹窗类型定义
 │       ├── modal-motion.ts     弹窗切换时序常量（单源）
 │       └── CLAUDE.md           modal-engine 模块地图
+├── debate/[id]/debate-page.module.css 讨论详情布局样式模块（CSS Modules）
+├── debate/[id]/DebateToc.module.css   讨论目录导航样式模块（CSS Modules）
 ├── debate/[id]/page.tsx        讨论详情页（Server Component）
 ├── debate/[id]/DebateToc.tsx   讨论详情目录导航（Client Component）
 └── api/

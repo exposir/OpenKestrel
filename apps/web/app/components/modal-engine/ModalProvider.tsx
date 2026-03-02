@@ -14,6 +14,7 @@ import { ComposeDialog } from "../ComposeDialog";
 import { SearchDialog } from "../SearchDialog";
 import { HotkeyHelpDialog } from "../HotkeyHelpDialog";
 import { MODAL_SWITCH_MS } from "./modal-motion";
+import styles from "./ModalProvider.module.css";
 
 interface InternalModalState extends ModalState {
   exiting: ModalId | null;
@@ -42,13 +43,13 @@ function getModalLabel(id: ModalId): string {
 function getShellClassName(id: ModalId | null): string {
   switch (id) {
     case "compose":
-      return "ok-modal-shell ok-modal-shell-compose";
+      return `${styles.shell} ${styles.shellCompose}`;
     case "search":
-      return "ok-modal-shell ok-modal-shell-search";
+      return `${styles.shell} ${styles.shellSearch}`;
     case "hotkey-help":
-      return "ok-modal-shell ok-modal-shell-help";
+      return `${styles.shell} ${styles.shellHelp}`;
     default:
-      return "ok-modal-shell";
+      return styles.shell;
   }
 }
 
@@ -139,15 +140,15 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const currentModal = state.active ?? state.exiting;
   const isClosing = state.phase === "switching" && state.active === null && state.exiting !== null;
   const overlayStateClass = !currentModal
-    ? "ok-modal-overlay-hidden"
+    ? styles.overlayHidden
     : isClosing
-      ? "ok-modal-overlay-close"
-      : "ok-modal-overlay-open";
+      ? styles.overlayClose
+      : styles.overlayOpen;
   const shellStateClass = !currentModal
-    ? "ok-modal-shell-hidden"
+    ? styles.shellHidden
     : isClosing
-      ? "ok-modal-shell-closing"
-      : "ok-modal-shell-open";
+      ? styles.shellClosing
+      : styles.shellOpen;
   const contextValue = useMemo<ModalEngineContextValue>(
     () => ({
       open,
@@ -175,7 +176,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       <Dialog.Root open={Boolean(currentModal)} onOpenChange={(isOpen) => !isOpen && close()}>
         <Dialog.Portal>
           <Dialog.Overlay
-            className={`ok-modal-overlay ${overlayStateClass}`}
+            className={`${styles.overlay} ${overlayStateClass}`}
             style={{ "--ok-modal-switch-ms": `${MODAL_SWITCH_MS}ms` } as CSSProperties}
           />
           <Dialog.Content
@@ -188,15 +189,15 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
             <Dialog.Title className="sr-only">
               {currentModal ? getModalLabel(currentModal) : "对话弹窗"}
             </Dialog.Title>
-            <div className="ok-modal-stage">
+            <div className={styles.stage}>
               {state.exiting ? (
-                <div className="ok-modal-panel ok-modal-exit" data-modal-id={state.exiting}>
+                <div className={`${styles.panel} ${styles.panelExit}`} data-modal-id={state.exiting}>
                   {renderPanel(state.exiting, false)}
                 </div>
               ) : null}
               {state.active ? (
                 <div
-                  className={`ok-modal-panel ${state.phase === "switching" && state.exiting ? "ok-modal-enter" : "ok-modal-active"}`}
+                  className={`${styles.panel} ${state.phase === "switching" && state.exiting ? styles.panelEnter : styles.panelActive}`}
                   data-modal-id={state.active}
                 >
                   {renderPanel(state.active, true)}

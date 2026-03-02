@@ -26,6 +26,7 @@ const meshList = document.getElementById("mesh-list");
 const cycleList = document.getElementById("cycle-list");
 const aggregateBtn = document.getElementById("show-aggregate");
 const fileBtn = document.getElementById("show-file");
+const graphTextPanel = document.getElementById("graph-text-panel");
 const shortNameToggle = document.getElementById("toggle-short-name");
 const directionSelect = document.getElementById("filter-direction");
 const depthSelect = document.getElementById("filter-depth");
@@ -242,6 +243,11 @@ function renderAggregateGraph() {
     rawEdgeCount: graphData.edges.length,
     hiddenEdgeCount: 0
   });
+  renderGraphTextPanel({
+    graphData,
+    centerNodeId: null,
+    title: "当前视图文本摘要"
+  });
 
   void mountRenderer(graphData, {
     onNodeClick: (nodeKey) => handleNodeInteraction(nodeKey),
@@ -259,6 +265,11 @@ function renderFocusedFileGraph(centerNodeId, prefix) {
   });
 
   updateFilterSummary(graphData);
+  renderGraphTextPanel({
+    graphData,
+    centerNodeId,
+    title: "当前视图文本摘要"
+  });
 
   void mountRenderer(graphData, {
     onNodeClick: (nodeKey) => handleNodeInteraction(nodeKey),
@@ -390,6 +401,119 @@ function updateFilterSummary(graphData) {
   }
 
   performanceWarning.hidden = true;
+}
+
+function renderGraphTextPanel({ graphData, centerNodeId, title }) {
+  if (!graphTextPanel) {
+    return;
+  }
+  graphTextPanel.innerHTML = "";
+
+  const nodeIds = graphData.nodes.map((node) => Number(node.id)).filter((id) => Number.isFinite(id));
+  const nodeIdSet = new Set(nodeIds);
+  const edges = report.edges.filter(
+    (edge) => !edge.external && edge.to >= 0 && nodeIdSet.has(edge.from) && nodeIdSet.has(edge.to)
+  );
+
+  const inMap = new Map();
+  const outMap = new Map();
+  for (const id of nodeIds) {
+    inMap.set(id, 0);
+    outMap.set(id, 0);
+  }
+  for (const edge of edges) {
+    outMap.set(edge.from, (outMap.get(edge.from) || 0) + 1);
+    inMap.set(edge.to, (inMap.get(edge.to) || 0) + 1);
+  }
+
+  const summary = makePanelBlock("图概览");
+  summary.appendChild(
+    makePanelLine(
+      `${title} | 节点 ${graphData.nodes.length} | 边 ${graphData.edges.length}/${graphData.rawEdgeCount}` +
+      (uiState.filters.edgeLimitEnabled ? ` (限流 ${uiState.filters.edgeLimit})` : "")
+    )
+  );
+  graphTextPanel.appendChild(summary);
+
+  if (centerNodeId != null && report.nodes[centerNodeId]) {
+    const center = report.nodes[centerNodeId];
+    const centerBlock = makePanelBlock("中心节点");
+    centerBlock.appendChild(makePanelLine(formatNodeName(center)));
+    centerBlock.appendChild(
+      makePanelLine(`in/out: ${center.inDegree}/${center.outDegree} | closure: ${formatSize(report.closureSizeByNode[centerNodeId] || 0)}`)
+    );
+    graphTextPanel.appendChild(centerBlock);
+
+    const outList = [];
+    const inList = [];
+    for (const edge of edges) {
+      if (edge.from === centerNodeId) outList.push(edge.to);
+      if (edge.to === centerNodeId) inList.push(edge.from);
+    }
+    graphTextPanel.appendChild(makeNodeListBlock("下游依赖（图内）", outList));
+    graphTextPanel.appendChild(makeNodeListBlock("上游引用（图内）", inList));
+  }
+
+  const topOut = nodeIds
+    .slice()
+    .sort((a, b) => (outMap.get(b) || 0) - (outMap.get(a) || 0))
+    .slice(0, 8);
+  const topIn = nodeIds
+    .slice()
+    .sort((a, b) => (inMap.get(b) || 0) - (inMap.get(a) || 0))
+    .slice(0, 8);
+
+  graphTextPanel.appendChild(
+    makeNodeListBlock(
+      "图内出度 Top",
+      topOut,
+      (id) => `out=${outMap.get(id) || 0}`
+    )
+  );
+  graphTextPanel.appendChild(
+    makeNodeListBlock(
+      "图内入度 Top",
+      topIn,
+      (id) => `in=${inMap.get(id) || 0}`
+    )
+  );
+}
+
+function makeNodeListBlock(title, nodeIds, suffixFactory) {
+  const block = makePanelBlock(title);
+  if (!nodeIds.length) {
+    block.appendChild(makePanelLine("暂无"));
+    return block;
+  }
+  for (const id of nodeIds.slice(0, 12)) {
+    const node = report.nodes[id];
+    if (!node) continue;
+    const suffix = suffixFactory ? ` | ${suffixFactory(id)}` : "";
+    const item = createResultItem(`${formatNodeName(node)}${suffix}`, () => {
+      selectedNodeId = id;
+      goToView({ type: "file", centerNodeId: id });
+      writeNodeDetails(id);
+    });
+    block.appendChild(item);
+  }
+  return block;
+}
+
+function makePanelBlock(title) {
+  const block = document.createElement("div");
+  block.className = "panel-block";
+  const heading = document.createElement("div");
+  heading.className = "panel-block-title";
+  heading.textContent = title;
+  block.appendChild(heading);
+  return block;
+}
+
+function makePanelLine(text) {
+  const line = document.createElement("div");
+  line.className = "panel-line";
+  line.textContent = text;
+  return line;
 }
 
 function formatDirection(direction) {

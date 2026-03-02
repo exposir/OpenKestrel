@@ -52,3 +52,7 @@ pnpm --filter @openkestrel/dep-graph okdep print-mesh .
 
 - Recommended to run on source directories.
 - Running on built artifacts is supported but reflects artifact dependency graph only.
+
+## Specs
+
+- Viewer behavior and filter specification: [`docs/viewer-spec.md`](./docs/viewer-spec.md)

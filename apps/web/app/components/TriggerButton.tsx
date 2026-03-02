@@ -9,6 +9,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { useModalEngine } from "./modal-engine/useModalEngine";
+import styles from "./TriggerButton.module.css";
 
 interface StreamCard {
   soul: string;
@@ -34,14 +35,13 @@ export function TriggerButton({ isAuthenticated }: TriggerButtonProps) {
 
   return (
     <button
-      className={`ok-compose-trigger-btn ${isAuthenticated ? "ok-compose-trigger-btn-enabled" : "ok-compose-trigger-btn-disabled"}`}
+      className={`${styles.button} ${isAuthenticated ? styles.enabled : styles.disabled}`}
       type="button"
       onClick={() => open("compose", "button")}
       disabled={!isAuthenticated}
       title={!isAuthenticated ? "请先登录后再发帖" : undefined}
       style={{
         padding: "8px 18px",
-        border: "none",
         borderRadius: 6,
         fontSize: 13,
         fontWeight: 600,
@@ -49,7 +49,7 @@ export function TriggerButton({ isAuthenticated }: TriggerButtonProps) {
         whiteSpace: "nowrap",
       }}
     >
-      <span className="ok-compose-trigger-label">
+      <span className={styles.label}>
         {!isAuthenticated ? "登录后可发帖" : "+ 发起讨论"}
       </span>
     </button>

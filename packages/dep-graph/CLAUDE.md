@@ -9,6 +9,8 @@
 > L2 | Parent: [packages/CLAUDE.md](../CLAUDE.md)
 
 成员清单 [package.json](./package.json): 包元数据、bin 命令与构建脚本定义。  
+成员清单 [README.md](./README.md): CLI/SDK 使用说明与快速上手。  
+成员清单 [README.zh.md](./README.zh.md): CLI/SDK 中文使用说明与快速上手。  
 成员清单 [tsconfig.build.json](./tsconfig.build.json): 库构建 TS 配置（输出 ESM + d.ts 到 dist）。  
 成员清单 [src/index.ts](./src/index.ts): SDK 默认入口（分析/算法/viewer API 导出）。  
 成员清单 [src/cli.ts](./src/cli.ts): `okdep` 命令入口（analyze/web/print-cycles/print-mesh）。  
@@ -22,5 +24,7 @@
 成员清单 [src/viewer-app/index.html](./src/viewer-app/index.html): 可视化页面骨架。  
 成员清单 [src/viewer-app/app.js](./src/viewer-app/app.js): WebGL 图渲染、搜索与详情交互。  
 成员清单 [src/viewer-app/style.css](./src/viewer-app/style.css): viewer 页面布局与样式。
+成员清单 [docs/viewer-spec.md](./docs/viewer-spec.md): viewer 筛选与交互规范、验收基线定义。
+成员清单 [tests/algorithms.test.mjs](./tests/algorithms.test.mjs): 图算法回归测试（SCC/闭包/网状识别）。
 
 法则: 分析链路线性复杂度优先·默认聚合视图后按需展开·CLI 与 SDK 同源数据协议

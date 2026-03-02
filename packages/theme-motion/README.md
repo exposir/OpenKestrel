@@ -1,3 +1,10 @@
+<!--
+- [INPUT]: 依赖 theme-motion 包的 core/react/css 导出能力
+- [OUTPUT]: 提供 theme-motion 的安装与使用说明
+- [POS]: theme-motion 对外文档入口
+- [PROTOCOL]: 变更时更新此头部，然后检查 ./CLAUDE.md
+-->
+
 # @openkestrel/theme-motion
 
 Minimal theme transition toolkit based on View Transition API.

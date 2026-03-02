@@ -6,7 +6,8 @@
  */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import styles from "./DebateToc.module.css";
 
 interface TocItem {
   id: string;
@@ -80,15 +81,15 @@ export function DebateToc({ items }: { items: TocItem[] }) {
   if (items.length === 0) return null;
 
   return (
-    <nav className="debate-toc" aria-label="目录导航">
-      <ul className="debate-toc-list">
+    <nav className={styles.toc} aria-label="目录导航">
+      <ul className={styles.list}>
         {items.map((item) => (
           <li
             key={item.id}
             style={{ marginLeft: item.depth > 0 ? `${item.depth * 10}px` : 0 }}
           >
             <button
-              className={`debate-toc-item${item.depth > 0 ? " sub-item" : ""}${activeId === item.id ? " active" : ""}`}
+              className={`${styles.item} ${item.depth > 0 ? styles.subItem : ""} ${activeId === item.id ? styles.active : ""}`.trim()}
               onClick={() => handleClick(item.id)}
             >
               {item.label}

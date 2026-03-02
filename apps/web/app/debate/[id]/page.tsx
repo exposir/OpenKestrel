@@ -8,6 +8,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { readDebateFile } from "../../../src/storage/adapter";
 import { DebateToc } from "./DebateToc";
+import styles from "./debate-page.module.css";
 
 function extractHeadingsFromMarkdown(markdown: string) {
   const headings: { text: string; depth: number }[] = [];
@@ -92,9 +93,9 @@ export default async function DebatePage({
   });
 
   return (
-    <div className="debate-layout">
+    <div className={styles.layout}>
       {/* ── Left: Content ── */}
-      <main className="debate-content">
+      <main className={styles.content}>
         <Link
           href="/"
           style={{
@@ -284,7 +285,7 @@ export default async function DebatePage({
       </main>
 
       {/* ── Right: TOC ── */}
-      <aside className="debate-sidebar">
+      <aside className={styles.sidebar}>
         <DebateToc items={tocItems} />
       </aside>
     </div>

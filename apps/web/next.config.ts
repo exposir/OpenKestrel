@@ -6,6 +6,9 @@
  */
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  // Ensure workspace packages are transpiled consistently in dev/build.
+  transpilePackages: ["@openkestrel/core", "@openkestrel/theme-motion"],
+};
 
 export default nextConfig;

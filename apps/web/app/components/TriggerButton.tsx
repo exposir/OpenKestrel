@@ -49,7 +49,9 @@ export function TriggerButton({ isAuthenticated }: TriggerButtonProps) {
         whiteSpace: "nowrap",
       }}
     >
-      {!isAuthenticated ? "登录后可发帖" : "+ 发起讨论"}
+      <span className="ok-compose-trigger-label">
+        {!isAuthenticated ? "登录后可发帖" : "+ 发起讨论"}
+      </span>
     </button>
   );
 }

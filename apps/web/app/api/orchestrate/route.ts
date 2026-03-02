@@ -4,14 +4,19 @@
 // [PROTOCOL]: NDJSON 消息结构变更须同步 app/components/TriggerButton.tsx 和 app/CLAUDE.md
 
 import { SOULS } from "../../../src/orchestration/soul";
-import { callDeepSeekStream } from "../../../src/orchestration/engine";
 import {
   buildSystemPrompt,
   buildUserPrompt,
 } from "../../../src/orchestration/prompts";
 import { auth } from "../../../src/auth/auth";
 import { getRequestContext, logAuditEvent } from "../../../src/audit/logger";
-import { writeDebateFile } from "../../../src/storage/adapter";
+import { getContainer } from "../../../src/di/container";
+import {
+  TOKENS,
+  StreamDebateUseCase,
+  type DebateRepository,
+  type LlmGateway,
+} from "@openkestrel/core";
 
 function normalizeStringList(input: unknown): string[] {
   if (!Array.isArray(input)) return [];
@@ -85,7 +90,8 @@ export async function POST(req: Request) {
   const normalizedMustCover = normalizeStringList(must_cover);
   const normalizedMustAvoid = normalizeStringList(must_avoid);
   const timestamp = new Date().toISOString();
-  const filename = `debate-${Date.now()}.json`;
+  const id = `debate-${Date.now()}`;
+  const filename = `${id}.json`;
 
   const messages = [
     { role: "system" as const, content: buildSystemPrompt(soul) },
@@ -101,8 +107,6 @@ export async function POST(req: Request) {
     },
   ];
 
-  let fullContent = "";
-
   const stream = new ReadableStream({
     async start(controller) {
       const encode = (s: string) => new TextEncoder().encode(s);
@@ -110,37 +114,31 @@ export async function POST(req: Request) {
         controller.enqueue(encode(JSON.stringify(payload) + "\n"));
 
       try {
-        // 先推送元信息
-        push({
-          type: "meta",
-          soul: soul.name,
+        const container = getContainer();
+        const llm = container.resolve<LlmGateway>(TOKENS.LlmGateway);
+        const repo = container.resolve<DebateRepository>(TOKENS.DebateRepository);
+        const useCase = new StreamDebateUseCase(llm, repo);
+
+        let status: "success" | "failure" = "failure";
+        for await (const event of useCase.execute({
+          id,
+          soulName: soul.name,
           topic: topic.trim(),
           timestamp,
-        });
+          messages,
+        })) {
+          if (event.type === "done") {
+            push({ type: "done", filename: event.id });
+            status = "success";
+          } else {
+            push(event);
+          }
+        }
 
-        await callDeepSeekStream(messages, (chunk) => {
-          fullContent += chunk;
-          push({ type: "chunk", text: chunk });
-        });
-
-        // 存文件
-        const output = {
-          soul: soul.name,
-          topic: topic.trim(),
-          reasoning: "",
-          response: fullContent,
-          timestamp,
-        };
-        await writeDebateFile(filename, [output]);
-
-        push({
-          type: "done",
-          filename: filename.replace(".json", ""),
-        });
         await logAuditEvent({
           category: "orchestrate",
           action: "create_post",
-          status: "success",
+          status,
           actor,
           request: requestContext,
           metadata: {

@@ -12,7 +12,7 @@ import { computeClosureSizes, findCycles, findMeshNodes } from "../dist/index.js
 
 const nodes = [
   { id: 0, path: "a.ts", ext: ".ts", sizeBytes: 100, inDegree: 1, outDegree: 1, meshScore: 0, externalRefsCount: 0 },
-  { id: 1, path: "b.ts", ext: ".ts", sizeBytes: 200, inDegree: 1, outDegree: 1, meshScore: 0, externalRefsCount: 0 },
+  { id: 1, path: "b.ts", ext: ".ts", sizeBytes: 200, inDegree: 1, outDegree: 2, meshScore: 0, externalRefsCount: 0 },
   { id: 2, path: "c.ts", ext: ".ts", sizeBytes: 300, inDegree: 1, outDegree: 0, meshScore: 0, externalRefsCount: 0 }
 ];
 

@@ -11,9 +11,9 @@ import fg from "fast-glob";
 import { init, parse } from "es-module-lexer";
 import ts from "typescript";
 
-import type { AnalyzeOptions, AnalysisWarning, EdgeKind } from "../types";
-import { isSupportedCodeFile, normalizeAbsolutePath, toRelativePath } from "./path-utils";
-import type { TsContext } from "./tsconfig";
+import type { AnalyzeOptions, AnalysisWarning, EdgeKind } from "../types.js";
+import { isSupportedCodeFile, normalizeAbsolutePath, toRelativePath } from "./path-utils.js";
+import type { TsContext } from "./tsconfig.js";
 
 export interface ScannedNode {
   id: number;

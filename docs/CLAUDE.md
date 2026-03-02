@@ -27,6 +27,7 @@ OpenKestrel 采用「意图-逻辑」双轨文档体系，隔离人类的感性�
 - [architecture.zh.md](./logic/architecture.zh.md): 系统架构设计
 - [api-design.zh.md](./logic/api-design.zh.md): 接口协议规范
 - [orchestration.zh.md](./logic/orchestration.zh.md): 核心编排与意图-逻辑转换
+- [core-di-architecture.zh.md](./logic/core-di-architecture.zh.md): core 包 + DI + 用例驱动的重构后架构说明（面向复杂度增长）
 - [safety.zh.md](./logic/safety.zh.md): 监管机制与安全边界
 - [roadmap.zh.md](./logic/roadmap.zh.md): 演进路线图
 

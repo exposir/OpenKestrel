@@ -11,9 +11,9 @@ import path from "node:path";
 
 import { Command } from "commander";
 
-import { analyzeProject } from "./analyzer/index";
-import { startViewer } from "./viewer-server/index";
-import type { AnalysisReport } from "./types";
+import { analyzeProject } from "./analyzer/index.js";
+import { startViewer } from "./viewer-server/index.js";
+import type { AnalysisReport } from "./types.js";
 
 const DEFAULT_REPORT = ".okdep/report.json";
 
@@ -26,15 +26,16 @@ export async function runCli(argv: string[]): Promise<void> {
 
   program
     .command("analyze")
-    .argument("[root]", "project root", ".")
+    .argument("[root]", "project root", defaultRootArg())
     .option("--out <path>", "output report path", DEFAULT_REPORT)
     .option("--open", "open Web viewer after analysis", false)
     .option("--port <number>", "viewer port", (value) => Number(value), 4711)
     .option("--aggregate-depth <number>", "aggregate directory depth", (value) => Number(value), 2)
     .option("--mesh-percentile <number>", "mesh percentile threshold", (value) => Number(value), 90)
     .action(async (root: string, options) => {
+      const effectiveRoot = resolveCliRoot(root);
       const report = await analyzeProject({
-        root,
+        root: effectiveRoot,
         outFile: options.out,
         aggregateDepth: options.aggregateDepth,
         meshPercentile: options.meshPercentile
@@ -68,10 +69,10 @@ export async function runCli(argv: string[]): Promise<void> {
 
   program
     .command("print-cycles")
-    .argument("[root]", "project root", ".")
+    .argument("[root]", "project root", defaultRootArg())
     .option("--limit <number>", "max cycle groups", (value) => Number(value), 20)
     .action(async (root, options) => {
-      const report = await analyzeProject({ root });
+      const report = await analyzeProject({ root: resolveCliRoot(root) });
       const top = report.cycles.slice(0, options.limit);
       console.log(`[okdep] cycles: ${report.cycles.length}`);
       for (const group of top) {
@@ -85,10 +86,10 @@ export async function runCli(argv: string[]): Promise<void> {
 
   program
     .command("print-mesh")
-    .argument("[root]", "project root", ".")
+    .argument("[root]", "project root", defaultRootArg())
     .option("--limit <number>", "max mesh nodes", (value) => Number(value), 30)
     .action(async (root, options) => {
-      const report = await analyzeProject({ root });
+      const report = await analyzeProject({ root: resolveCliRoot(root) });
       const top = report.mesh.slice(0, options.limit);
       console.log(`[okdep] mesh nodes: ${report.mesh.length}`);
       for (const item of top) {
@@ -114,6 +115,17 @@ function printSummary(report: AnalysisReport): void {
   console.log(`- mesh: ${report.mesh.length}`);
   console.log(`- warnings: ${report.warnings.length}`);
   console.log(`- duration: ${report.meta.durationMs}ms`);
+}
+
+function defaultRootArg(): string {
+  return process.env.INIT_CWD || ".";
+}
+
+function resolveCliRoot(input: string): string {
+  if (input === "." && process.env.INIT_CWD) {
+    return process.env.INIT_CWD;
+  }
+  return input;
 }
 
 async function main(): Promise<void> {

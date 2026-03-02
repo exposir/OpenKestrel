@@ -28,11 +28,13 @@ AGENTS.md / CODEX.md / GEMINI.md - 各 AI Agent 入口（指向 CLAUDE.md）
 package.json - Monorepo 根脚本（pnpm workspaces 编排）
 pnpm-workspace.yaml - Workspace 包范围定义（apps/* + packages/*）
 packages/CLAUDE.md - 可复用包工作区地图（L2）
+packages/core/package.json - 纯业务内核包清单（DDD ports/use-cases 导出与构建脚本）
 packages/theme-motion/package.json - 主题动画库包清单与导出配置
 packages/dep-graph/package.json - 依赖分析与 WebGL 可视化包清单与 CLI 定义
 tsconfig.base.json - Web/Admin 共享 TypeScript 基线配置
 .gitignore - Git 忽略规则
 apps/web/package.json - 前台应用独立依赖与脚本（默认端口 3000）
+apps/web/src/di/container.ts - 前台 DI composition root（ports 实现注册与 use-case 装配）
 apps/admin/package.json - 管理后台独立依赖与脚本
 </config>
 

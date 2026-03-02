@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && cp -R src/viewer-app dist/viewer-app",
+    "build": "tsc -p tsconfig.build.json && rm -rf dist/viewer-app && mkdir -p dist/viewer-app && cp -R src/viewer-app/. dist/viewer-app",
     "clean": "rm -rf dist",
     "okdep": "node ./dist/cli.js",
     "test": "pnpm build && node --test tests/*.test.mjs"

@@ -95,4 +95,5 @@ UI 规则：基础输入默认展示（话题/人格/背景），高级输入（
 - `page.tsx`（首页/详情页）必须保持 Server Component，不加 `"use client"`
 - 所有流式交互逻辑收敛在 `TriggerButton.tsx`，不散落至 `page.tsx`
 - `/api/orchestrate` 响应头固定为 `Content-Type: text/event-stream`，前端按 NDJSON 解析
+- `api/orchestrate|search` 必须通过 `src/di/container.ts` 解析 core use-case，不在 route 内直接拼装基础设施依赖
 - `output/` 目录由 API 路由写入，前端只读，已加入 `.gitignore`

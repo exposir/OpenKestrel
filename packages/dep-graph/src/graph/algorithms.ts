@@ -12,8 +12,8 @@ import type {
   DependencyEdge,
   FileNode,
   MeshNode
-} from "../types";
-import { aggregateKey } from "../analyzer/path-utils";
+} from "../types.js";
+import { aggregateKey } from "../analyzer/path-utils.js";
 
 export function buildAdjacency(nodes: FileNode[], edges: DependencyEdge[]): number[][] {
   const adjacency = Array.from({ length: nodes.length }, () => [] as number[]);

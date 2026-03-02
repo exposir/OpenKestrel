@@ -5,9 +5,9 @@
  * - [PROTOCOL]: 变更时更新此头部，然后检查 ../CLAUDE.md
  */
 
-export { analyzeProject } from "./analyzer/index";
-export { findCycles, findMeshNodes, computeClosureSizes } from "./graph/algorithms";
-export { startViewer } from "./viewer-server/index";
+export { analyzeProject } from "./analyzer/index.js";
+export { findCycles, findMeshNodes, computeClosureSizes } from "./graph/algorithms.js";
+export { startViewer } from "./viewer-server/index.js";
 
 export type {
   AnalyzeOptions,
@@ -19,4 +19,4 @@ export type {
   MeshNode,
   ViewerHandle,
   ViewerOptions
-} from "./types";
+} from "./types.js";

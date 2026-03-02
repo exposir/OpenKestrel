@@ -8,11 +8,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import type { AnalysisReport, AnalyzeOptions, DependencyEdge, FileNode } from "../types";
-import { buildAggregates, computeClosureSizes, findCycles, findMeshNodes } from "../graph/algorithms";
-import { normalizeAbsolutePath } from "./path-utils";
-import { scanProject } from "./scan";
-import { createTsContext } from "./tsconfig";
+import type { AnalysisReport, AnalyzeOptions, DependencyEdge, FileNode } from "../types.js";
+import { buildAggregates, computeClosureSizes, findCycles, findMeshNodes } from "../graph/algorithms.js";
+import { normalizeAbsolutePath } from "./path-utils.js";
+import { scanProject } from "./scan.js";
+import { createTsContext } from "./tsconfig.js";
 
 const REPORT_VERSION = "0.1.0";
 

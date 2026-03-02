@@ -1,7 +1,7 @@
 <!--
-- [INPUT]: 依赖 /CLAUDE.md 的模块定位与索引
-- [OUTPUT]: 输出本文件内容
-- [POS]: 位于 项目根目录 的文档
+- [INPUT]: 依赖 项目目录结构、运行时快照与 GEB 协议约束
+- [OUTPUT]: 提供 根入口协作规范、认知架构与文档协议
+- [POS]: 位于 项目根目录 的 Agent 入口镜像文档（AGENTS/CLAUDE/GEMINI）
 - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
 

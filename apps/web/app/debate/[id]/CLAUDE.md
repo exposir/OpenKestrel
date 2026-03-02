@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「debate/[id]/」。
-- 核心文件：`page.tsx`（页面入口）、`debate-page.module.css`（模块实现）、`DebateToc.module.css`（模块实现）、`DebateToc.tsx`（React 组件实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `page.tsx` 接入调用，再由 `debate-page.module.css` 与 `DebateToc.module.css` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「debate/[id]/」负责 模块能力组织与对外暴露，当前由 `page.tsx` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`page.tsx`（页面入口）、`debate-page.module.css`（模块实现）、`DebateToc.module.css`（模块实现）、`DebateToc.tsx`（组件实现）
+- 实现原理：由 `page.tsx` 接收入口，再通过 `debate-page.module.css` 和 `DebateToc.module.css` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `debate-page.module.css`、`DebateToc.module.css`、`DebateToc.tsx`、`page.tsx`。
+- 调用链路：`page.tsx` -> `debate-page.module.css` -> `DebateToc.module.css` -> 输出
 ## 成员清单
 
 - [`debate-page.module.css`](./debate-page.module.css)：本目录成员文件，承载对应子能力实现

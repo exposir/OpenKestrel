@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「packages/」。
-- 核心文件：`core/`（模块实现）、`dep-graph/`（模块实现）、`theme-motion/`（模块实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `core/` 接入调用，再由 `dep-graph/` 与 `theme-motion/` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `core/`、`dep-graph/`、`theme-motion/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「packages/」负责 模块能力组织与对外暴露，当前由 `core/` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`core/`（子模块）、`dep-graph/`（子模块）、`theme-motion/`（子模块）
+- 实现原理：由 `core/` 接收入口，再通过 `dep-graph/` 和 `theme-motion/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `core/`、`dep-graph/`、`theme-motion/`。
+- 调用链路：`core/` -> `dep-graph/` -> `theme-motion/` -> 输出
 ## 成员清单
 
 - [`core/`](./core)：子模块目录，承载该子域实现

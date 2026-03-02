@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「modal-engine/」。
-- 核心文件：`modal-motion.ts`（TypeScript 业务实现）、`modal-types.ts`（TypeScript 业务实现）、`ModalProvider.module.css`（状态与上下文管理）、`ModalProvider.tsx`（状态与上下文管理）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `modal-motion.ts` 接入调用，再由 `modal-types.ts` 与 `ModalProvider.module.css` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「modal-engine/」负责 前端交互与状态驱动渲染，当前由 `modal-motion.ts` 等文件对外提供能力，典型使用场景是页面渲染与用户交互触发时。
+- 核心文件：`modal-motion.ts`（逻辑实现）、`modal-types.ts`（逻辑实现）、`ModalProvider.module.css`（状态容器）、`ModalProvider.tsx`（状态容器）
+- 实现原理：由 `modal-motion.ts` 接收入口，再通过 `modal-types.ts` 和 `ModalProvider.module.css` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `modal-motion.ts`、`modal-types.ts`、`ModalProvider.module.css`、`ModalProvider.tsx`。
+- 调用链路：`modal-motion.ts` -> `modal-types.ts` -> `ModalProvider.module.css` -> 输出
 ## 成员清单
 
 - [`modal-motion.ts`](./modal-motion.ts)：TypeScript 实现文件，承载本模块核心逻辑

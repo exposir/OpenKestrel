@@ -11,10 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「app/ - Next.js 前端与 API 路由」。
-- 核心文件：`layout.tsx`（布局入口）、`page.tsx`（页面入口）。
-- 实现原理：采用双文件协作：`layout.tsx` 负责入口与编排，`page.tsx` 负责核心处理并输出结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `api/`、`components/`、`debate/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「app/ - Next.js 前端与 API 路由」负责 模块能力组织与对外暴露，当前由 `page.tsx` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`page.tsx`（页面入口）、`layout.tsx`（布局入口）、`globals.css`（模块实现）
+- 实现原理：由 `page.tsx` 接收入口，再通过 `layout.tsx` 和 `globals.css` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `api/`、`components/`、`debate/`、`globals.css`。
+- 调用链路：`page.tsx` -> `layout.tsx` -> `globals.css` -> 输出
 ## 成员清单
 
 成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。

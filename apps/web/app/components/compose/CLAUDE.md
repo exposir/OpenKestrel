@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「compose/」。
-- 核心文件：`ComposeDialog.module.css`（交互弹窗实现）、`ComposeDialog.tsx`（交互弹窗实现）。
-- 实现原理：采用双文件协作：`ComposeDialog.module.css` 负责入口与编排，`ComposeDialog.tsx` 负责核心处理并输出结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「compose/」负责 前端交互与状态驱动渲染，当前由 `ComposeDialog.module.css` 等文件对外提供能力，典型使用场景是页面渲染与用户交互触发时。
+- 核心文件：`ComposeDialog.module.css`（交互弹窗）、`ComposeDialog.tsx`（交互弹窗）
+- 实现原理：由 `ComposeDialog.module.css` 负责入口编排，`ComposeDialog.tsx` 负责核心处理与结果产出；异常路径在当前目录内兜底并向上抛出可诊断信息。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `ComposeDialog.module.css`、`ComposeDialog.tsx`。
+- 调用链路：`ComposeDialog.module.css` -> `ComposeDialog.tsx` -> 输出
 ## 成员清单
 
 - [`ComposeDialog.module.css`](./ComposeDialog.module.css)：本目录成员文件，承载对应子能力实现

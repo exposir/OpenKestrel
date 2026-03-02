@@ -11,10 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「src/orchestration/ - 意图编译引擎」。
-- 核心文件：`engine.ts`（核心引擎逻辑）、`index.ts`（TypeScript 业务实现）、`prompts.ts`（提示词构建）、`soul.ts`（人格模型定义）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `engine.ts` 接入调用，再由 `index.ts` 与 `prompts.ts` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「src/orchestration/ - 意图编译引擎」负责 业务逻辑实现与依赖协作，当前由 `index.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
+- 核心文件：`index.ts`（逻辑实现）、`engine.ts`（核心引擎）、`prompts.ts`（提示词构建）、`soul.ts`（人格模型）
+- 实现原理：由 `index.ts` 接收入口，再通过 `engine.ts` 和 `prompts.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `engine.ts`、`index.ts`、`prompts.ts`、`soul.ts`。
+- 调用链路：`index.ts` -> `engine.ts` -> `prompts.ts` -> 输出
 ## 成员清单
 
 成员清单见下方目录结构与职责边界章节；新增/删除文件时需同步更新对应清单。

@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「infrastructure-ports/」。
-- 核心文件：`debateRepository.ts`（TypeScript 业务实现）、`llmGateway.ts`（TypeScript 业务实现）。
-- 实现原理：采用双文件协作：`debateRepository.ts` 负责入口与编排，`llmGateway.ts` 负责核心处理并输出结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「infrastructure-ports/」负责 业务逻辑实现与依赖协作，当前由 `debateRepository.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
+- 核心文件：`debateRepository.ts`（逻辑实现）、`llmGateway.ts`（逻辑实现）
+- 实现原理：由 `debateRepository.ts` 负责入口编排，`llmGateway.ts` 负责核心处理与结果产出；异常路径在当前目录内兜底并向上抛出可诊断信息。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `debateRepository.ts`、`llmGateway.ts`。
+- 调用链路：`debateRepository.ts` -> `llmGateway.ts` -> 输出
 ## 成员清单
 
 - [`debateRepository.ts`](./debateRepository.ts)：TypeScript 实现文件，承载本模块核心逻辑

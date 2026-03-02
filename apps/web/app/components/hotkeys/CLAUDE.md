@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「hotkeys/」。
-- 核心文件：`GlobalHotkeys.tsx`（React 组件实现）、`HotkeyHelpDialog.module.css`（交互弹窗实现）、`HotkeyHelpDialog.tsx`（交互弹窗实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `GlobalHotkeys.tsx` 接入调用，再由 `HotkeyHelpDialog.module.css` 与 `HotkeyHelpDialog.tsx` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「hotkeys/」负责 前端交互与状态驱动渲染，当前由 `GlobalHotkeys.tsx` 等文件对外提供能力，典型使用场景是页面渲染与用户交互触发时。
+- 核心文件：`GlobalHotkeys.tsx`（组件实现）、`HotkeyHelpDialog.module.css`（交互弹窗）、`HotkeyHelpDialog.tsx`（交互弹窗）
+- 实现原理：由 `GlobalHotkeys.tsx` 接收入口，再通过 `HotkeyHelpDialog.module.css` 和 `HotkeyHelpDialog.tsx` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `GlobalHotkeys.tsx`、`HotkeyHelpDialog.module.css`、`HotkeyHelpDialog.tsx`。
+- 调用链路：`GlobalHotkeys.tsx` -> `HotkeyHelpDialog.module.css` -> `HotkeyHelpDialog.tsx` -> 输出
 ## 成员清单
 
 - [`GlobalHotkeys.tsx`](./GlobalHotkeys.tsx)：React 组件实现文件，负责界面与交互逻辑

@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「apps/admin/」。
-- 核心文件：`package.json`（项目配置）、`proxy.ts`（TypeScript 业务实现）、`README.md`（模块文档与规范）、`tsconfig.json`（项目配置）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `package.json` 接入调用，再由 `proxy.ts` 与 `README.md` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；下游模块 `app/`、`lib/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「apps/admin/」负责 模块能力组织与对外暴露，当前由 `package.json` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`package.json`（配置）、`proxy.ts`（逻辑实现）、`README.md`（规则文档）、`tsconfig.json`（配置）
+- 实现原理：由 `package.json` 接收入口，再通过 `proxy.ts` 和 `README.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../../CLAUDE.md](./../../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `app/`、`lib/`、`package.json`、`proxy.ts`。
+- 调用链路：`package.json` -> `proxy.ts` -> `README.md` -> 输出
 ## 成员清单
 
 - [`app/`](./app)：子模块目录，承载该子域实现

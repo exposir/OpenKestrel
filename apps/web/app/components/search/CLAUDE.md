@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「search/」。
-- 核心文件：`SearchDialog.module.css`（交互弹窗实现）、`SearchDialog.tsx`（交互弹窗实现）、`SearchLauncher.tsx`（React 组件实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `SearchDialog.module.css` 接入调用，再由 `SearchDialog.tsx` 与 `SearchLauncher.tsx` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「search/」负责 前端交互与状态驱动渲染，当前由 `SearchDialog.module.css` 等文件对外提供能力，典型使用场景是页面渲染与用户交互触发时。
+- 核心文件：`SearchDialog.module.css`（交互弹窗）、`SearchDialog.tsx`（交互弹窗）、`SearchLauncher.tsx`（组件实现）
+- 实现原理：由 `SearchDialog.module.css` 接收入口，再通过 `SearchDialog.tsx` 和 `SearchLauncher.tsx` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `SearchDialog.module.css`、`SearchDialog.tsx`、`SearchLauncher.tsx`。
+- 调用链路：`SearchDialog.module.css` -> `SearchDialog.tsx` -> `SearchLauncher.tsx` -> 输出
 ## 成员清单
 
 - [`SearchDialog.module.css`](./SearchDialog.module.css)：本目录成员文件，承载对应子能力实现

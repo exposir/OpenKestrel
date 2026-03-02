@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：沉淀项目文档规范，负责设计说明、约束定义与知识索引，对应目录「logic/」。
-- 核心文件：`api-design.zh.md`（模块文档与规范）、`architecture.zh.md`（模块文档与规范）、`core-di-architecture.zh.md`（模块文档与规范）、`orchestration.zh.md`（模块文档与规范）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `api-design.zh.md` 接入调用，再由 `architecture.zh.md` 与 `core-di-architecture.zh.md` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「logic/」负责 文档规范沉淀与知识索引，当前由 `api-design.zh.md` 等文件对外提供能力，典型使用场景是开发者查阅方案与规则时。
+- 核心文件：`api-design.zh.md`（规则文档）、`architecture.zh.md`（规则文档）、`core-di-architecture.zh.md`（规则文档）、`orchestration.zh.md`（规则文档）
+- 实现原理：由 `api-design.zh.md` 接收入口，再通过 `architecture.zh.md` 和 `core-di-architecture.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `api-design.zh.md`、`architecture.zh.md`、`core-di-architecture.zh.md`、`orchestration.zh.md`。
+- 调用链路：`api-design.zh.md` -> `architecture.zh.md` -> `core-di-architecture.zh.md` -> 输出
 ## 成员清单
 
 - [`api-design.zh.md`](./api-design.zh.md)：文档文件，记录该模块规范与说明

@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「src/」。
-- 核心文件：`index.ts`（TypeScript 业务实现）、`core.ts`（TypeScript 业务实现）、`react.ts`（TypeScript 业务实现）、`style.css`（模块实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `index.ts` 接入调用，再由 `core.ts` 与 `react.ts` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「src/」负责 业务逻辑实现与依赖协作，当前由 `index.ts` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
+- 核心文件：`index.ts`（逻辑实现）、`core.ts`（逻辑实现）、`react.ts`（逻辑实现）、`style.css`（模块实现）
+- 实现原理：由 `index.ts` 接收入口，再通过 `core.ts` 和 `react.ts` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `core.ts`、`index.ts`、`react.ts`、`style.css`。
+- 调用链路：`index.ts` -> `core.ts` -> `react.ts` -> 输出
 ## 成员清单
 
 - [`core.ts`](./core.ts)：TypeScript 实现文件，承载本模块核心逻辑

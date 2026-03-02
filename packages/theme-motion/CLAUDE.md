@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「theme-motion/」。
-- 核心文件：`package.json`（项目配置）、`README.md`（模块文档与规范）、`README.zh.md`（模块文档与规范）、`tsconfig.build.json`（项目配置）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `package.json` 接入调用，再由 `README.md` 与 `README.zh.md` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `src/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「theme-motion/」负责 模块能力组织与对外暴露，当前由 `package.json` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`package.json`（配置）、`README.md`（规则文档）、`README.zh.md`（规则文档）、`tsconfig.build.json`（配置）
+- 实现原理：由 `package.json` 接收入口，再通过 `README.md` 和 `README.zh.md` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `package.json`、`README.md`、`README.zh.md`、`src/`。
+- 调用链路：`package.json` -> `README.md` -> `README.zh.md` -> 输出
 ## 成员清单
 
 - [`package.json`](./package.json)：配置文件，声明运行或构建参数

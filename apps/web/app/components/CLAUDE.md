@@ -11,10 +11,11 @@
 
 ## 模块功能综述
 
-- 主要功能：承载该目录核心能力，实现模块级功能交付，对应目录「components/」。
-- 核心文件：`auth/`（模块实现）、`compose/`（模块实现）、`hotkeys/`（模块实现）、`modal-engine/`（核心引擎逻辑）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `auth/` 接入调用，再由 `compose/` 与 `hotkeys/` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `auth/`、`compose/`、`hotkeys/`、`modal-engine/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「components/」负责 模块能力组织与对外暴露，当前由 `auth/` 等文件对外提供能力，典型使用场景是模块协作与复用时。
+- 核心文件：`auth/`（子模块）、`compose/`（子模块）、`hotkeys/`（子模块）、`modal-engine/`（子模块）
+- 实现原理：由 `auth/` 接收入口，再通过 `compose/` 和 `hotkeys/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `auth/`、`compose/`、`hotkeys/`、`modal-engine/`。
+- 调用链路：`auth/` -> `compose/` -> `hotkeys/` -> 输出
 ## 成员清单
 
 - [auth/CLAUDE.md](./auth/CLAUDE.md): 认证交互模块地图（登录/退出入口）

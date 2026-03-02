@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供前端交互组件能力，负责状态驱动渲染与用户操作响应，对应目录「theme/」。
-- 核心文件：`ThemeToggle.tsx`（React 组件实现）。
-- 实现原理：采用单入口实现：由 `ThemeToggle.tsx` 直接承载核心逻辑并对外提供可调用能力。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 无子模块；同级协作见本文件“成员清单”。
+- 主要功能：目录「theme/」负责 前端交互与状态驱动渲染，当前由 `ThemeToggle.tsx` 等文件对外提供能力，典型使用场景是页面渲染与用户交互触发时。
+- 核心文件：`ThemeToggle.tsx`（组件实现）
+- 实现原理：由 `ThemeToggle.tsx` 单点承载入口与处理流程，对外保持稳定输出；边界条件在文件内显式校验并快速失败。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `ThemeToggle.tsx`。
+- 调用链路：`ThemeToggle.tsx` -> 输出
 ## 成员清单
 
 - [`ThemeToggle.tsx`](./ThemeToggle.tsx)：React 组件实现文件，负责界面与交互逻辑

@@ -10,10 +10,11 @@
 
 ## 模块功能综述
 
-- 主要功能：提供核心业务实现能力，负责领域逻辑、依赖装配与外部适配，对应目录「debate/」。
-- 核心文件：`application/`（模块实现）、`domain/`（模块实现）、`infrastructure-ports/`（模块实现）。
-- 实现原理：采用“入口 -> 处理 -> 输出”链路：由 `application/` 接入调用，再由 `domain/` 与 `infrastructure-ports/` 完成主要处理，最后对上层暴露稳定结果。
-- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；下游模块 `application/`、`domain/`、`infrastructure-ports/`；同级协作见本文件“成员清单”。
+- 主要功能：目录「debate/」负责 业务逻辑实现与依赖协作，当前由 `application/` 等文件对外提供能力，典型使用场景是上层模块调用核心能力时。
+- 核心文件：`application/`（子模块）、`domain/`（子模块）、`infrastructure-ports/`（子模块）
+- 实现原理：由 `application/` 接收入口，再通过 `domain/` 和 `infrastructure-ports/` 完成核心处理；遇到参数不合法或依赖缺失时立即中断并返回明确错误。
+- 相关文件：上游规范 [../CLAUDE.md](./../CLAUDE.md)；同级协作文件见“成员清单”；下游依赖或子模块包括 `application/`、`domain/`、`infrastructure-ports/`。
+- 调用链路：`application/` -> `domain/` -> `infrastructure-ports/` -> 输出
 ## 成员清单
 
 - [`application/`](./application)：子模块目录，承载该子域实现

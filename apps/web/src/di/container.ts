@@ -13,7 +13,12 @@ import {
   type SearchRepository,
 } from "@openkestrel/core";
 import { callDeepSeekStream } from "../orchestration/engine";
-import { listDebateFiles, readDebateFile, writeDebateFile } from "../storage/adapter";
+import {
+  listDebateFiles,
+  listDebateSummaries,
+  readDebateFile,
+  writeDebateFile,
+} from "../storage/adapter";
 import { Debate, DebateEntry, DebateId, SoulName, Topic } from "@openkestrel/core";
 
 let initialized = false;
@@ -62,46 +67,7 @@ function buildDebateRepository(): DebateRepository {
 function buildSearchRepository(): SearchRepository {
   return {
     async search(q, limit) {
-      const files = await listDebateFiles();
-      const matches = await Promise.all(
-        files.map(async (filename) => {
-          const id = filename.replace(".json", "");
-          const entries = await readDebateFile(id);
-          const topic = entries[0]?.topic ?? "未知话题";
-          const souls = entries.map((item) => item.soul);
-          const timestamp = entries[0]?.timestamp ?? "";
-          const fullText = [topic, ...souls, ...entries.map((item) => item.response)].join("\n");
-          if (!fullText.toLowerCase().includes(q)) return null;
-
-          const buildExcerpt = (input: string) => {
-            const text = input.replace(/\s+/g, " ").trim();
-            if (!text) return "";
-            const lower = text.toLowerCase();
-            const idx = lower.indexOf(q);
-            if (idx < 0) return text.slice(0, 160);
-            const start = Math.max(0, idx - 36);
-            const end = Math.min(text.length, idx + q.length + 84);
-            return (
-              (start > 0 ? "..." : "") + text.slice(start, end) + (end < text.length ? "..." : "")
-            );
-          };
-
-          const matchedEntry = entries.find((item) => item.response.toLowerCase().includes(q));
-          const excerptSource = matchedEntry?.response ?? fullText;
-          return {
-            id,
-            topic,
-            souls,
-            timestamp,
-            excerpt: buildExcerpt(excerptSource),
-          };
-        }),
-      );
-
-      return matches
-        .filter((item): item is NonNullable<typeof item> => item !== null)
-        .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
-        .slice(0, limit);
+      return listDebateSummaries({ query: q, limit });
     },
   };
 }

@@ -1,24 +1,16 @@
 /**
- * - [INPUT]: 依赖 `next/link` (路由), `react-markdown` (内容渲染), `app/components/search/SearchLauncher` (搜索触发器), `app/components/trigger/TriggerButton` (发帖触发器), `src/storage/adapter` (存储适配器), `auth.ts` (登录态)
+ * - [INPUT]: 依赖 `next/link` (路由), `app/components/search/SearchLauncher` (搜索触发器), `app/components/trigger/TriggerButton` (发帖触发器), `src/storage/adapter` (索引与存储适配器), `auth.ts` (登录态)
  * - [OUTPUT]: 对外提供 `HomePage` 异步组件
  * - [POS]: 业务主页入口，负责展示讨论列表与触发新讨论
  * - [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
 import { TriggerButton, StreamCard } from "./components/trigger/TriggerButton";
 import { ThemeToggle } from "./components/theme/ThemeToggle";
 import { AuthButton } from "./components/auth/AuthButton";
 import { SearchLauncher } from "./components/search/SearchLauncher";
 import { auth } from "../src/auth/auth";
-import { listDebateFiles, readDebateFile } from "../src/storage/adapter";
-
-interface DebateOutput {
-  soul: string;
-  topic: string;
-  response: string;
-  timestamp: string;
-}
+import { listDebateSummaries } from "../src/storage/adapter";
 
 interface DebateFile {
   filename: string;
@@ -28,42 +20,23 @@ interface DebateFile {
   timestamp: string;
 }
 
+const HOME_FEED_LIMIT = 24;
+
 async function getDebates(query?: string): Promise<DebateFile[]> {
   try {
-    const files = await listDebateFiles();
-    const normalizedQuery = query?.trim().toLowerCase() ?? "";
-    const debates = await Promise.all(
-      files.map(async (filename) => {
-        const data = await readDebateFile(filename.replace(".json", ""));
-        if (normalizedQuery) {
-          const searchable = [
-            data[0]?.topic ?? "",
-            ...data.map((d) => d.soul),
-            ...data.map((d) => d.response),
-          ]
-            .join("\n")
-            .toLowerCase();
-          if (!searchable.includes(normalizedQuery)) {
-            return null;
-          }
-        }
-
-        const matchedEntry = normalizedQuery
-          ? data.find((d) => d.response.toLowerCase().includes(normalizedQuery))
-          : data[0];
-
-        return {
-          filename: filename.replace(".json", ""),
-          topic: data[0]?.topic ?? "未知话题",
-          souls: data.map((d) => d.soul),
-          excerpt: matchedEntry?.response ? matchedEntry.response.slice(0, 400) + "..." : "",
-          timestamp: data[0]?.timestamp ?? "",
-        };
-      }),
-    );
-    return debates
-      .filter((item): item is DebateFile => item !== null)
-      .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    const normalizedQuery = query?.trim() ?? "";
+    const limit = normalizedQuery ? 200 : HOME_FEED_LIMIT;
+    const summaries = await listDebateSummaries({
+      query: normalizedQuery,
+      limit,
+    });
+    return summaries.map((item) => ({
+      filename: item.id,
+      topic: item.topic,
+      souls: item.souls,
+      excerpt: item.excerpt,
+      timestamp: item.timestamp,
+    }));
   } catch (error) {
     console.warn("Failed to read output directory:", error);
     return [];
@@ -210,45 +183,7 @@ export default async function HomePage({
                         overflow: "hidden",
                       }}
                     >
-                      <ReactMarkdown
-                        components={{
-                          h1: ({ node, ...props }) => (
-                            <span
-                              style={{
-                                fontWeight: 600,
-                                display: "block",
-                                marginBottom: 4,
-                              }}
-                              {...props}
-                            />
-                          ),
-                          h2: ({ node, ...props }) => (
-                            <span
-                              style={{
-                                fontWeight: 600,
-                                display: "block",
-                                marginBottom: 4,
-                              }}
-                              {...props}
-                            />
-                          ),
-                          h3: ({ node, ...props }) => (
-                            <span
-                              style={{
-                                fontWeight: 600,
-                                display: "block",
-                                marginBottom: 4,
-                              }}
-                              {...props}
-                            />
-                          ),
-                          p: ({ node, ...props }) => (
-                            <span style={{ display: "inline" }} {...props} />
-                          ),
-                        }}
-                      >
-                        {d.excerpt}
-                      </ReactMarkdown>
+                      {d.excerpt}
                     </div>
                     <div
                       style={{

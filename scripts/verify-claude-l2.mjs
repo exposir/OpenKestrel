@@ -15,7 +15,8 @@ const BANNED_IMPL = [
   "边界条件在文件内显式校验并快速失败",
   "异常路径在当前目录内兜底并向上抛出可诊断信息",
 ];
-const FORBIDDEN_NODE = /(?:\.module\.css|\.css|package\.json|README(?:\.zh)?\.md|tsconfig(?:\.[^`\s]+)?\.json|\.md|index\.html)$/i;
+const FORBIDDEN_NODE =
+  /(?:\.module\.css|\.css|package\.json|README(?:\.zh)?\.md|tsconfig(?:\.[^`\s]+)?\.json|\.md|index\.html)$/i;
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {

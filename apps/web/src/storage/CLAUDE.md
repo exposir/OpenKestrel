@@ -19,5 +19,5 @@
 
 ## 成员清单
 
-- [`adapter.ts`](./adapter.ts)：TypeScript 实现文件，承载本模块核心逻辑
+- [`adapter.ts`](./adapter.ts)：TypeScript 实现文件，负责帖子读写、审计追加与增量索引维护（listDebateSummaries）
 - [`paths.ts`](./paths.ts)：TypeScript 实现文件，承载本模块核心逻辑

@@ -17,19 +17,24 @@ interface SearchItem {
 }
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const q = (searchParams.get("q") ?? "").trim().toLowerCase();
-  const limitRaw = Number.parseInt(searchParams.get("limit") ?? "12", 10);
-  const limit = Number.isFinite(limitRaw) ? Math.max(1, Math.min(20, limitRaw)) : 12;
-  if (!q) {
-    return Response.json({ items: [] satisfies SearchItem[] });
-  }
+  try {
+    const { searchParams } = new URL(req.url);
+    const q = (searchParams.get("q") ?? "").trim().toLowerCase();
+    const limitRaw = Number.parseInt(searchParams.get("limit") ?? "12", 10);
+    const limit = Number.isFinite(limitRaw) ? Math.max(1, Math.min(20, limitRaw)) : 12;
+    if (!q) {
+      return Response.json({ items: [] satisfies SearchItem[] });
+    }
 
-  // Temporary: reuse existing file-based search until an indexer lands.
-  // The use case is still resolved from DI to keep callers stable.
-  const container = getContainer();
-  const repo = container.resolve<SearchRepository>(TOKENS.SearchRepository);
-  const useCase = new SearchDebatesUseCase(repo);
-  const items = (await useCase.execute({ q, limit })) as SearchItem[];
-  return Response.json({ items });
+    // Temporary: reuse existing file-based search until an indexer lands.
+    // The use case is still resolved from DI to keep callers stable.
+    const container = getContainer();
+    const repo = container.resolve<SearchRepository>(TOKENS.SearchRepository);
+    const useCase = new SearchDebatesUseCase(repo);
+    const items = (await useCase.execute({ q, limit })) as SearchItem[];
+    return Response.json({ items });
+  } catch (error) {
+    console.warn("Search route failed:", error);
+    return Response.json({ items: [] satisfies SearchItem[] }, { status: 200 });
+  }
 }
